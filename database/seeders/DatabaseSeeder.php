@@ -119,15 +119,15 @@ class DatabaseSeeder extends Seeder
         }
 
         $services = [
-            ['title' => 'Web', 'title_line2' => 'Design', 'icon' => 'fa fa-3x fa-laptop-code text-primary mb-4', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'sort_order' => 1],
-            ['title' => 'Web', 'title_line2' => 'Development', 'icon' => 'fa fa-3x fa-code text-primary mb-4', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'sort_order' => 2],
-            ['title' => 'Digital', 'title_line2' => 'Marketing', 'icon' => 'fa fa-3x fa-envelope-open-text text-primary mb-4', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'sort_order' => 3],
-            ['title' => 'Content', 'title_line2' => 'Writing', 'icon' => 'fa fa-3x fa-edit text-primary mb-4', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'sort_order' => 4],
+            ['title' => 'Web', 'title_line2' => 'Design', 'slug' => 'web-design', 'icon' => 'fa-laptop-code', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Professional web design services focused on clean UI, branding, and conversion-ready layouts.</p>', 'sort_order' => 1],
+            ['title' => 'Web', 'title_line2' => 'Development', 'slug' => 'web-development', 'icon' => 'fa-code', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Custom web development with modern frameworks, performance, and scalable architecture.</p>', 'sort_order' => 2],
+            ['title' => 'Digital', 'title_line2' => 'Marketing', 'slug' => 'digital-marketing', 'icon' => 'fa-envelope-open-text', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Result-driven digital marketing campaigns across SEO, social, and paid channels.</p>', 'sort_order' => 3],
+            ['title' => 'Content', 'title_line2' => 'Writing', 'slug' => 'content-writing', 'icon' => 'fa-edit', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Clear, engaging content writing that strengthens your brand voice and SEO.</p>', 'sort_order' => 4],
         ];
 
         foreach ($services as $service) {
             Service::query()->updateOrCreate(
-                ['title' => $service['title'], 'title_line2' => $service['title_line2']],
+                ['slug' => $service['slug']],
                 array_merge(['is_published' => true], $service)
             );
         }
@@ -188,17 +188,19 @@ class DatabaseSeeder extends Seeder
         }
 
         $teams = [
-            ['name' => 'John Doe', 'designation' => 'CEO, Founder', 'sort_order' => 1, 'img' => 'team-1.jpg'],
-            ['name' => 'Kate Wilson', 'designation' => 'Designer', 'sort_order' => 2, 'img' => 'team-2.jpg'],
-            ['name' => 'John Brown', 'designation' => 'Developer', 'sort_order' => 3, 'img' => 'team-3.jpg'],
-            ['name' => 'Paul Watson', 'designation' => 'Marketer', 'sort_order' => 4, 'img' => 'team-4.jpg'],
+            ['name' => 'John Doe', 'slug' => 'john-doe', 'designation' => 'CEO, Founder', 'sort_order' => 1],
+            ['name' => 'Kate Wilson', 'slug' => 'kate-wilson', 'designation' => 'Designer', 'sort_order' => 2],
+            ['name' => 'John Brown', 'slug' => 'john-brown', 'designation' => 'Developer', 'sort_order' => 3],
+            ['name' => 'Paul Watson', 'slug' => 'paul-watson', 'designation' => 'Marketer', 'sort_order' => 4],
         ];
 
         foreach ($teams as $member) {
             Team::query()->updateOrCreate(
-                ['name' => $member['name']],
+                ['slug' => $member['slug']],
                 [
+                    'name' => $member['name'],
                     'designation' => $member['designation'],
+                    'content' => '<p>'.$member['name'].' is a valued team member working as '.$member['designation'].'.</p>',
                     'facebook' => '#',
                     'twitter' => '#',
                     'linkedin' => '#',

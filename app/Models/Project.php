@@ -9,7 +9,7 @@ use Illuminate\Support\Str;
 class Project extends Model
 {
     protected $fillable = [
-        'project_category_id', 'title', 'slug', 'description', 'image',
+        'project_category_id', 'title', 'slug', 'description', 'content', 'image',
         'client', 'project_url', 'is_featured', 'is_published', 'sort_order',
     ];
 

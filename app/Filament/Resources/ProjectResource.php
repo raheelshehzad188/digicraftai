@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ProjectResource\Pages;
 use App\Models\Project;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -47,7 +48,9 @@ class ProjectResource extends Resource
                             ->maxLength(255)
                             ->unique(ignoreRecord: true),
                         Textarea::make('description')
-                            ->rows(4)
+                            ->rows(3)
+                            ->columnSpanFull(),
+                        RichEditor::make('content')
                             ->columnSpanFull(),
                         FileUpload::make('image')
                             ->disk('public')

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\TeamResource\Pages;
 use App\Models\Team;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -36,6 +37,10 @@ class TeamResource extends Resource
                         TextInput::make('name')
                             ->required()
                             ->maxLength(255),
+                        TextInput::make('slug')
+                            ->maxLength(255)
+                            ->unique(ignoreRecord: true)
+                            ->helperText('Leave blank to auto-generate'),
                         TextInput::make('designation')
                             ->maxLength(255),
                         FileUpload::make('image')
@@ -43,19 +48,17 @@ class TeamResource extends Resource
                             ->directory('teams')
                             ->image(),
                         Textarea::make('bio')
-                            ->rows(4)
+                            ->rows(3)
+                            ->columnSpanFull(),
+                        RichEditor::make('content')
                             ->columnSpanFull(),
                         TextInput::make('facebook')
-                            ->url()
                             ->maxLength(255),
                         TextInput::make('twitter')
-                            ->url()
                             ->maxLength(255),
                         TextInput::make('linkedin')
-                            ->url()
                             ->maxLength(255),
                         TextInput::make('instagram')
-                            ->url()
                             ->maxLength(255),
                         Toggle::make('is_published')
                             ->default(true),

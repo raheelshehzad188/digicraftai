@@ -3,9 +3,14 @@
         @php $imageUrl = cms_image($member->image, 'team-'.(($index % 4) + 1).'.jpg'); @endphp
         <div class="team-item rounded overflow-hidden">
             <div class="position-relative">
-                <img class="img-fluid w-100" src="{{ $imageUrl }}" alt="{{ $member->name }}">
+                <a href="{{ route('team.show', $member->slug) }}">
+                    <img class="img-fluid w-100" src="{{ $imageUrl }}" alt="{{ $member->name }}">
+                </a>
                 <div class="team-overlay">
                     <div class="d-flex align-items-center justify-content-start">
+                        <a class="btn btn-lg btn-primary btn-lg-square mx-1" href="{{ route('team.show', $member->slug) }}" title="View profile">
+                            <i class="fa fa-eye"></i>
+                        </a>
                         @if($member->twitter)
                             <a class="btn btn-lg btn-primary btn-lg-square mx-1" href="{{ $member->twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
                         @endif
@@ -22,7 +27,9 @@
                 </div>
             </div>
             <div class="bg-light text-center p-4">
-                <h4 class="text-uppercase">{{ $member->name }}</h4>
+                <h4 class="text-uppercase">
+                    <a href="{{ route('team.show', $member->slug) }}" class="text-dark">{{ $member->name }}</a>
+                </h4>
                 <p class="m-0">{{ $member->designation }}</p>
             </div>
         </div>

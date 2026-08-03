@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\ServiceResource\Pages;
 use App\Models\Service;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -38,10 +39,18 @@ class ServiceResource extends Resource
                             ->maxLength(255),
                         TextInput::make('title_line2')
                             ->maxLength(255),
+                        TextInput::make('slug')
+                            ->maxLength(255)
+                            ->unique(ignoreRecord: true)
+                            ->helperText('Leave blank to auto-generate'),
                         TextInput::make('icon')
+                            ->placeholder('fa-laptop-code')
+                            ->helperText('Font Awesome icon class, e.g. fa-code')
                             ->maxLength(255),
                         Textarea::make('description')
-                            ->rows(4)
+                            ->rows(3)
+                            ->columnSpanFull(),
+                        RichEditor::make('content')
                             ->columnSpanFull(),
                         FileUpload::make('image')
                             ->disk('public')
