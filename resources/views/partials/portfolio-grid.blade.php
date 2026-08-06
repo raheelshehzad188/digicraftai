@@ -1,50 +1,18 @@
-@if(empty($hideFilters))
-<div class="row">
-    <div class="col-12 text-center mb-2">
-        <ul class="list-inline mb-4" id="portfolio-flters">
-            <li class="btn btn-outline-dark text-uppercase py-2 px-4 active" data-filter="*">
-                <i class="fa fa-star text-primary mr-2"></i>All
-            </li>
-            @foreach($categories as $category)
-                <li class="btn btn-outline-dark text-uppercase py-2 px-4" data-filter=".{{ $category->filter_class ?: $category->slug }}">
-                    @if($category->icon)
-                        <i class="fa {{ $category->icon }} text-primary mr-2"></i>
-                    @endif
-                    {{ $category->name }}
-                </li>
-            @endforeach
-        </ul>
-    </div>
-</div>
-@endif
-<div class="row portfolio-container">
+<div class="row g-5">
     @forelse($projects as $index => $project)
         @php
-            $filterClass = $project->category?->filter_class ?: $project->category?->slug ?: 'uncategorized';
-            $fallback = 'portfolio-'.(($index % 6) + 1).'.jpg';
+            $fallback = 'project-'.(($index % 6) + 1).'.jpg';
             $imageUrl = cms_image($project->image, $fallback);
         @endphp
-        <div class="col-lg-4 col-md-6 mb-4 portfolio-item {{ $filterClass }}">
-            <div class="position-relative rounded overflow-hidden mb-2">
-                <a href="{{ route('projects.show', $project->slug) }}">
-                    <img class="img-fluid w-100" src="{{ $imageUrl }}" alt="{{ $project->title }}">
-                </a>
-                <div class="portfolio-btn d-flex align-items-center justify-content-center">
-                    <a href="{{ route('projects.show', $project->slug) }}" title="{{ $project->title }}">
-                        <i class="fa fa-4x fa-plus text-primary"></i>
-                    </a>
-                </div>
+        <div class="col-xxl-4 col-lg-6 col-md-6 col-sm-12 wow fadeInUp" data-wow-delay=".{{ 3 + ($index % 3) * 2 }}s">
+            <div class="project-item">
+                <div class="project-left bg-dark"></div>
+                <div class="project-right bg-dark"></div>
+                <img src="{{ $imageUrl }}" class="img-fluid h-100" alt="{{ $project->title }}">
+                <a href="{{ $project->slug ? route('projects.show', $project->slug) : '#' }}" class="fs-4 fw-bold text-center">{{ $project->title }}</a>
             </div>
-            <h5 class="text-uppercase mt-2 mb-0">
-                <a href="{{ route('projects.show', $project->slug) }}" class="text-dark">{{ $project->title }}</a>
-            </h5>
-            @if($project->category)
-                <small class="text-primary text-uppercase">{{ $project->category->name }}</small>
-            @endif
         </div>
     @empty
-        <div class="col-12 text-center">
-            <p class="text-muted">No projects available at the moment.</p>
-        </div>
+        <div class="col-12"><p class="text-muted">No projects available.</p></div>
     @endforelse
 </div>

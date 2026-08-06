@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8">
     <title>@yield('title', $settings->site_name)</title>
@@ -10,185 +9,194 @@
 
     @if($settings->favicon)
         <link href="{{ asset('storage/'.$settings->favicon) }}" rel="icon">
-    @else
-        <link href="{{ asset('assets/img/favicon.ico') }}" rel="icon">
     @endif
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Rubik&display=swap" rel="stylesheet">
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.0/css/all.min.css" rel="stylesheet">
-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="{{ asset('assets/lib/animate/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/lib/lightbox/css/lightbox.min.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
-
     <style>
         :root {
-            --primary: {{ $settings->primary_color }};
-            --secondary: {{ $settings->secondary_color }};
-            --dark: {{ $settings->dark_color }};
+            --primary: {{ $settings->primary_color ?? '#FDF001' }};
+            --secondary: {{ $settings->secondary_color ?? '#555555' }};
+            --dark: {{ $settings->dark_color ?? '#13357B' }};
         }
-        .bg-primary { background-color: {{ $settings->primary_color }} !important; }
+        .bg-primary, .btn-primary, .btn-primary:hover, .btn-primary:active,
+        .spinner-grow.text-primary, .text-primary, .border-primary,
+        .carousel-control-prev.btn-primary, .carousel-control-next.btn-primary,
+        .navbar-toggler.bg-primary, .dropdown-menu.bg-primary,
+        .blog-btn.bg-primary, .team-content.bg-primary, .pricing-label.bg-primary {
+            --bs-primary: {{ $settings->primary_color ?? '#FDF001' }};
+        }
+        .bg-primary { background-color: {{ $settings->primary_color ?? '#FDF001' }} !important; }
         .btn-primary {
-            background-color: {{ $settings->primary_color }} !important;
-            border-color: {{ $settings->primary_color }} !important;
-            color: {{ $settings->dark_color }} !important;
+            background-color: {{ $settings->primary_color ?? '#FDF001' }} !important;
+            border-color: {{ $settings->primary_color ?? '#FDF001' }} !important;
+            color: #111 !important;
         }
-        .btn-primary:hover,
-        .btn-primary:focus,
-        .btn-primary:active {
-            background-color: {{ $settings->dark_color }} !important;
-            border-color: {{ $settings->dark_color }} !important;
-            color: #fff !important;
-        }
-        .text-primary { color: {{ $settings->primary_color }} !important; }
-        .border-primary { border-color: {{ $settings->primary_color }} !important; }
-        .page-header.bg-primary { background-color: {{ $settings->primary_color }} !important; }
+        .text-primary { color: {{ $settings->primary_color ?? '#FDF001' }} !important; }
+        .border-primary { border-color: {{ $settings->primary_color ?? '#FDF001' }} !important; }
+        .bg-dark { background-color: {{ $settings->dark_color ?? '#13357B' }} !important; }
     </style>
     @stack('styles')
 </head>
-
 <body>
-    <!-- Navbar Start -->
-    <div class="container-fluid bg-white position-relative">
-        <nav class="navbar navbar-expand-lg bg-white navbar-light py-3 py-lg-0">
-            <a href="{{ route('home') }}" class="navbar-brand text-secondary">
-                @if($settings->logo)
-                    <img src="{{ asset('storage/'.$settings->logo) }}" alt="{{ $settings->site_name }}" style="max-height: 60px;">
-                @else
-                    <h1 class="display-4 text-uppercase">{{ $settings->site_name }}</h1>
-                @endif
-            </a>
-            <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ml-auto py-0 pr-3 border-right">
-                    @foreach($menuItems as $item)
-                        @php
-                            $activeChildren = $item->children->where('is_active', true);
-                            $isActive = $activeChildren->isNotEmpty()
-                                ? $activeChildren->contains(fn ($child) => menu_is_active($child))
-                                : menu_is_active($item);
-                        @endphp
-                        @if($activeChildren->isNotEmpty())
-                            <div class="nav-item dropdown">
-                                <a href="#" class="nav-link dropdown-toggle {{ $isActive ? 'active' : '' }}" data-toggle="dropdown">{{ $item->label }}</a>
-                                <div class="dropdown-menu rounded-0 m-0">
-                                    @foreach($activeChildren as $child)
-                                        <a href="{{ $child->href }}" class="dropdown-item {{ menu_is_active($child) ? 'active' : '' }}" target="{{ $child->target }}">{{ $child->label }}</a>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @else
-                            <a href="{{ $item->href }}" class="nav-item nav-link {{ $isActive ? 'active' : '' }}" target="{{ $item->target }}">{{ $item->label }}</a>
-                        @endif
-                    @endforeach
-                </div>
-                @if($settings->phone)
-                    <div class="d-none d-lg-flex align-items-center pl-4">
-                        <i class="fa fa-2x fa-mobile-alt text-primary mr-3"></i>
-                        <div>
-                            <h6 class="text-body text-uppercase mb-1"><small>Call Anytime</small></h6>
-                            <h6 class="m-0">{{ $settings->phone }}</h6>
-                        </div>
-                    </div>
-                @endif
-            </div>
-        </nav>
+    <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
     </div>
-    <!-- Navbar End -->
+
+    <div class="container-fluid topbar-top bg-primary">
+        <div class="container">
+            <div class="d-flex justify-content-between topbar py-2">
+                <div class="d-flex align-items-center flex-shrink-0 topbar-info flex-wrap">
+                    @if($settings->address)
+                        <a href="#" class="me-4 text-secondary"><i class="fas fa-map-marker-alt me-2 text-dark"></i>{{ $settings->address }}</a>
+                    @endif
+                    @if($settings->phone)
+                        <a href="tel:{{ $settings->phone }}" class="me-4 text-secondary"><i class="fas fa-phone-alt me-2 text-dark"></i>{{ $settings->phone }}</a>
+                    @endif
+                    @if($settings->email)
+                        <a href="mailto:{{ $settings->email }}" class="text-secondary"><i class="fas fa-envelope me-2 text-dark"></i>{{ $settings->email }}</a>
+                    @endif
+                </div>
+                <div class="d-flex align-items-center justify-content-center topbar-icon">
+                    @if($settings->facebook)<a href="{{ $settings->facebook }}" class="me-4" target="_blank"><i class="fab fa-facebook-f text-dark"></i></a>@endif
+                    @if($settings->twitter)<a href="{{ $settings->twitter }}" class="me-4" target="_blank"><i class="fab fa-twitter text-dark"></i></a>@endif
+                    @if($settings->instagram)<a href="{{ $settings->instagram }}" class="me-4" target="_blank"><i class="fab fa-instagram text-dark"></i></a>@endif
+                    @if($settings->linkedin)<a href="{{ $settings->linkedin }}" target="_blank"><i class="fab fa-linkedin-in text-dark"></i></a>@endif
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid bg-dark">
+        <div class="container">
+            <nav class="navbar navbar-dark navbar-expand-lg py-lg-0">
+                <a href="{{ route('home') }}" class="navbar-brand">
+                    @if($settings->logo)
+                        <img src="{{ asset('storage/'.$settings->logo) }}" alt="{{ $settings->site_name }}" style="max-height:55px">
+                    @else
+                        @php
+                            $name = $settings->site_name;
+                            $parts = preg_split('/\s+/', trim($name), 2);
+                        @endphp
+                        <h1 class="text-primary mb-0 display-5">
+                            {{ $parts[0] ?? $name }}@if(!empty($parts[1]))<span class="text-white">{{ $parts[1] }}</span>@endif
+                            <i class="fa fa-spider text-primary ms-2"></i>
+                        </h1>
+                    @endif
+                </a>
+                <button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars text-dark"></span>
+                </button>
+                <div class="collapse navbar-collapse me-n3" id="navbarCollapse">
+                    <div class="navbar-nav ms-auto">
+                        @foreach($menuItems as $item)
+                            @php
+                                $activeChildren = $item->children->where('is_active', true);
+                                $isActive = $activeChildren->isNotEmpty()
+                                    ? $activeChildren->contains(fn ($child) => menu_is_active($child))
+                                    : menu_is_active($item);
+                            @endphp
+                            @if($activeChildren->isNotEmpty())
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle {{ $isActive ? 'active' : '' }}" data-bs-toggle="dropdown">{{ $item->label }}</a>
+                                    <div class="dropdown-menu m-0 bg-primary">
+                                        @foreach($activeChildren as $child)
+                                            <a href="{{ $child->href }}" class="dropdown-item {{ menu_is_active($child) ? 'active' : '' }}" target="{{ $child->target }}">{{ $child->label }}</a>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            @else
+                                <a href="{{ $item->href }}" class="nav-item nav-link {{ $isActive ? 'active' : '' }}" target="{{ $item->target }}">{{ $item->label }}</a>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
 
     @yield('content')
 
-    <!-- Footer Start -->
-    <div class="container-fluid bg-dark text-white-50 py-5 px-sm-3 px-md-5" style="margin-top: 90px;">
-        <div class="row pt-5">
-            <div class="col-lg-3 col-md-6 mb-5">
-                <a href="{{ route('home') }}" class="navbar-brand">
-                    <h1 class="m-0 mt-n2 text-white display-4">{{ $settings->site_name }}</h1>
-                </a>
-                <p>{{ $settings->footer_about }}</p>
-                <h6 class="text-uppercase text-white py-2">Follow Us</h6>
-                <div class="d-flex justify-content-start">
-                    @if($settings->twitter)
-                        <a class="btn btn-lg btn-primary btn-lg-square mr-2" href="{{ $settings->twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
-                    @endif
-                    @if($settings->facebook)
-                        <a class="btn btn-lg btn-primary btn-lg-square mr-2" href="{{ $settings->facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                    @endif
-                    @if($settings->linkedin)
-                        <a class="btn btn-lg btn-primary btn-lg-square mr-2" href="{{ $settings->linkedin }}" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                    @endif
-                    @if($settings->instagram)
-                        <a class="btn btn-lg btn-primary btn-lg-square" href="{{ $settings->instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
-                    @endif
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <h4 class="text-uppercase text-white mb-4">Get In Touch</h4>
-                <p>{{ $settings->footer_about }}</p>
-                @if($settings->address)
-                    <p><i class="fa fa-map-marker-alt text-white mr-2"></i>{{ $settings->address }}</p>
-                @endif
-                @if($settings->phone)
-                    <p><i class="fa fa-phone-alt text-white mr-2"></i>{{ $settings->phone }}</p>
-                @endif
-                @if($settings->email)
-                    <p><i class="fa fa-envelope text-white mr-2"></i>{{ $settings->email }}</p>
-                @endif
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <h4 class="text-uppercase text-white mb-4">Quick Links</h4>
-                <div class="d-flex flex-column justify-content-start">
-                    @foreach($menuItems as $item)
-                        @php $activeChildren = $item->children->where('is_active', true); @endphp
-                        @if($activeChildren->isNotEmpty())
-                            @foreach($activeChildren as $child)
-                                <a class="text-white-50 mb-2" href="{{ $child->href }}" target="{{ $child->target }}"><i class="fa fa-angle-right text-white mr-2"></i>{{ $child->label }}</a>
-                            @endforeach
-                        @else
-                            <a class="text-white-50 mb-2" href="{{ $item->href }}" target="{{ $item->target }}"><i class="fa fa-angle-right text-white mr-2"></i>{{ $item->label }}</a>
-                        @endif
-                    @endforeach
-                </div>
-            </div>
-            <div class="col-lg-3 col-md-6 mb-5">
-                <h4 class="text-uppercase text-white mb-4">Newsletter</h4>
-                <p class="mb-4">{{ $settings->newsletter_text }}</p>
-                <div class="w-100 mb-3">
-                    <div class="input-group">
-                        <input type="text" class="form-control border-light" style="padding: 25px;" placeholder="Your Email">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary text-uppercase px-3" type="button">Sign Up</button>
+    <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay=".3s">
+        <div class="container py-5">
+            <div class="row g-4 footer-inner">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="text-white fw-bold mb-4">{{ $settings->site_name }}</h4>
+                        <p class="mb-4">{{ $settings->footer_about }}</p>
+                        <div class="d-flex">
+                            @if($settings->facebook)<a href="{{ $settings->facebook }}" class="btn btn-primary btn-sm-square me-3" target="_blank"><i class="fab fa-facebook-f text-dark"></i></a>@endif
+                            @if($settings->twitter)<a href="{{ $settings->twitter }}" class="btn btn-primary btn-sm-square me-3" target="_blank"><i class="fab fa-twitter text-dark"></i></a>@endif
+                            @if($settings->instagram)<a href="{{ $settings->instagram }}" class="btn btn-primary btn-sm-square me-3" target="_blank"><i class="fab fa-instagram text-dark"></i></a>@endif
+                            @if($settings->linkedin)<a href="{{ $settings->linkedin }}" class="btn btn-primary btn-sm-square" target="_blank"><i class="fab fa-linkedin-in text-dark"></i></a>@endif
                         </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="text-white fw-bold mb-4">Contact Us</h4>
+                        @if($settings->address)<p><i class="fa fa-map-marker-alt me-2"></i>{{ $settings->address }}</p>@endif
+                        @if($settings->email)<p><i class="fas fa-envelope me-2"></i>{{ $settings->email }}</p>@endif
+                        @if($settings->phone)<p><i class="fas fa-phone me-2"></i>{{ $settings->phone }}</p>@endif
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="text-white fw-bold mb-4">Quick Links</h4>
+                        @foreach($menuItems->take(6) as $item)
+                            @if($item->children->where('is_active', true)->isEmpty())
+                                <a class="btn btn-link" href="{{ $item->href }}">{{ $item->label }}</a>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="text-white fw-bold mb-4">Newsletter</h4>
+                        <p class="mb-3">{{ $settings->newsletter_text }}</p>
+                        <form action="{{ route('newsletter.store') }}" method="POST">
+                            @csrf
+                            <div class="position-relative w-100">
+                                <input class="form-control py-3 ps-4 pe-5" type="email" name="email" placeholder="Your Email" required>
+                                <button type="submit" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="container-fluid py-4 px-sm-3 px-md-5" style="background: #111111;">
-        <p class="mb-2 text-center text-white-50">
-            &copy; <a href="{{ route('home') }}" class="text-white-50">{{ $settings->site_name }}</a>.
-            {{ $settings->copyright_text ?: 'All Rights Reserved.' }}
-        </p>
-        <p class="m-0 text-center text-white-50">Designed by <a href="https://htmlcodex.com">HTML Codex</a></p>
+
+    <div class="container-fluid copyright bg-dark py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    &copy; <a class="border-bottom" href="{{ route('home') }}">{{ $settings->site_name }}</a>, {{ $settings->copyright_text ?: 'All Rights Reserved.' }}
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    Designed by <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                </div>
+            </div>
+        </div>
     </div>
-    <!-- Footer End -->
 
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="fa fa-angle-up"></i></a>
+    <a href="#" class="btn btn-primary rounded-circle border-3 border-white back-to-top"><i class="fa fa-arrow-up text-dark"></i></a>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('assets/lib/wow/wow.min.js') }}"></script>
     <script src="{{ asset('assets/lib/easing/easing.min.js') }}"></script>
     <script src="{{ asset('assets/lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('assets/lib/isotope/isotope.pkgd.min.js') }}"></script>
-    <script src="{{ asset('assets/lib/lightbox/js/lightbox.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
     @stack('scripts')
 </body>
-
 </html>

@@ -5,6 +5,7 @@ namespace App\Filament\Resources;
 use App\Filament\Resources\HomeSectionResource\Pages;
 use App\Models\HomeSection;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\TextInput;
@@ -54,6 +55,29 @@ class HomeSectionResource extends Resource
                             ->disk('public')
                             ->directory('home')
                             ->image(),
+                        TextInput::make('extra.banner_title')
+                            ->label('Page banner title')
+                            ->helperText('Used on About page header when editing the about section')
+                            ->maxLength(255),
+                        TextInput::make('extra.years')
+                            ->label('Years badge number')
+                            ->maxLength(10),
+                        TextInput::make('extra.years_label')
+                            ->label('Years badge label')
+                            ->maxLength(100),
+                        Repeater::make('extra.features')
+                            ->label('Feature boxes')
+                            ->schema([
+                                TextInput::make('icon')
+                                    ->placeholder('fa-city')
+                                    ->helperText('Font Awesome class e.g. fa-city, fa-school')
+                                    ->required(),
+                                TextInput::make('line1')->required(),
+                                TextInput::make('line2'),
+                            ])
+                            ->columns(3)
+                            ->collapsible()
+                            ->columnSpanFull(),
                         Toggle::make('is_visible')
                             ->default(true),
                         TextInput::make('sort_order')

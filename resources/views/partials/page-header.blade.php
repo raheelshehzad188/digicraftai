@@ -1,16 +1,14 @@
-<!-- Page Header Start -->
-<div class="page-header container-fluid bg-primary d-flex flex-column align-items-center justify-content-center">
-    <h1 class="display-3 text-uppercase mb-3">{{ $title }}</h1>
-    <div class="d-inline-flex text-white">
-        <h6 class="text-uppercase m-0"><a class="text-white" href="{{ route('home') }}">Home</a></h6>
-        @if(!empty($parent))
-            <h6 class="m-0 px-3">/</h6>
-            <h6 class="text-uppercase m-0">
-                <a class="text-white" href="{{ route($parent['route']) }}">{{ $parent['label'] }}</a>
-            </h6>
-        @endif
-        <h6 class="m-0 px-3">/</h6>
-        <h6 class="text-uppercase m-0">{{ $title }}</h6>
+<div class="container-fluid page-header py-5">
+    <div class="container text-center py-5">
+        <h1 class="display-2 text-white mb-4 animated slideInDown">{{ $title }}</h1>
+        <nav aria-label="breadcrumb animated slideInDown">
+            <ol class="breadcrumb justify-content-center mb-0">
+                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
+                @isset($parent)
+                    <li class="breadcrumb-item"><a href="{{ route($parent['route']) }}">{{ $parent['label'] }}</a></li>
+                @endisset
+                <li class="breadcrumb-item text-white" aria-current="page">{{ $title }}</li>
+            </ol>
+        </nav>
     </div>
 </div>
-<!-- Page Header End -->

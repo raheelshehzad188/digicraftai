@@ -1,16 +1,10 @@
 @extends('layouts.frontend')
-
-@section('title', $settings->site_name.' - Prices')
-
+@section('title', $settings->site_name.' - Pricing')
 @section('content')
-    @include('partials.page-header', ['title' => 'Prices'])
-
-    <!-- Pricing Plan Start -->
+    @include('partials.page-header', ['title' => $section?->title ?: 'Pricing'])
     <div class="container-fluid py-5">
-        <div class="container pt-5 pb-3">
-            <h1 class="display-4 text-uppercase text-center mb-5">{{ $section?->title ?? 'Competitive Pricing' }}</h1>
+        <div class="container py-5">
             @include('partials.pricing-grid', ['pricingPlans' => $pricingPlans])
         </div>
     </div>
-    <!-- Pricing Plan End -->
 @endsection

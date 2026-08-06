@@ -17,7 +17,13 @@ class PageController extends Controller
     public function about(): View
     {
         return view('frontend.about', [
+            'bannerTitle' => HomeSection::byKey('about')?->extra['banner_title'] ?? 'About',
             'section' => HomeSection::byKey('about'),
+            'cta' => HomeSection::byKey('cta'),
+            'teamSection' => HomeSection::byKey('team_title'),
+            'testimonialSection' => HomeSection::byKey('testimonial_title'),
+            'teams' => Team::query()->where('is_published', true)->orderBy('sort_order')->get(),
+            'testimonials' => Testimonial::query()->where('is_published', true)->orderBy('sort_order')->get(),
         ]);
     }
 
