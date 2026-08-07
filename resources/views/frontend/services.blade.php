@@ -14,9 +14,13 @@
 @section('og_description', $seo['og_description'])
 
 @section('content')
-    @include('partials.page-header', ['bannerKey' => 'services', 'title' => $section?->title ?: 'Services'])
-    <div class="container-fluid services py-5">
-        <div class="container text-center py-5">
+    @include('partials.page-header', ['bannerKey' => 'services', 'title' => $section?->extra['banner_title'] ?? 'Services'])
+    <div class="container-fluid services py-5 mb-5">
+        <div class="container">
+            <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+                @if($section?->subtitle)<h5 class="text-primary">{{ $section->subtitle }}</h5>@endif
+                <h1>{{ $section?->title ?: 'Our Services' }}</h1>
+            </div>
             @include('partials.services-grid', ['services' => $services])
         </div>
     </div>

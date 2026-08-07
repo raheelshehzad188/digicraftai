@@ -14,94 +14,75 @@
 @section('og_description', $seo['og_description'])
 
 @section('content')
-    @include('partials.page-header', ['bannerKey' => 'about', 'title' => $bannerTitle ?? 'About'])
+    @include('partials.page-header', ['bannerKey' => 'about', 'title' => $bannerTitle ?? 'About Us'])
 
-    {{-- About main section --}}
     @if($section?->is_visible ?? true)
-        <div class="container-fluid py-5">
-            <div class="container py-5">
+        <div class="container-fluid py-5 my-5">
+            <div class="container pt-5">
                 <div class="row g-5">
-                    <div class="col-lg-6 col-md-12 wow fadeInUp" data-wow-delay=".3s">
-                        <div class="about-img">
-                            <div class="rotate-left bg-dark"></div>
-                            <div class="rotate-right bg-dark"></div>
-                            <img src="{{ cms_image($section?->image, 'about-img.jpg') }}" class="img-fluid h-100" alt="{{ $section?->title }}">
-                            <div class="bg-white experiences">
-                                <h1 class="display-3">{{ $section?->extra['years'] ?? '20' }}</h1>
-                                <h6 class="fw-bold">{{ $section?->extra['years_label'] ?? 'Years Of Experiences' }}</h6>
+                    <div class="col-lg-5 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".3s">
+                        <div class="h-100 position-relative">
+                            <img src="{{ cms_image($section?->image, 'about-1.jpg') }}" class="img-fluid w-75 rounded" alt="{{ $section?->title }}" style="margin-bottom: 25%;">
+                            <div class="position-absolute w-75" style="top: 25%; left: 25%;">
+                                <img src="{{ cms_image($section?->extra['image_2'] ?? null, 'about-2.jpg') }}" class="img-fluid w-100 rounded" alt="">
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-6 col-md-12 wow fadeInUp" data-wow-delay=".6s">
-                        <div class="about-item overflow-hidden">
-                            @if($section?->subtitle)
-                                <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block border border-2 border-primary">{{ $section->subtitle }}</h5>
-                            @endif
-                            @if($section?->title)
-                                <h1 class="display-5 mb-2">{{ $section->title }}</h1>
-                            @endif
-                            <div class="fs-5 cms-html" style="text-align: justify;">
-                                {!! cms_html($section?->content) !!}
-                            </div>
+                    <div class="col-lg-7 col-md-6 col-sm-12 wow fadeIn" data-wow-delay=".5s">
+                        @if($section?->subtitle)
+                            <h5 class="text-primary">{{ $section->subtitle }}</h5>
+                        @endif
+                        @if($section?->title)
+                            <h1 class="mb-4">{{ $section->title }}</h1>
+                        @endif
+                        <div class="mb-4">{!! cms_html($section?->content) !!}</div>
 
-                            @php $features = $section?->extra['features'] ?? []; @endphp
-                            @if(!empty($features))
-                                <div class="row mt-4">
-                                    @foreach($features as $feature)
-                                        <div class="col-6 col-md-3">
-                                            <div class="text-center">
-                                                <div class="p-4 bg-dark rounded d-flex" style="align-items: center; justify-content: center;">
-                                                    <i class="fas {{ $feature['icon'] ?? 'fa-city' }} fa-4x text-primary"></i>
-                                                </div>
-                                                <div class="my-2">
-                                                    @if(!empty($feature['line1']))<h5>{{ $feature['line1'] }}</h5>@endif
-                                                    @if(!empty($feature['line2']))<h5>{{ $feature['line2'] }}</h5>@endif
-                                                </div>
-                                            </div>
+                        @php $features = $section?->extra['features'] ?? []; @endphp
+                        @if(!empty($features))
+                            <div class="row g-3 mb-4">
+                                @foreach($features as $feature)
+                                    <div class="col-6 col-md-3">
+                                        <div class="text-center p-3 bg-light rounded">
+                                            <i class="fas {{ $feature['icon'] ?? 'fa-check' }} fa-2x text-secondary mb-2"></i>
+                                            @if(!empty($feature['line1']))<h6 class="mb-0">{{ $feature['line1'] }}</h6>@endif
+                                            @if(!empty($feature['line2']))<small>{{ $feature['line2'] }}</small>@endif
                                         </div>
-                                    @endforeach
-                                </div>
-                            @endif
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
 
-                            @if($section?->button_text)
-                                <a href="{{ $section->button_url ?: route('services') }}" class="btn btn-primary border-0 rounded-pill px-4 py-3 mt-5">{{ $section->button_text }}</a>
-                            @endif
-                        </div>
+                        @if($section?->button_text)
+                            <a href="{{ $section->button_url ?: route('services') }}" class="btn btn-secondary rounded-pill px-5 py-3 text-white">{{ $section->button_text }}</a>
+                        @endif
                     </div>
                 </div>
             </div>
         </div>
     @endif
 
-    {{-- CTA / Newsletter --}}
     @if(($section?->extra['show_cta'] ?? true) && $cta)
         @include('partials.newsletter-cta', ['cta' => $cta])
     @endif
 
-    {{-- Team --}}
     @if(($section?->extra['show_team'] ?? true) && $teams->isNotEmpty())
-        <div class="container-fluid py-5">
-            <div class="container py-5">
-                <div class="text-center mb-5 wow fadeInUp" data-wow-delay=".3s">
-                    @if($teamSection?->subtitle)
-                        <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block border border-2 border-primary">{{ $teamSection->subtitle }}</h5>
-                    @endif
-                    <h1 class="display-5 w-50 mx-auto">{{ $teamSection?->title ?? 'Our Team Members' }}</h1>
+        <div class="container-fluid py-5 mb-5">
+            <div class="container">
+                <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+                    @if($teamSection?->subtitle)<h5 class="text-primary">{{ $teamSection->subtitle }}</h5>@endif
+                    <h1>{{ $teamSection?->title ?? 'Our Team Members' }}</h1>
                 </div>
                 @include('partials.team-grid', ['teams' => $teams])
             </div>
         </div>
     @endif
 
-    {{-- Testimonials --}}
     @if(($section?->extra['show_testimonials'] ?? true) && $testimonials->isNotEmpty())
-        <div class="container-fluid testimonial py-5">
-            <div class="container py-5">
-                <div class="text-center mb-5 wow fadeInUp" data-wow-delay=".3s">
-                    @if($testimonialSection?->subtitle)
-                        <h5 class="mb-2 px-3 py-1 text-dark rounded-pill d-inline-block border border-2 border-primary">{{ $testimonialSection->subtitle }}</h5>
-                    @endif
-                    <h1 class="display-5 w-50 mx-auto">{{ $testimonialSection?->title ?? 'What Clients Say' }}</h1>
+        <div class="container-fluid py-5 mb-5">
+            <div class="container">
+                <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+                    @if($testimonialSection?->subtitle)<h5 class="text-primary">{{ $testimonialSection->subtitle }}</h5>@endif
+                    <h1>{{ $testimonialSection?->title ?? 'What Clients Say' }}</h1>
                 </div>
                 @include('partials.testimonial-carousel', ['testimonials' => $testimonials])
             </div>

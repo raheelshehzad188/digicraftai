@@ -1,24 +1,24 @@
-<div class="row g-3 g-md-5">
+<div class="row g-4">
     @forelse($teams as $index => $member)
         @php $imageUrl = cms_image($member->image, 'team-'.(($index % 4) + 1).'.jpg'); @endphp
-        <div class="col-6 col-md-6 col-lg-6 col-xxl-3 wow fadeInUp" data-wow-delay=".{{ 3 + ($index % 4) * 2 }}s">
-            <div class="rounded team-item">
+        <div class="col-6 col-md-6 col-lg-3 wow fadeIn" data-wow-delay=".{{ 3 + ($index % 4) * 2 }}s">
+            <div class="team-card bg-light rounded h-100">
                 <a href="{{ $member->slug ? route('team.show', $member->slug) : '#' }}">
-                    <img src="{{ $imageUrl }}" class="img-fluid w-100 rounded-top border border-bottom-0" alt="{{ $member->name }}">
+                    <img src="{{ $imageUrl }}" class="img-fluid w-100 rounded-top" alt="{{ $member->name }}">
                 </a>
-                <div class="team-content bg-primary text-dark text-center py-2 py-md-3 px-1">
-                    <a href="{{ $member->slug ? route('team.show', $member->slug) : '#' }}" class="team-name fw-bold text-dark text-decoration-none">{{ $member->name }}</a>
-                    <p class="text-muted mb-0 team-role">{{ $member->designation }}</p>
-                </div>
-                <div class="team-icon d-flex flex-column">
-                    @if($member->facebook)<a href="{{ $member->facebook }}" class="btn btn-primary border-0 mb-2" target="_blank"><i class="fab fa-facebook-f"></i></a>@endif
-                    @if($member->twitter)<a href="{{ $member->twitter }}" class="btn btn-primary border-0 mb-2" target="_blank"><i class="fab fa-twitter"></i></a>@endif
-                    @if($member->instagram)<a href="{{ $member->instagram }}" class="btn btn-primary border-0 mb-2" target="_blank"><i class="fab fa-instagram"></i></a>@endif
-                    @if($member->linkedin)<a href="{{ $member->linkedin }}" class="btn btn-primary border-0" target="_blank"><i class="fab fa-linkedin-in"></i></a>@endif
+                <div class="p-3 text-center">
+                    <a href="{{ $member->slug ? route('team.show', $member->slug) : '#' }}" class="h5 text-dark text-decoration-none">{{ $member->name }}</a>
+                    <p class="text-secondary mb-2">{{ $member->designation }}</p>
+                    <div class="d-flex justify-content-center gap-2">
+                        @if($member->facebook)<a href="{{ $member->facebook }}" class="btn btn-sm btn-primary btn-square rounded-circle" target="_blank"><i class="fab fa-facebook-f"></i></a>@endif
+                        @if($member->twitter)<a href="{{ $member->twitter }}" class="btn btn-sm btn-primary btn-square rounded-circle" target="_blank"><i class="fab fa-twitter"></i></a>@endif
+                        @if($member->instagram)<a href="{{ $member->instagram }}" class="btn btn-sm btn-primary btn-square rounded-circle" target="_blank"><i class="fab fa-instagram"></i></a>@endif
+                        @if($member->linkedin)<a href="{{ $member->linkedin }}" class="btn btn-sm btn-primary btn-square rounded-circle" target="_blank"><i class="fab fa-linkedin-in"></i></a>@endif
+                    </div>
                 </div>
             </div>
         </div>
     @empty
-        <div class="col-12"><p class="text-muted">No team members available.</p></div>
+        <div class="col-12"><p class="text-muted text-center">No team members available.</p></div>
     @endforelse
 </div>

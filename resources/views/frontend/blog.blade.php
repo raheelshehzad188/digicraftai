@@ -14,9 +14,9 @@
 @section('og_description', $seo['og_description'])
 
 @section('content')
-    @include('partials.page-header', ['bannerKey' => 'blog', 'title' => 'Blog'])
-    <div class="container-fluid py-5">
-        <div class="container py-5">
+    @include('partials.page-header', ['bannerKey' => 'blog', 'title' => 'Blog Posts'])
+    <div class="container-fluid blog py-5 mb-5">
+        <div class="container">
             @include('partials.blog-carousel', ['blogs' => $blogs])
         </div>
     </div>
