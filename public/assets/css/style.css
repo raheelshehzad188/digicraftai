@@ -102,6 +102,18 @@
 
 /*** Topbar End ***/
 
+/*** Sticky Header ***/
+.site-header {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    z-index: 1050;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+}
+
 /*** Navbar Start ***/
 .navbar .navbar-nav {
     padding: 15px 0;
@@ -230,21 +242,71 @@
     background: var(--bs-primary) !important;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 991.98px) {
     .carousel-item {
         width: 100%;
-        height: 400px;
+        height: 480px;
     }
 
     .carousel-item img {
-        height: 400px;
+        height: 480px;
+        object-fit: cover;
     }
 
     .carousel-control-prev,
     .carousel-control-next {
         display: none;
     }
-    
+
+    .carousel-caption {
+        text-align: center !important;
+        padding: 1rem 1.25rem 4.5rem !important;
+        align-items: flex-end !important;
+    }
+
+    .carousel-caption .carousel-content {
+        width: 100%;
+        text-align: center;
+    }
+
+    .carousel-caption h4 {
+        font-size: 1rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+
+    .carousel-caption h1 {
+        font-size: clamp(1.6rem, 6vw, 2.4rem) !important;
+        line-height: 1.25 !important;
+        margin-bottom: 1rem !important;
+    }
+
+    .carousel-caption .btn {
+        position: relative;
+        z-index: 3;
+        padding: 0.7rem 1.5rem !important;
+    }
+
+    #carouselId .carousel-indicators {
+        margin-bottom: 0.75rem;
+    }
+
+    #carouselId .carousel-indicators li {
+        width: 12px;
+        height: 12px;
+        margin: 0 4px 8px 4px;
+    }
+
+    .container-fluid.carousel {
+        margin-bottom: 2rem !important;
+        padding-bottom: 0 !important;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .carousel-item,
+    .carousel-item img {
+        height: 420px;
+    }
 }
 
 .page-header {
@@ -622,12 +684,40 @@
 .team-item .team-content {
     box-shadow: inset 0 0 0 0 var(--bs-dark);
     transition: 1s;
-    
+}
+
+.team-item .team-name {
+    font-size: 1.25rem;
+    display: block;
+    line-height: 1.3;
+}
+
+.team-item .team-role {
+    font-size: 0.9rem;
 }
 
 .team-item:hover .team-content {
     box-shadow: inset 550px 0 0 0 var(--bs-dark);
-    color: var(--bs-primary) !important;
+    color: #fff !important;
+}
+
+.team-item:hover .team-content a,
+.team-item:hover .team-content p {
+    color: #fff !important;
+}
+
+@media (max-width: 575.98px) {
+    .team-item .team-name {
+        font-size: 0.95rem;
+    }
+
+    .team-item .team-role {
+        font-size: 0.75rem;
+    }
+
+    .team-item:hover .team-content {
+        box-shadow: inset 100vw 0 0 0 var(--bs-dark);
+    }
 }
 /*** Team End ***/
 
@@ -768,3 +858,214 @@
 }
 
 /*** Copywright End ***/
+
+
+/*** Responsive Fixes ***/
+html {
+    max-width: 100%;
+}
+
+body {
+    max-width: 100%;
+    overflow-x: clip;
+}
+
+@media (max-width: 991.98px) {
+    .topbar-top {
+        display: none !important;
+    }
+
+    .navbar-brand h1,
+    .navbar-brand .display-5 {
+        font-size: 1.5rem !important;
+        line-height: 1.2;
+        margin: 0;
+    }
+
+    .navbar-brand img {
+        max-height: 42px !important;
+        width: auto;
+    }
+
+    .navbar .navbar-nav .nav-link {
+        padding: 10px 12px;
+    }
+
+    .page-header {
+        margin-bottom: 3rem !important;
+        padding-top: 3rem !important;
+        padding-bottom: 3rem !important;
+    }
+
+    .page-header .display-2 {
+        font-size: clamp(1.75rem, 7vw, 2.5rem) !important;
+        line-height: 1.2;
+    }
+
+    .display-5 {
+        font-size: clamp(1.5rem, 5vw, 2.25rem) !important;
+    }
+
+    .display-1 {
+        font-size: clamp(1.75rem, 6vw, 2.75rem) !important;
+    }
+
+    .about-img {
+        padding: 16px;
+        margin-bottom: 1rem;
+    }
+
+    .rotate-left,
+    .rotate-right {
+        display: none;
+    }
+
+    .experiences {
+        width: 110px;
+        height: auto;
+        min-height: 120px;
+        padding: 16px 12px;
+        animation: none;
+        top: 16px;
+        right: 16px;
+    }
+
+    .experiences .display-3 {
+        font-size: 2rem !important;
+    }
+
+    .call-to-action {
+        margin: 3rem 0 !important;
+    }
+
+    .call-to-action img.rounded-circle {
+        padding: 1.5rem !important;
+        max-width: 280px;
+        margin: 0 auto;
+        display: block;
+    }
+
+    .call-btn {
+        flex-direction: column !important;
+        gap: 0.75rem;
+    }
+
+    .call-btn .form-control,
+    .call-btn .btn {
+        width: 100% !important;
+        border-radius: 50rem !important;
+    }
+
+    .footer {
+        margin-top: 3rem !important;
+    }
+
+    .back-to-top {
+        width: 44px;
+        height: 44px;
+        right: 16px;
+        bottom: 16px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .navbar {
+        padding-top: 0.35rem;
+        padding-bottom: 0.35rem;
+    }
+
+    .services-inner-icon {
+        width: 70px;
+        height: 70px;
+    }
+
+    .services-inner-icon i {
+        font-size: 1.5rem !important;
+    }
+
+    .services-card-title {
+        font-size: 0.95rem;
+        line-height: 1.3;
+    }
+
+    .services-card-text {
+        font-size: 0.8rem !important;
+        line-height: 1.4;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .project-card-title {
+        font-size: 0.9rem !important;
+        line-height: 1.3;
+        padding: 0 6px;
+    }
+
+    .pricing-card-name {
+        font-size: 1rem !important;
+    }
+
+    .pricing-card-price {
+        font-size: 1.25rem !important;
+    }
+
+    .pricing-card-price .fs-5 {
+        font-size: 0.75rem !important;
+    }
+
+    .pricing-card-features {
+        font-size: 0.75rem !important;
+    }
+
+    .pricing-card-features p {
+        margin-bottom: 0.4rem;
+        text-align: left;
+    }
+
+    .blog-item h4 {
+        font-size: 0.9rem;
+        line-height: 1.3;
+    }
+
+    .blog-item p,
+    .blog-item span {
+        font-size: 0.75rem;
+    }
+
+    .blog-item .blog-btn {
+        flex-direction: column;
+        gap: 0.35rem;
+        align-items: flex-start !important;
+    }
+
+    .blog-item .blog-btn .btn {
+        padding: 0.35rem 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    .testimonial-content p {
+        font-size: 0.8rem !important;
+        line-height: 1.4;
+    }
+
+    .testimonial-item h4 {
+        font-size: 0.9rem;
+    }
+
+    .testimonial-item img {
+        width: 55px;
+        height: 55px;
+        object-fit: cover;
+    }
+
+    .pricing-item,
+    .blog-item,
+    .team-item,
+    .services-item,
+    .project-item {
+        margin-bottom: 0.25rem;
+    }
+}
+

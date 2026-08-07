@@ -52,9 +52,18 @@ class HomeSectionResource extends Resource
                         TextInput::make('button_url')
                             ->maxLength(255),
                         FileUpload::make('image')
+                            ->label('Side circle image')
                             ->disk('public')
                             ->directory('home')
-                            ->image(),
+                            ->image()
+                            ->helperText('Round image shown beside newsletter text'),
+                        FileUpload::make('extra.background_image')
+                            ->label('Section background image')
+                            ->disk('public')
+                            ->directory('home/backgrounds')
+                            ->image()
+                            ->helperText('Full-width background behind the newsletter/CTA section')
+                            ->columnSpanFull(),
                         TextInput::make('extra.banner_title')
                             ->label('Page banner title')
                             ->helperText('Used on About page header when editing the about section')

@@ -1,7 +1,20 @@
 @extends('layouts.frontend')
-@section('title', $blog->title.' - '.$settings->site_name)
+
+@php
+    $seo = page_banner_seo('blog_detail', [
+        'title' => $blog->title.' - '.$settings->site_name,
+        'description' => \Illuminate\Support\Str::limit(strip_tags($blog->excerpt ?? $blog->content ?? ''), 160) ?: $settings->tagline,
+        'keywords' => $blog->title.', '.$settings->tagline,
+    ]);
+@endphp
+@section('title', $seo['title'])
+@section('meta_description', $seo['description'])
+@section('meta_keywords', $seo['keywords'])
+@section('og_title', $seo['og_title'])
+@section('og_description', $seo['og_description'])
+
 @section('content')
-    @include('partials.page-header', ['title' => $blog->title, 'parent' => ['label' => 'Blog', 'route' => 'blog']])
+    @include('partials.page-header', ['bannerKey' => 'blog_detail', 'title' => $blog->title, 'parent' => ['label' => 'Blog', 'route' => 'blog']])
     <div class="container-fluid py-5">
         <div class="container py-5">
             <div class="row g-5">

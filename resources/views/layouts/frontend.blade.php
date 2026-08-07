@@ -4,8 +4,13 @@
     <meta charset="utf-8">
     <title>@yield('title', $settings->site_name)</title>
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="@yield('meta_keywords', $settings->tagline)" name="keywords">
-    <meta content="@yield('meta_description', $settings->tagline)" name="description">
+    <meta name="keywords" content="@yield('meta_keywords', $settings->tagline)">
+    <meta name="description" content="@yield('meta_description', $settings->tagline)">
+    <meta property="og:title" content="@yield('og_title', $settings->site_name)">
+    <meta property="og:description" content="@yield('og_description', $settings->tagline)">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <link rel="canonical" href="{{ url()->current() }}">
 
     @if($settings->favicon)
         <link href="{{ asset('storage/'.$settings->favicon) }}" rel="icon">
@@ -51,81 +56,92 @@
         <div class="spinner-grow text-primary" role="status"></div>
     </div>
 
-    <div class="container-fluid topbar-top bg-primary">
-        <div class="container">
-            <div class="d-flex justify-content-between topbar py-2">
-                <div class="d-flex align-items-center flex-shrink-0 topbar-info flex-wrap">
-                    @if($settings->address)
-                        <a href="#" class="me-4 text-secondary"><i class="fas fa-map-marker-alt me-2 text-dark"></i>{{ $settings->address }}</a>
-                    @endif
-                    @if($settings->phone)
-                        <a href="tel:{{ $settings->phone }}" class="me-4 text-secondary"><i class="fas fa-phone-alt me-2 text-dark"></i>{{ $settings->phone }}</a>
-                    @endif
-                    @if($settings->email)
-                        <a href="mailto:{{ $settings->email }}" class="text-secondary"><i class="fas fa-envelope me-2 text-dark"></i>{{ $settings->email }}</a>
-                    @endif
-                </div>
-                <div class="d-flex align-items-center justify-content-center topbar-icon">
-                    @if($settings->facebook)<a href="{{ $settings->facebook }}" class="me-4" target="_blank"><i class="fab fa-facebook-f text-dark"></i></a>@endif
-                    @if($settings->twitter)<a href="{{ $settings->twitter }}" class="me-4" target="_blank"><i class="fab fa-twitter text-dark"></i></a>@endif
-                    @if($settings->instagram)<a href="{{ $settings->instagram }}" class="me-4" target="_blank"><i class="fab fa-instagram text-dark"></i></a>@endif
-                    @if($settings->linkedin)<a href="{{ $settings->linkedin }}" target="_blank"><i class="fab fa-linkedin-in text-dark"></i></a>@endif
+    <div class="site-header">
+        <div class="container-fluid topbar-top bg-primary">
+            <div class="container">
+                <div class="d-flex justify-content-between topbar py-2">
+                    <div class="d-flex align-items-center flex-shrink-0 topbar-info flex-wrap">
+                        @if($settings->address)
+                            <a href="#" class="me-4 text-secondary"><i class="fas fa-map-marker-alt me-2 text-dark"></i>{{ $settings->address }}</a>
+                        @endif
+                        @if($settings->phone)
+                            <a href="tel:{{ $settings->phone }}" class="me-4 text-secondary"><i class="fas fa-phone-alt me-2 text-dark"></i>{{ $settings->phone }}</a>
+                        @endif
+                        @if($settings->email)
+                            <a href="mailto:{{ $settings->email }}" class="text-secondary"><i class="fas fa-envelope me-2 text-dark"></i>{{ $settings->email }}</a>
+                        @endif
+                    </div>
+                    <div class="d-flex align-items-center justify-content-center topbar-icon">
+                        @if($settings->facebook)<a href="{{ $settings->facebook }}" class="me-4" target="_blank"><i class="fab fa-facebook-f text-dark"></i></a>@endif
+                        @if($settings->twitter)<a href="{{ $settings->twitter }}" class="me-4" target="_blank"><i class="fab fa-twitter text-dark"></i></a>@endif
+                        @if($settings->instagram)<a href="{{ $settings->instagram }}" class="me-4" target="_blank"><i class="fab fa-instagram text-dark"></i></a>@endif
+                        @if($settings->linkedin)<a href="{{ $settings->linkedin }}" target="_blank"><i class="fab fa-linkedin-in text-dark"></i></a>@endif
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="container-fluid bg-dark">
-        <div class="container">
-            <nav class="navbar navbar-dark navbar-expand-lg py-lg-0">
-                <a href="{{ route('home') }}" class="navbar-brand">
-                    @if($settings->logo)
-                        <img src="{{ asset('storage/'.$settings->logo) }}" alt="{{ $settings->site_name }}" style="max-height:55px">
-                    @else
-                        @php
-                            $name = $settings->site_name;
-                            $parts = preg_split('/\s+/', trim($name), 2);
-                        @endphp
-                        <h1 class="text-primary mb-0 display-5">
-                            {{ $parts[0] ?? $name }}@if(!empty($parts[1]))<span class="text-white">{{ $parts[1] }}</span>@endif
-                            <i class="fa fa-spider text-primary ms-2"></i>
-                        </h1>
-                    @endif
-                </a>
-                <button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                    <span class="fa fa-bars text-dark"></span>
-                </button>
-                <div class="collapse navbar-collapse me-n3" id="navbarCollapse">
-                    <div class="navbar-nav ms-auto">
-                        @foreach($menuItems as $item)
+        <div class="container-fluid bg-dark">
+            <div class="container">
+                <nav class="navbar navbar-dark navbar-expand-lg py-lg-0">
+                    <a href="{{ route('home') }}" class="navbar-brand">
+                        @if($settings->logo)
+                            <img src="{{ asset('storage/'.$settings->logo) }}" alt="{{ $settings->site_name }}" style="max-height:55px">
+                        @else
                             @php
-                                $activeChildren = $item->children->where('is_active', true);
-                                $isActive = $activeChildren->isNotEmpty()
-                                    ? $activeChildren->contains(fn ($child) => menu_is_active($child))
-                                    : menu_is_active($item);
+                                $name = $settings->site_name;
+                                $parts = preg_split('/\s+/', trim($name), 2);
                             @endphp
-                            @if($activeChildren->isNotEmpty())
-                                <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle {{ $isActive ? 'active' : '' }}" data-bs-toggle="dropdown">{{ $item->label }}</a>
-                                    <div class="dropdown-menu m-0 bg-primary">
-                                        @foreach($activeChildren as $child)
-                                            <a href="{{ $child->href }}" class="dropdown-item {{ menu_is_active($child) ? 'active' : '' }}" target="{{ $child->target }}">{{ $child->label }}</a>
-                                        @endforeach
+                            <h1 class="text-primary mb-0 display-5">
+                                {{ $parts[0] ?? $name }}@if(!empty($parts[1]))<span class="text-white">{{ $parts[1] }}</span>@endif
+                                <i class="fa fa-spider text-primary ms-2"></i>
+                            </h1>
+                        @endif
+                    </a>
+                    <button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-dark"></span>
+                    </button>
+                    <div class="collapse navbar-collapse me-n3" id="navbarCollapse">
+                        <div class="navbar-nav ms-auto">
+                            @foreach($menuItems as $item)
+                                @php
+                                    $activeChildren = $item->children->where('is_active', true);
+                                    $isActive = $activeChildren->isNotEmpty()
+                                        ? $activeChildren->contains(fn ($child) => menu_is_active($child))
+                                        : menu_is_active($item);
+                                @endphp
+                                @if($activeChildren->isNotEmpty())
+                                    <div class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle {{ $isActive ? 'active' : '' }}" data-bs-toggle="dropdown">{{ $item->label }}</a>
+                                        <div class="dropdown-menu m-0 bg-primary">
+                                            @foreach($activeChildren as $child)
+                                                <a href="{{ $child->href }}" class="dropdown-item {{ menu_is_active($child) ? 'active' : '' }}" target="{{ $child->target }}">{{ $child->label }}</a>
+                                            @endforeach
+                                        </div>
                                     </div>
-                                </div>
-                            @else
-                                <a href="{{ $item->href }}" class="nav-item nav-link {{ $isActive ? 'active' : '' }}" target="{{ $item->target }}">{{ $item->label }}</a>
-                            @endif
-                        @endforeach
+                                @else
+                                    <a href="{{ $item->href }}" class="nav-item nav-link {{ $isActive ? 'active' : '' }}" target="{{ $item->target }}">{{ $item->label }}</a>
+                                @endif
+                            @endforeach
+                        </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            </div>
         </div>
     </div>
 
     @yield('content')
 
-    <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay=".3s">
+    @php
+        $footerBg = $settings->footer_background_image
+            ? asset('storage/'.$settings->footer_background_image)
+            : asset('assets/img/carousel-2.jpg');
+    @endphp
+    <div
+        class="container-fluid footer py-5 wow fadeIn"
+        data-wow-delay=".3s"
+        style="background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('{{ $footerBg }}'); background-position: center center; background-repeat: no-repeat; background-size: cover;"
+    >
         <div class="container py-5">
             <div class="row g-4 footer-inner">
                 <div class="col-lg-3 col-md-6">

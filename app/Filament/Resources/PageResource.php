@@ -51,6 +51,12 @@ class PageResource extends Resource
                             ->required(),
                         TextInput::make('banner_title')
                             ->maxLength(255),
+                        FileUpload::make('banner_image')
+                            ->label('Banner background image')
+                            ->disk('public')
+                            ->directory('banners/pages')
+                            ->image()
+                            ->columnSpanFull(),
                         RichEditor::make('content')
                             ->columnSpanFull(),
                         Toggle::make('is_published')

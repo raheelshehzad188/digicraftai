@@ -1,7 +1,20 @@
 @extends('layouts.frontend')
-@section('title', $service->full_title.' - '.$settings->site_name)
+
+@php
+    $seo = page_banner_seo('service_detail', [
+        'title' => $service->full_title.' - '.$settings->site_name,
+        'description' => \Illuminate\Support\Str::limit(strip_tags($service->description ?? ''), 160) ?: $settings->tagline,
+        'keywords' => $service->full_title.', '.$settings->tagline,
+    ]);
+@endphp
+@section('title', $seo['title'])
+@section('meta_description', $seo['description'])
+@section('meta_keywords', $seo['keywords'])
+@section('og_title', $seo['og_title'])
+@section('og_description', $seo['og_description'])
+
 @section('content')
-    @include('partials.page-header', ['title' => $service->full_title, 'parent' => ['label' => 'Services', 'route' => 'services']])
+    @include('partials.page-header', ['bannerKey' => 'service_detail', 'title' => $service->full_title, 'parent' => ['label' => 'Services', 'route' => 'services']])
     <div class="container-fluid py-5">
         <div class="container py-5">
             <div class="row g-5 align-items-center">

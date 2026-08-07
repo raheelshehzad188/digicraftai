@@ -35,3 +35,42 @@ if (! function_exists('menu_is_active')) {
         return rtrim(url()->current(), '/') === rtrim($item->href, '/');
     }
 }
+
+if (! function_exists('page_banner_seo')) {
+    /**
+     * Resolve SEO meta from Page Banners admin, with optional fallbacks.
+     *
+     * @param  array{title?:string|null,description?:string|null,keywords?:string|null}  $fallback
+     * @return array{title:string,description:string,keywords:string,og_title:string,og_description:string}
+     */
+    function page_banner_seo(string $key, array $fallback = []): array
+    {
+        $banner = \App\Models\PageBanner::forKey($key);
+        $settings = view()->shared('settings');
+        $siteName = $settings->site_name ?? config('app.name', 'Site');
+        $tagline = $settings->tagline ?? '';
+        $isDetail = str_ends_with($key, '_detail');
+
+        // List pages: admin SEO wins. Detail pages: item fallback wins (unique titles).
+        if ($isDetail) {
+            $title = $fallback['title'] ?? $banner?->meta_title ?: $siteName;
+            $description = $fallback['description'] ?? $banner?->meta_description ?: $tagline;
+            $keywords = $banner?->meta_keywords ?: ($fallback['keywords'] ?? $tagline);
+        } else {
+            $title = $banner?->meta_title ?: ($fallback['title'] ?? $siteName);
+            $description = $banner?->meta_description ?: ($fallback['description'] ?? $tagline);
+            $keywords = $banner?->meta_keywords ?: ($fallback['keywords'] ?? $tagline);
+        }
+
+        $ogTitle = $banner?->og_title ?: $title;
+        $ogDescription = $banner?->og_description ?: $description;
+
+        return [
+            'title' => $title,
+            'description' => (string) $description,
+            'keywords' => (string) $keywords,
+            'og_title' => $ogTitle,
+            'og_description' => (string) $ogDescription,
+        ];
+    }
+}

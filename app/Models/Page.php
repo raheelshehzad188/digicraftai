@@ -10,7 +10,7 @@ use Illuminate\Support\Str;
 class Page extends Model
 {
     protected $fillable = [
-        'title', 'slug', 'template', 'banner_title', 'content',
+        'title', 'slug', 'template', 'banner_title', 'banner_image', 'content',
         'meta_title', 'meta_description', 'is_published', 'sort_order',
     ];
 

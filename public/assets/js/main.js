@@ -46,10 +46,13 @@
         responsiveClass: true,
         responsive: {
             0:{
-                items:1
+                items:2,
+                margin: 12,
+                nav: false
             },
             768:{
-                items:2
+                items:2,
+                margin: 30
             },
             992:{
                 items:2
@@ -65,7 +68,7 @@
     $(".testimonial-carousel").owlCarousel({
         autoplay: true,
         smartSpeed: 1500,
-        center: true,
+        center: false,
         dots: true,
         loop: true,
         margin: 50,
@@ -77,13 +80,19 @@
         responsiveClass: true,
         responsive: {
             0:{
-                items:1
+                items:2,
+                margin: 12,
+                nav: false,
+                center: false
             },
             576:{
-                items:1
+                items:2,
+                margin: 16,
+                nav: false
             },
             768:{
-                items:2
+                items:2,
+                margin: 30
             },
             992:{
                 items:2

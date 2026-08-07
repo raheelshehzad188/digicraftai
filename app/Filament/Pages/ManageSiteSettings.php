@@ -74,6 +74,13 @@ class ManageSiteSettings extends Page implements HasForms
                         Textarea::make('footer_about')
                             ->rows(4)
                             ->columnSpanFull(),
+                        FileUpload::make('footer_background_image')
+                            ->label('Footer background image')
+                            ->disk('public')
+                            ->directory('settings/footer')
+                            ->image()
+                            ->helperText('Full-width background behind the footer section')
+                            ->columnSpanFull(),
                         TextInput::make('newsletter_text')
                             ->maxLength(255),
                         TextInput::make('map_embed_url')

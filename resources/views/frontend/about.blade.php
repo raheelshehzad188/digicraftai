@@ -1,9 +1,20 @@
 @extends('layouts.frontend')
 
-@section('title', $settings->site_name.' - '.($bannerTitle ?? 'About'))
+@php
+    $seo = page_banner_seo('about', [
+        'title' => $settings->site_name.' - '.($bannerTitle ?? 'About'),
+        'description' => $settings->tagline,
+        'keywords' => $settings->tagline,
+    ]);
+@endphp
+@section('title', $seo['title'])
+@section('meta_description', $seo['description'])
+@section('meta_keywords', $seo['keywords'])
+@section('og_title', $seo['og_title'])
+@section('og_description', $seo['og_description'])
 
 @section('content')
-    @include('partials.page-header', ['title' => $bannerTitle ?? 'About'])
+    @include('partials.page-header', ['bannerKey' => 'about', 'title' => $bannerTitle ?? 'About'])
 
     {{-- About main section --}}
     @if($section?->is_visible ?? true)
@@ -64,32 +75,7 @@
 
     {{-- CTA / Newsletter --}}
     @if(($section?->extra['show_cta'] ?? true) && $cta)
-        <div class="container-fluid py-5 call-to-action wow fadeInUp" data-wow-delay=".3s" style="margin: 6rem 0;">
-            <div class="container">
-                <div class="row g-4">
-                    <div class="col-lg-6">
-                        <img src="{{ cms_image($cta->image, 'action.jpg') }}" class="img-fluid w-100 rounded-circle p-5" alt="">
-                    </div>
-                    <div class="col-lg-6 my-auto">
-                        <div class="text-start mt-4">
-                            <h1 class="pb-4 text-white">{{ $cta->title }}</h1>
-                            @if($cta->content)
-                                <div class="text-white mb-3">{!! cms_html($cta->content) !!}</div>
-                            @endif
-                        </div>
-                        <form method="post" action="{{ route('newsletter.store') }}">
-                            @csrf
-                            <div class="form-group">
-                                <div class="d-flex call-btn">
-                                    <input type="email" class="form-control py-3 px-4 w-100 border-0 rounded-0 rounded-end rounded-pill" name="email" placeholder="Enter Your Email Address" required>
-                                    <button type="submit" class="btn btn-primary border-0 rounded-pill rounded rounded-start px-5">{{ $cta->button_text ?: 'Subscribe' }}</button>
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+        @include('partials.newsletter-cta', ['cta' => $cta])
     @endif
 
     {{-- Team --}}

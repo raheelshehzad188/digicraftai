@@ -1,10 +1,24 @@
 @extends('layouts.frontend')
 
-@section('title', $page->meta_title ?: ($settings->site_name.' - '.$page->title))
-@section('meta_description', $page->meta_description)
+@php
+    $seo = page_banner_seo('cms_page', [
+        'title' => $page->meta_title ?: ($settings->site_name.' - '.$page->title),
+        'description' => $page->meta_description ?: $settings->tagline,
+        'keywords' => $settings->tagline,
+    ]);
+@endphp
+@section('title', $seo['title'])
+@section('meta_description', $seo['description'])
+@section('meta_keywords', $seo['keywords'])
+@section('og_title', $seo['og_title'])
+@section('og_description', $seo['og_description'])
 
 @section('content')
-    @include('partials.page-header', ['title' => $page->banner_title ?: $page->title])
+    @include('partials.page-header', [
+        'bannerKey' => 'cms_page',
+        'title' => $page->banner_title ?: $page->title,
+        'background' => $page->banner_image ? asset('storage/'.$page->banner_image) : null,
+    ])
 
     @if($page->content)
         <div class="container-fluid py-5">
