@@ -10,6 +10,7 @@ class SiteSetting extends Model
         'site_name', 'tagline', 'logo', 'favicon', 'phone', 'email', 'address',
         'footer_about', 'footer_background_image', 'newsletter_text', 'map_embed_url',
         'primary_color', 'secondary_color', 'dark_color',
+        'menu_text_color', 'menu_hover_color',
         'facebook', 'twitter', 'linkedin', 'instagram', 'copyright_text',
     ];
 
@@ -30,6 +31,8 @@ class SiteSetting extends Model
             'primary_color' => '#FFAA17',
             'secondary_color' => '#6c757d',
             'dark_color' => '#212529',
+            'menu_text_color' => '#FFFFFF',
+            'menu_hover_color' => '#FFAA17',
             'facebook' => '#',
             'twitter' => '#',
             'linkedin' => '#',

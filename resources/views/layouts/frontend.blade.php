@@ -31,6 +31,8 @@
             --primary: {{ $settings->primary_color ?? '#FDF001' }};
             --secondary: {{ $settings->secondary_color ?? '#555555' }};
             --dark: {{ $settings->dark_color ?? '#13357B' }};
+            --menu-text: {{ $settings->menu_text_color ?? '#FFFFFF' }};
+            --menu-hover: {{ $settings->menu_hover_color ?? ($settings->primary_color ?? '#FDF001') }};
         }
         .bg-primary, .btn-primary, .btn-primary:hover, .btn-primary:active,
         .spinner-grow.text-primary, .text-primary, .border-primary,
@@ -48,13 +50,71 @@
         .text-primary { color: {{ $settings->primary_color ?? '#FDF001' }} !important; }
         .border-primary { border-color: {{ $settings->primary_color ?? '#FDF001' }} !important; }
         .bg-dark { background-color: {{ $settings->dark_color ?? '#13357B' }} !important; }
+
+        /* Top menu item colors from Site Settings */
+        .site-header .navbar .navbar-nav .nav-link {
+            color: var(--menu-text) !important;
+        }
+        .site-header .navbar .navbar-nav .nav-link:hover,
+        .site-header .navbar .navbar-nav .nav-link.active,
+        .site-header .navbar .navbar-nav .nav-link:focus {
+            color: var(--menu-hover) !important;
+        }
+        .site-header .navbar .dropdown-menu .dropdown-item {
+            color: #111 !important;
+        }
+        .site-header .navbar .dropdown-menu .dropdown-item:hover,
+        .site-header .navbar .dropdown-menu .dropdown-item.active {
+            color: var(--menu-hover) !important;
+        }
+
+        /* LiveBits preloader (exact) */
+        .loader-wrapper {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 100000;
+            background: #fff;
+        }
+        .loader-wrapper .loader {
+            display: block;
+            position: relative;
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            z-index: 100001;
+            transform: translate(-50%, -50%);
+        }
+        .loaded .loader {
+            opacity: 0;
+            transition: all 0.3s ease-out;
+        }
+        .loaded .loader-wrapper {
+            visibility: hidden;
+            transform: translateY(-100%);
+            transition: all 0.3s 0.3s ease-out;
+        }
     </style>
     @stack('styles')
 </head>
 <body>
-    <div id="spinner" class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-grow text-primary" role="status"></div>
+    {{-- THEME PRELOADER START (LiveBits) --}}
+    <div class="loader-wrapper">
+        <div class="loader">
+            <dotlottie-player
+                src="https://lottie.host/f8e0b03c-545b-4e81-8e1c-d8500df41f9f/VTTcCVMYTX.lottie"
+                background="transparent"
+                speed="1"
+                style="width: 300px; height: 300px"
+                loop
+                autoplay
+            ></dotlottie-player>
+        </div>
     </div>
+    {{-- THEME PRELOADER END --}}
 
     <div class="site-header">
         <div class="container-fluid topbar-top bg-primary">
@@ -213,6 +273,15 @@
     <script src="{{ asset('assets/lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    {{-- LiveBits preloader: Lottie player + hide after load --}}
+    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module" defer></script>
+    <script>
+        window.addEventListener('load', function () {
+            setTimeout(function () {
+                document.body.classList.add('loaded');
+            }, 3000);
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>

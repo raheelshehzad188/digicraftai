@@ -92,9 +92,18 @@ class ManageSiteSettings extends Page implements HasForms
                     ]),
                 Section::make('Colors')
                     ->schema([
-                        ColorPicker::make('primary_color'),
-                        ColorPicker::make('secondary_color'),
-                        ColorPicker::make('dark_color'),
+                        ColorPicker::make('primary_color')
+                            ->label('Primary color'),
+                        ColorPicker::make('secondary_color')
+                            ->label('Secondary color'),
+                        ColorPicker::make('dark_color')
+                            ->label('Header / dark background'),
+                        ColorPicker::make('menu_text_color')
+                            ->label('Menu item color')
+                            ->helperText('Top navigation link color'),
+                        ColorPicker::make('menu_hover_color')
+                            ->label('Menu hover / active color')
+                            ->helperText('Color when menu item is hovered or active'),
                     ])
                     ->columns(3),
                 Section::make('Social Links')

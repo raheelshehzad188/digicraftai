@@ -56,6 +56,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Asset URL
+    |--------------------------------------------------------------------------
+    |
+    | This URL is used by the asset() helper for CSS, JS, images, and storage
+    | files. Set ASSETS_URL in .env when assets live under a different base
+    | (e.g. https://digicraftsai.com/public). Leave empty to use APP_URL.
+    |
+    */
+
+    'asset_url' => env('ASSETS_URL', env('ASSET_URL')),
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Timezone
     |--------------------------------------------------------------------------
     |
