@@ -9,6 +9,7 @@ class Team extends Model
     protected $fillable = [
         'name', 'slug', 'designation', 'image', 'bio', 'content',
         'facebook', 'twitter', 'linkedin', 'instagram',
+        'meta_title', 'meta_description', 'meta_keywords', 'og_title', 'og_description',
         'is_published', 'sort_order',
     ];
 

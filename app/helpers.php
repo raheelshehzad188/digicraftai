@@ -74,3 +74,30 @@ if (! function_exists('page_banner_seo')) {
         ];
     }
 }
+
+if (! function_exists('entity_seo')) {
+    /**
+     * Prefer per-record SEO fields, then page-banner SEO, then fallbacks.
+     *
+     * @param  array{title?:string|null,description?:string|null,keywords?:string|null}  $fallback
+     * @return array{title:string,description:string,keywords:string,og_title:string,og_description:string}
+     */
+    function entity_seo(object $record, string $bannerKey, array $fallback = []): array
+    {
+        $base = page_banner_seo($bannerKey, $fallback);
+
+        $title = $record->meta_title ?: $base['title'];
+        $description = $record->meta_description ?: $base['description'];
+        $keywords = $record->meta_keywords ?: $base['keywords'];
+        $ogTitle = $record->og_title ?: ($record->meta_title ?: $base['og_title']);
+        $ogDescription = $record->og_description ?: ($record->meta_description ?: $base['og_description']);
+
+        return [
+            'title' => $title,
+            'description' => (string) $description,
+            'keywords' => (string) $keywords,
+            'og_title' => $ogTitle,
+            'og_description' => (string) $ogDescription,
+        ];
+    }
+}

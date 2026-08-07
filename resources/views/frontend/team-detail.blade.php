@@ -1,7 +1,7 @@
 @extends('layouts.frontend')
 
 @php
-    $seo = page_banner_seo('team_detail', [
+    $seo = entity_seo($member, 'team_detail', [
         'title' => $member->name.' - '.$settings->site_name,
         'description' => \Illuminate\Support\Str::limit(strip_tags($member->bio ?? $member->designation ?? ''), 160) ?: $settings->tagline,
         'keywords' => $member->name.', '.($member->designation ?? '').', '.$settings->tagline,

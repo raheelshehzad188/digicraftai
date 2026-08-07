@@ -44,6 +44,33 @@ class BlogResource extends Resource
                 Toggle::make('is_published')->default(true),
                 TextInput::make('sort_order')->numeric()->default(0),
             ])->columns(2),
+            Section::make('SEO')
+                ->description('Unique SEO for this blog post.')
+                ->schema([
+                    TextInput::make('meta_title')
+                        ->label('Meta Title')
+                        ->maxLength(255)
+                        ->helperText('Recommended under 60 characters.'),
+                    Textarea::make('meta_description')
+                        ->label('Meta Description')
+                        ->rows(3)
+                        ->helperText('Recommended under 160 characters.')
+                        ->columnSpanFull(),
+                    TextInput::make('meta_keywords')
+                        ->label('Meta Keywords')
+                        ->maxLength(255)
+                        ->helperText('Comma-separated keywords')
+                        ->columnSpanFull(),
+                    TextInput::make('og_title')
+                        ->label('OG Title')
+                        ->maxLength(255),
+                    Textarea::make('og_description')
+                        ->label('OG Description')
+                        ->rows(2)
+                        ->columnSpanFull(),
+                ])
+                ->columns(2)
+                ->collapsed(),
         ]);
     }
 

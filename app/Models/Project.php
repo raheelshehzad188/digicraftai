@@ -10,7 +10,9 @@ class Project extends Model
 {
     protected $fillable = [
         'project_category_id', 'title', 'slug', 'description', 'content', 'image',
-        'client', 'project_url', 'is_featured', 'is_published', 'sort_order',
+        'client', 'project_url',
+        'meta_title', 'meta_description', 'meta_keywords', 'og_title', 'og_description',
+        'is_featured', 'is_published', 'sort_order',
     ];
 
     protected function casts(): array

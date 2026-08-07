@@ -9,7 +9,9 @@ class Blog extends Model
 {
     protected $fillable = [
         'title', 'slug', 'image', 'excerpt', 'content', 'author',
-        'published_at', 'comments_count', 'is_published', 'sort_order',
+        'published_at', 'comments_count',
+        'meta_title', 'meta_description', 'meta_keywords', 'og_title', 'og_description',
+        'is_published', 'sort_order',
     ];
 
     protected function casts(): array
