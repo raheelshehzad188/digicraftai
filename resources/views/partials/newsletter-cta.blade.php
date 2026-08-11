@@ -18,7 +18,7 @@
                 @if(!empty($cta->content))
                     <div class="text-white mb-4">{!! cms_html($cta->content) !!}</div>
                 @endif
-                <form method="post" action="{{ route('newsletter.store') }}">
+                <form method="post" action="{{ route('newsletter.store') }}" class="js-newsletter-form">
                     @csrf
                     <div class="d-flex flex-column flex-sm-row gap-2">
                         <input type="email" class="form-control border-0 py-3 px-4" name="email" placeholder="Enter Your Email Address" required>

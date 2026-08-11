@@ -253,20 +253,13 @@
                         @endif
                     </div>
                     <div class="col-lg-7">
-                        @if(session('newsletter_success'))
-                            <div class="alert alert-success py-2 mb-3">{{ session('newsletter_success') }}</div>
-                        @endif
-                        @if($errors->has('email') && old('_form') === 'footer_newsletter')
-                            <div class="alert alert-danger py-2 mb-3">{{ $errors->first('email') }}</div>
-                        @endif
-                        <form method="post" action="{{ route('newsletter.store') }}" class="d-flex flex-column flex-sm-row gap-2">
+                        <form method="post" action="{{ route('newsletter.store') }}" class="js-newsletter-form d-flex flex-column flex-sm-row gap-2">
                             @csrf
                             <input type="hidden" name="_form" value="footer_newsletter">
                             <input
                                 type="email"
                                 name="email"
                                 class="form-control border-0 py-3 px-4"
-                                value="{{ old('_form') === 'footer_newsletter' ? old('email') : '' }}"
                                 placeholder="{{ $settings->newsletter_placeholder ?: 'Enter Your Email Address' }}"
                                 required
                             >
