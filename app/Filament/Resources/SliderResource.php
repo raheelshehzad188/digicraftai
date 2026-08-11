@@ -6,6 +6,7 @@ use App\Filament\Resources\SliderResource\Pages;
 use App\Models\Slider;
 use Filament\Forms\Components\FileUpload;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
@@ -32,9 +33,12 @@ class SliderResource extends Resource
             Section::make()->schema([
                 TextInput::make('subtitle')->maxLength(255),
                 TextInput::make('title')->maxLength(255),
+                Textarea::make('description')->rows(3)->columnSpanFull(),
                 FileUpload::make('image')->disk('public')->directory('sliders')->image(),
                 TextInput::make('button_text')->maxLength(255),
                 TextInput::make('button_url')->maxLength(255),
+                TextInput::make('button_2_text')->label('Second button text')->maxLength(255),
+                TextInput::make('button_2_url')->label('Second button URL')->maxLength(255),
                 Toggle::make('is_active')->default(true),
                 TextInput::make('sort_order')->numeric()->default(0),
             ])->columns(2),

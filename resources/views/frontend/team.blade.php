@@ -2,7 +2,7 @@
 
 @php
     $seo = page_banner_seo('team', [
-        'title' => $settings->site_name.' - Team',
+        'title' => trim(($settings->site_name ?? '').($settings->brand_accent ?? '')).' - Team',
         'description' => $settings->tagline,
         'keywords' => $settings->tagline,
     ]);
@@ -14,9 +14,17 @@
 @section('og_description', $seo['og_description'])
 
 @section('content')
-    @include('partials.page-header', ['bannerKey' => 'team', 'title' => $section?->title ?: 'Team'])
-    <div class="container-fluid py-5">
+    @include('partials.page-header', [
+        'bannerKey' => 'team',
+        'title' => $section?->extra['banner_title'] ?? 'Our Team',
+        'crumb' => 'Team',
+    ])
+    <div class="container-fluid py-5 my-5">
         <div class="container py-5">
+            <div class="text-center mx-auto pb-5 wow fadeIn" data-wow-delay=".3s" style="max-width: 600px;">
+                @if($section?->subtitle)<h5 class="text-primary">{{ $section->subtitle }}</h5>@endif
+                <h1>{{ $section?->title ?: 'Meet Our Expert Team' }}</h1>
+            </div>
             @include('partials.team-grid', ['teams' => $teams])
         </div>
     </div>

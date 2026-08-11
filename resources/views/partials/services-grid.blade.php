@@ -1,15 +1,13 @@
 <div class="row g-5 services-inner">
     @forelse($services as $index => $service)
         <div class="col-md-6 col-lg-4 wow fadeIn" data-wow-delay=".{{ 3 + ($index % 3) * 2 }}s">
-            <div class="services-item bg-light h-100">
+            <div class="services-item bg-light">
                 <div class="p-4 text-center services-content">
                     <div class="services-content-icon">
-                        <i class="fa {{ $service->icon ?: 'fa-laptop' }} fa-7x mb-4 text-primary"></i>
+                        <i class="{{ $service->icon ?: 'fa fa-laptop' }} fa-7x mb-4 text-primary"></i>
                         <h4 class="mb-3">{{ $service->full_title }}</h4>
-                        <p class="mb-4">{{ \Illuminate\Support\Str::limit($service->description, 110) }}</p>
-                        @if($service->slug)
-                            <a href="{{ route('services.show', $service->slug) }}" class="btn btn-secondary text-white px-5 py-3 rounded-pill">Read More</a>
-                        @endif
+                        <p class="mb-4">{{ $service->description }}</p>
+                        <a href="{{ $service->slug ? route('services.show', $service->slug) : '#' }}" class="btn btn-secondary text-white px-5 py-3 rounded-pill">{{ $readMoreText ?? 'Read More' }}</a>
                     </div>
                 </div>
             </div>

@@ -2,7 +2,7 @@
 
 @php
     $seo = page_banner_seo('contact', [
-        'title' => $settings->site_name.' - Contact',
+        'title' => trim(($settings->site_name ?? '').($settings->brand_accent ?? '')).' - Contact',
         'description' => $settings->tagline,
         'keywords' => $settings->tagline,
     ]);
@@ -14,6 +14,8 @@
 @section('og_description', $seo['og_description'])
 
 @section('content')
-    @include('partials.page-header', ['bannerKey' => 'contact', 'title' => 'Contact'])
-    @include('partials.contact-section', ['section' => $section, 'showTitle' => true])
+    @include('partials.page-header', ['bannerKey' => 'contact', 'title' => 'Contact Us', 'crumb' => 'Contact'])
+    <div class="mt-5">
+        @include('partials.contact-section', ['section' => $section, 'showTitle' => true])
+    </div>
 @endsection

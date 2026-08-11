@@ -5,9 +5,11 @@ namespace App\Filament\Pages;
 use App\Models\SiteSetting;
 use Filament\Forms\Components\ColorPicker;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Repeater;
 use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Forms\Form;
@@ -44,7 +46,11 @@ class ManageSiteSettings extends Page implements HasForms
                         TextInput::make('site_name')
                             ->required()
                             ->maxLength(255),
+                        TextInput::make('brand_accent')
+                            ->label('Brand accent (e.g. Tech)')
+                            ->maxLength(255),
                         TextInput::make('tagline')
+                            ->label('Topbar note')
                             ->maxLength(255),
                         FileUpload::make('logo')
                             ->disk('public')
@@ -54,6 +60,12 @@ class ManageSiteSettings extends Page implements HasForms
                             ->disk('public')
                             ->directory('settings')
                             ->image(),
+                        Toggle::make('preloader_enabled')
+                            ->label('Enable page preloader')
+                            ->helperText('Show the Lottie loading animation on page load (about 3 seconds).')
+                            ->default(true)
+                            ->inline(false)
+                            ->columnSpanFull(),
                     ])
                     ->columns(2),
                 Section::make('Contact')
@@ -61,12 +73,23 @@ class ManageSiteSettings extends Page implements HasForms
                         TextInput::make('phone')
                             ->tel()
                             ->maxLength(255),
+                        TextInput::make('phone_cta_label')
+                            ->label('Phone CTA label')
+                            ->placeholder('Have any questions?')
+                            ->maxLength(255),
                         TextInput::make('email')
                             ->email()
                             ->maxLength(255),
                         Textarea::make('address')
-                            ->rows(3)
+                            ->label('Topbar / footer address')
+                            ->rows(2)
                             ->columnSpanFull(),
+                        TextInput::make('contact_display_address')
+                            ->label('Contact card short address')
+                            ->maxLength(255),
+                        TextInput::make('contact_map_link')
+                            ->label('Google Maps link')
+                            ->maxLength(500),
                     ])
                     ->columns(2),
                 Section::make('Footer & Map')
@@ -79,7 +102,16 @@ class ManageSiteSettings extends Page implements HasForms
                             ->disk('public')
                             ->directory('settings/footer')
                             ->image()
-                            ->helperText('Full-width background behind the footer section')
+                            ->columnSpanFull(),
+                        FileUpload::make('contact_background_image')
+                            ->label('Contact section background')
+                            ->disk('public')
+                            ->directory('settings/contact')
+                            ->image()
+                            ->columnSpanFull(),
+                        Textarea::make('contact_form_notice')
+                            ->label('Contact form notice')
+                            ->rows(2)
                             ->columnSpanFull(),
                         TextInput::make('newsletter_text')
                             ->maxLength(255),
@@ -88,6 +120,14 @@ class ManageSiteSettings extends Page implements HasForms
                             ->columnSpanFull(),
                         TextInput::make('copyright_text')
                             ->maxLength(255)
+                            ->columnSpanFull(),
+                        Repeater::make('footer_help_links')
+                            ->label('Footer help links')
+                            ->schema([
+                                TextInput::make('label')->required(),
+                                TextInput::make('url')->required(),
+                            ])
+                            ->columns(2)
                             ->columnSpanFull(),
                     ]),
                 Section::make('Colors')

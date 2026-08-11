@@ -7,7 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Slider extends Model
 {
     protected $fillable = [
-        'title', 'subtitle', 'image', 'button_text', 'button_url', 'sort_order', 'is_active',
+        'title', 'subtitle', 'description', 'image',
+        'button_text', 'button_url', 'button_2_text', 'button_2_url',
+        'sort_order', 'is_active',
     ];
 
     protected function casts(): array

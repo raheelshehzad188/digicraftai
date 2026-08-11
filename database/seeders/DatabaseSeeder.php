@@ -2,19 +2,22 @@
 
 namespace Database\Seeders;
 
+use App\Models\Blog;
 use App\Models\HomeSection;
 use App\Models\MenuItem;
 use App\Models\Page;
+use App\Models\PageBanner;
 use App\Models\PricingPlan;
 use App\Models\Project;
 use App\Models\ProjectCategory;
 use App\Models\Service;
 use App\Models\SiteSetting;
+use App\Models\Slider;
 use App\Models\Team;
-use App\Models\Testimonial;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,252 +25,344 @@ class DatabaseSeeder extends Seeder
     {
         User::query()->updateOrCreate(
             ['email' => 'admin@digicraftai.test'],
-            [
-                'name' => 'Admin',
-                'password' => Hash::make('password'),
-            ]
+            ['name' => 'Admin', 'password' => Hash::make('password')]
         );
 
-        SiteSetting::query()->updateOrCreate(
-            ['id' => 1],
-            [
-                'site_name' => 'DOT.NET',
-                'tagline' => 'Digital Agency Website',
-                'phone' => '+012 345 6789',
-                'email' => 'info@example.com',
-                'address' => '123 Street, New York, USA',
-                'footer_about' => 'Volup amet magna clita tempor. Tempor sea eos vero ipsum. Lorem lorem sit sed elitr sed kasd et',
-                'newsletter_text' => 'Volup amet magna clita tempor. Tempor sea eos vero ipsum. Lorem lorem sit sed elitr sed kasd et',
-                'map_embed_url' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd',
-                'primary_color' => '#FFAA17',
-                'secondary_color' => '#6c757d',
-                'dark_color' => '#212529',
-                'facebook' => '#',
-                'twitter' => '#',
-                'linkedin' => '#',
-                'instagram' => '#',
-                'copyright_text' => 'DOT.NET. All Rights Reserved.',
-            ]
-        );
+        SiteSetting::query()->updateOrCreate(['id' => 1], SiteSetting::defaults() + [
+            'email' => 'Email@Example.com',
+            'phone' => '+ 0123 456 7890',
+            'address' => '23 Ranking Street, New York',
+            'contact_display_address' => '23 rank Str, NY',
+            'contact_map_link' => 'https://goo.gl/maps/Zd4BCynmTb98ivUJ6',
+            'facebook' => '#',
+            'twitter' => '#',
+            'instagram' => '#',
+            'linkedin' => '#',
+            'copyright_text' => 'All right reserved.',
+        ]);
+
+        $facts = [
+            ['value' => 99, 'label' => 'Success in getting happy customer'],
+            ['value' => 25, 'label' => 'Thousands of successful business'],
+            ['value' => 120, 'label' => 'Total clients who love HighTech'],
+            ['value' => 5, 'label' => 'Stars reviews given by satisfied clients'],
+        ];
+
+        $aboutContent = <<<HTML
+<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed efficitur quis purus ut interdum. Pellentesque aliquam dolor eget urna ultricies tincidunt. Nam volutpat libero sit amet leo cursus, ac viverra eros tristique. Morbi quis quam mi. Cras vel gravida eros. Proin scelerisque quam nec elementum viverra. Suspendisse viverra hendrerit diam in tempus. Etiam gravida justo nec erat vestibulum, et malesuada augue laoreet.</p>
+<p>Pellentesque aliquam dolor eget urna ultricies tincidunt. Nam volutpat libero sit amet leo cursus, ac viverra eros tristique. Morbi quis quam mi. Cras vel gravida eros. Proin scelerisque quam nec elementum viverra. Suspendisse viverra hendrerit diam in tempus.</p>
+HTML;
 
         $sections = [
             [
                 'key' => 'hero',
-                'name' => 'Hero Banner',
-                'title' => 'Best Digital Marketing Agency',
-                'content' => 'Sea ipsum kasd eirmod kasd magna, est sea et diam ipsum est amet sed sit. Ipsum dolor no justo dolor et, lorem ut dolor erat dolore sed ipsum at ipsum nonumy amet.',
-                'button_text' => 'Learn More',
-                'button_url' => '/about',
-                'image' => null,
-                'extra' => ['fallback_image' => 'header.png'],
+                'name' => '1. Hero / Carousel',
+                'title' => 'Hero',
+                'is_visible' => true,
                 'sort_order' => 1,
             ],
             [
-                'key' => 'about',
-                'name' => 'About Section',
-                'title' => 'Best digital agency in downtown',
-                'subtitle' => 'Clita elitr et amet et ipsum sea. Ipsum stet kasd ea et no est duo diam. Lorem dolores eos ut nonumy ipsum sit clita lorem no amet dolor dolore, stet sit dolor justo',
-                'content' => 'Eirmod est dolor nonumy sea amet dolore erat sit dolor et dolor vero. Tempor ipsum at justo amet at ipsum justo. Aiam kasd sea sit dolor duo elitr dolor amet, justo est ipsum amet dolor ut ipsum.',
-                'button_text' => 'Read More',
-                'button_url' => '/about',
-                'extra' => ['fallback_image' => 'about.jpg'],
+                'key' => 'facts',
+                'name' => '2. Fact Counters',
+                'title' => 'Facts',
+                'extra' => ['facts' => $facts],
+                'is_visible' => true,
                 'sort_order' => 2,
             ],
             [
-                'key' => 'services_title',
-                'name' => 'Services Section',
-                'title' => 'Our Creative Services',
+                'key' => 'about',
+                'name' => '3. About Section',
+                'subtitle' => 'About Us',
+                'title' => "About HighTech Agency And It's Innovative IT Solutions",
+                'content' => $aboutContent,
+                'button_text' => 'More Details',
+                'button_url' => '/about',
+                'image' => 'hightech/about-1.jpg',
+                'extra' => [
+                    'image_2' => 'hightech/about-2.jpg',
+                    'banner_title' => 'About Us',
+                    'show_cta' => false,
+                    'show_team' => false,
+                    'show_testimonials' => false,
+                ],
+                'is_visible' => true,
                 'sort_order' => 3,
             ],
             [
-                'key' => 'portfolio_title',
-                'name' => 'Projects Section',
-                'title' => 'Visit Our Projects',
+                'key' => 'services_title',
+                'name' => '4. Services Heading',
+                'subtitle' => 'Our Services',
+                'title' => 'Services Built Specifically For Your Business',
+                'extra' => ['read_more_text' => 'Read More'],
+                'is_visible' => true,
                 'sort_order' => 4,
             ],
             [
-                'key' => 'pricing_title',
-                'name' => 'Pricing Section',
-                'title' => 'Competitive Pricing',
+                'key' => 'blog_title',
+                'name' => '5. Blog Heading',
+                'subtitle' => 'Our Blog',
+                'title' => 'Latest Blog & News',
+                'extra' => ['read_more_text' => 'Read More', 'share_label' => 'Share'],
+                'is_visible' => true,
                 'sort_order' => 5,
             ],
             [
-                'key' => 'team_title',
-                'name' => 'Team Section',
-                'title' => 'Meet Our Team',
+                'key' => 'contact',
+                'name' => '6. Contact Section',
+                'subtitle' => 'Get In Touch',
+                'title' => 'Contact for any query',
+                'extra' => [
+                    'address_label' => 'Address',
+                    'phone_label' => 'Call Us',
+                    'email_label' => 'Email Us',
+                    'form_notice' => 'Send us a message and we will get back to you shortly.',
+                    'name_placeholder' => 'Your Name',
+                    'email_placeholder' => 'Your Email',
+                    'subject_placeholder' => 'Project',
+                    'message_placeholder' => 'Message',
+                    'submit_text' => 'Send Message',
+                ],
+                'is_visible' => true,
                 'sort_order' => 6,
             ],
-            [
-                'key' => 'testimonial_title',
-                'name' => 'Testimonials Section',
-                'title' => "Our Client's Say",
-                'sort_order' => 7,
-            ],
-            [
-                'key' => 'contact',
-                'name' => 'Contact Section',
-                'title' => 'Contact Us',
-                'sort_order' => 8,
-            ],
+            ['key' => 'portfolio_title', 'name' => '7. Projects Heading', 'subtitle' => 'Our Projects', 'title' => 'Recently Completed Projects', 'extra' => ['read_more_text' => 'View Project'], 'is_visible' => true, 'sort_order' => 7],
+            ['key' => 'pricing_title', 'name' => '8. Pricing Heading', 'subtitle' => 'Our Pricing', 'title' => 'Affordable Pricing Plans', 'is_visible' => true, 'sort_order' => 8],
+            ['key' => 'team_title', 'name' => '9. Team Heading', 'subtitle' => 'Our Team', 'title' => 'Meet Our Expert Team', 'is_visible' => true, 'sort_order' => 9],
+            ['key' => 'quote_form', 'name' => 'Quote Form', 'title' => 'Get A Quote', 'is_visible' => false, 'sort_order' => 90],
+            ['key' => 'testimonial_title', 'name' => 'Testimonials', 'title' => 'Testimonials', 'is_visible' => false, 'sort_order' => 94],
+            ['key' => 'cta', 'name' => 'Newsletter CTA', 'title' => 'Subscribe', 'is_visible' => false, 'sort_order' => 95],
         ];
 
         foreach ($sections as $section) {
-            HomeSection::query()->updateOrCreate(
-                ['key' => $section['key']],
-                array_merge(['is_visible' => true], $section)
-            );
+            HomeSection::query()->updateOrCreate(['key' => $section['key']], $section);
         }
 
+        Slider::query()->delete();
+        $slideBody = 'Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Pellentesque aliquam dolor eget urna ultricies tincidunt.';
+        Slider::query()->create([
+            'subtitle' => 'Best IT Solutions',
+            'title' => 'An Innovative IT Solutions Agency',
+            'description' => $slideBody,
+            'image' => 'hightech/carousel-1.jpg',
+            'button_text' => 'Read More',
+            'button_url' => '/about',
+            'button_2_text' => 'Contact Us',
+            'button_2_url' => '/contact',
+            'sort_order' => 1,
+            'is_active' => true,
+        ]);
+        Slider::query()->create([
+            'subtitle' => 'Best IT Solutions',
+            'title' => 'Quality Digital Services You Really Need!',
+            'description' => $slideBody,
+            'image' => 'hightech/carousel-2.jpg',
+            'button_text' => 'Read More',
+            'button_url' => '/about',
+            'button_2_text' => 'Contact Us',
+            'button_2_url' => '/contact',
+            'sort_order' => 2,
+            'is_active' => true,
+        ]);
+
+        Service::query()->delete();
+        $serviceDesc = 'Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.';
         $services = [
-            ['title' => 'Web', 'title_line2' => 'Design', 'slug' => 'web-design', 'icon' => 'fa-laptop-code', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Professional web design services focused on clean UI, branding, and conversion-ready layouts.</p>', 'sort_order' => 1],
-            ['title' => 'Web', 'title_line2' => 'Development', 'slug' => 'web-development', 'icon' => 'fa-code', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Custom web development with modern frameworks, performance, and scalable architecture.</p>', 'sort_order' => 2],
-            ['title' => 'Digital', 'title_line2' => 'Marketing', 'slug' => 'digital-marketing', 'icon' => 'fa-envelope-open-text', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Result-driven digital marketing campaigns across SEO, social, and paid channels.</p>', 'sort_order' => 3],
-            ['title' => 'Content', 'title_line2' => 'Writing', 'slug' => 'content-writing', 'icon' => 'fa-edit', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Clear, engaging content writing that strengthens your brand voice and SEO.</p>', 'sort_order' => 4],
+            ['title' => 'Web Design', 'icon' => 'fa fa-code', 'sort_order' => 1],
+            ['title' => 'Web Development', 'icon' => 'fa fa-file-code', 'sort_order' => 2],
+            ['title' => 'UI/UX Design', 'icon' => 'fa fa-external-link-alt', 'sort_order' => 3],
+            ['title' => 'Web Cecurity', 'icon' => 'fas fa-user-secret', 'sort_order' => 4],
+            ['title' => 'Digital Marketing', 'icon' => 'fa fa-envelope-open', 'sort_order' => 5],
+            ['title' => 'Programming', 'icon' => 'fas fa-laptop', 'sort_order' => 6],
         ];
-
         foreach ($services as $service) {
-            Service::query()->updateOrCreate(
-                ['slug' => $service['slug']],
-                array_merge(['is_published' => true], $service)
-            );
+            Service::query()->create([
+                'title' => $service['title'],
+                'slug' => \Illuminate\Support\Str::slug($service['title']),
+                'icon' => $service['icon'],
+                'description' => $serviceDesc,
+                'content' => '<p>'.$serviceDesc.'</p>',
+                'is_published' => true,
+                'sort_order' => $service['sort_order'],
+            ]);
         }
 
-        $design = ProjectCategory::query()->updateOrCreate(
-            ['slug' => 'design'],
-            ['name' => 'Design', 'filter_class' => 'first', 'icon' => 'fa-laptop-code', 'sort_order' => 1]
-        );
-        $dev = ProjectCategory::query()->updateOrCreate(
-            ['slug' => 'development'],
-            ['name' => 'Development', 'filter_class' => 'second', 'icon' => 'fa-mobile-alt', 'sort_order' => 2]
-        );
-
-        $projects = [
-            ['title' => 'Portfolio 1', 'slug' => 'portfolio-1', 'project_category_id' => $design->id, 'extra_img' => 'portfolio-1.jpg', 'sort_order' => 1],
-            ['title' => 'Portfolio 2', 'slug' => 'portfolio-2', 'project_category_id' => $dev->id, 'extra_img' => 'portfolio-2.jpg', 'sort_order' => 2],
-            ['title' => 'Portfolio 3', 'slug' => 'portfolio-3', 'project_category_id' => $design->id, 'extra_img' => 'portfolio-3.jpg', 'sort_order' => 3],
-            ['title' => 'Portfolio 4', 'slug' => 'portfolio-4', 'project_category_id' => $dev->id, 'extra_img' => 'portfolio-4.jpg', 'sort_order' => 4],
-            ['title' => 'Portfolio 5', 'slug' => 'portfolio-5', 'project_category_id' => $design->id, 'extra_img' => 'portfolio-5.jpg', 'sort_order' => 5],
-            ['title' => 'Portfolio 6', 'slug' => 'portfolio-6', 'project_category_id' => $dev->id, 'extra_img' => 'portfolio-6.jpg', 'sort_order' => 6],
+        Blog::query()->delete();
+        $blogExcerpt = 'Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt libero sit amet';
+        $blogs = [
+            ['title' => 'Web Design Trends', 'category' => 'Web Design', 'image' => 'hightech/blog-1.jpg', 'date' => '2023-03-24'],
+            ['title' => 'Development Best Practices', 'category' => 'Development', 'image' => 'hightech/blog-2.jpg', 'date' => '2023-04-23'],
+            ['title' => 'Mobile App Insights', 'category' => 'Mobile App', 'image' => 'hightech/blog-3.jpg', 'date' => '2023-01-30'],
         ];
-
-        foreach ($projects as $project) {
-            Project::query()->updateOrCreate(
-                ['slug' => $project['slug']],
-                [
-                    'title' => $project['title'],
-                    'project_category_id' => $project['project_category_id'],
-                    'description' => 'Project showcase item',
-                    'is_featured' => true,
-                    'is_published' => true,
-                    'sort_order' => $project['sort_order'],
-                ]
-            );
+        foreach ($blogs as $i => $blog) {
+            Blog::query()->create([
+                'title' => $blog['title'],
+                'slug' => Str::slug($blog['title']),
+                'image' => $blog['image'],
+                'excerpt' => $blogExcerpt,
+                'content' => '<p>'.$blogExcerpt.'</p>',
+                'author' => 'Daniel Martin',
+                'category' => $blog['category'],
+                'author_image' => 'hightech/admin.jpg',
+                'published_at' => $blog['date'],
+                'comments_count' => 5,
+                'shares_count' => 5324,
+                'is_published' => true,
+                'sort_order' => $i + 1,
+            ]);
         }
 
-        // Store fallback image names in description isn't ideal - home view uses portfolio-N.jpg by sort
-        // We'll rely on cms_image fallbacks in views
-
-        $plans = [
-            ['name' => 'Basic', 'tagline' => 'The Best Choice', 'price' => 49, 'is_featured' => false, 'sort_order' => 1],
-            ['name' => 'Standard', 'tagline' => 'The Best Choice', 'price' => 99, 'is_featured' => true, 'sort_order' => 2],
-            ['name' => 'Extended', 'tagline' => 'The Best Choice', 'price' => 149, 'is_featured' => false, 'sort_order' => 3],
+        Project::query()->delete();
+        ProjectCategory::query()->delete();
+        $web = ProjectCategory::query()->create(['name' => 'Web Design', 'slug' => 'web-design', 'filter_class' => 'web', 'sort_order' => 1]);
+        $app = ProjectCategory::query()->create(['name' => 'App Development', 'slug' => 'app-development', 'filter_class' => 'app', 'sort_order' => 2]);
+        $mkt = ProjectCategory::query()->create(['name' => 'Digital Marketing', 'slug' => 'digital-marketing', 'filter_class' => 'marketing', 'sort_order' => 3]);
+        $projectDesc = 'Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum. Aliquam dolor eget urna ultricies tincidunt.';
+        $projectContent = '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed efficitur quis purus ut interdum. Pellentesque aliquam dolor eget urna ultricies tincidunt.</p>';
+        $projectItems = [
+            ['title' => 'Corporate Website Redesign', 'cat' => $web, 'client' => 'HighTech Corp', 'img' => 'projects/project-1.jpg'],
+            ['title' => 'E-Commerce Platform', 'cat' => $web, 'client' => 'ShopMax', 'img' => 'projects/project-2.jpg'],
+            ['title' => 'Mobile Banking App UI', 'cat' => $app, 'client' => 'FinSoft', 'img' => 'projects/project-3.jpg'],
+            ['title' => 'SaaS Dashboard System', 'cat' => $app, 'client' => 'CloudOps', 'img' => 'projects/project-4.jpg'],
+            ['title' => 'Brand SEO Campaign', 'cat' => $mkt, 'client' => 'Growly', 'img' => 'projects/project-5.jpg'],
+            ['title' => 'Social Media Launch Kit', 'cat' => $mkt, 'client' => 'BuzzMedia', 'img' => 'projects/project-6.jpg'],
         ];
-
-        foreach ($plans as $plan) {
-            PricingPlan::query()->updateOrCreate(
-                ['name' => $plan['name']],
-                array_merge($plan, [
-                    'period' => '/ Mo',
-                    'currency' => '$',
-                    'features' => ['HTML5 & CSS3', 'Bootstrap v4', 'Responsive Layout', 'Compatible With All Browsers'],
-                    'button_text' => 'Order Now',
-                    'button_url' => '/contact',
-                    'is_published' => true,
-                ])
-            );
+        foreach ($projectItems as $i => $item) {
+            Project::query()->create([
+                'project_category_id' => $item['cat']->id,
+                'title' => $item['title'],
+                'slug' => Str::slug($item['title']),
+                'description' => $projectDesc,
+                'content' => $projectContent,
+                'image' => $item['img'],
+                'client' => $item['client'],
+                'project_url' => '#',
+                'is_featured' => $i < 3,
+                'is_published' => true,
+                'sort_order' => $i + 1,
+            ]);
         }
 
-        $teams = [
-            ['name' => 'John Doe', 'slug' => 'john-doe', 'designation' => 'CEO, Founder', 'sort_order' => 1],
-            ['name' => 'Kate Wilson', 'slug' => 'kate-wilson', 'designation' => 'Designer', 'sort_order' => 2],
-            ['name' => 'John Brown', 'slug' => 'john-brown', 'designation' => 'Developer', 'sort_order' => 3],
-            ['name' => 'Paul Watson', 'slug' => 'paul-watson', 'designation' => 'Marketer', 'sort_order' => 4],
+        PricingPlan::query()->delete();
+        PricingPlan::query()->insert([
+            [
+                'name' => 'Basic',
+                'tagline' => 'Perfect for startups and small businesses',
+                'price' => 49,
+                'period' => '/ month',
+                'currency' => '$',
+                'features' => json_encode(['10 GB SSD Storage', '50 GB Bandwidth', 'Unlimited Emails', 'Free SSL Certificate', '-Dedicated Support']),
+                'button_text' => 'Get Started',
+                'button_url' => '/contact',
+                'is_featured' => false,
+                'is_published' => true,
+                'sort_order' => 1,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Standard',
+                'tagline' => 'Best for growing agencies and teams',
+                'price' => 99,
+                'period' => '/ month',
+                'currency' => '$',
+                'features' => json_encode(['50 GB SSD Storage', '200 GB Bandwidth', 'Unlimited Emails', 'Free SSL Certificate', 'Priority Support']),
+                'button_text' => 'Get Started',
+                'button_url' => '/contact',
+                'is_featured' => true,
+                'is_published' => true,
+                'sort_order' => 2,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'name' => 'Premium',
+                'tagline' => 'Enterprise-grade power and flexibility',
+                'price' => 149,
+                'period' => '/ month',
+                'currency' => '$',
+                'features' => json_encode(['100 GB SSD Storage', 'Unlimited Bandwidth', 'Unlimited Emails', 'Free SSL Certificate', '24/7 Dedicated Support']),
+                'button_text' => 'Get Started',
+                'button_url' => '/contact',
+                'is_featured' => false,
+                'is_published' => true,
+                'sort_order' => 3,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+        ]);
+
+        Team::query()->delete();
+        $teamMembers = [
+            ['name' => 'Daniel Martin', 'designation' => 'CEO & Founder', 'img' => 'teams/team-1.jpg'],
+            ['name' => 'Sarah Johnson', 'designation' => 'Project Manager', 'img' => 'teams/team-2.jpg'],
+            ['name' => 'Michael Lee', 'designation' => 'Lead Developer', 'img' => 'teams/team-3.jpg'],
+            ['name' => 'Emily Davis', 'designation' => 'UI/UX Designer', 'img' => 'teams/team-4.jpg'],
         ];
-
-        foreach ($teams as $member) {
-            Team::query()->updateOrCreate(
-                ['slug' => $member['slug']],
-                [
-                    'name' => $member['name'],
-                    'designation' => $member['designation'],
-                    'content' => '<p>'.$member['name'].' is a valued team member working as '.$member['designation'].'.</p>',
-                    'facebook' => '#',
-                    'twitter' => '#',
-                    'linkedin' => '#',
-                    'is_published' => true,
-                    'sort_order' => $member['sort_order'],
-                ]
-            );
-        }
-
-        for ($i = 1; $i <= 4; $i++) {
-            Testimonial::query()->updateOrCreate(
-                ['name' => "Client Name {$i}"],
-                [
-                    'profession' => 'Profession',
-                    'content' => 'Tempor lorem dolor sea et ipsum, lorem justo kasd dolore vero eos. Lorem duo ipsum sea amet et clita dolor',
-                    'is_published' => true,
-                    'sort_order' => $i,
-                ]
-            );
+        foreach ($teamMembers as $i => $member) {
+            Team::query()->create([
+                'name' => $member['name'],
+                'slug' => Str::slug($member['name']),
+                'designation' => $member['designation'],
+                'image' => $member['img'],
+                'bio' => 'Lorem ipsum dolor sit amet elit. Sed efficitur quis purus ut interdum.',
+                'content' => '<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed efficitur quis purus ut interdum.</p>',
+                'facebook' => '#',
+                'twitter' => '#',
+                'instagram' => '#',
+                'linkedin' => '#',
+                'is_published' => true,
+                'sort_order' => $i + 1,
+            ]);
         }
 
         Page::query()->updateOrCreate(
             ['slug' => 'privacy-policy'],
             [
                 'title' => 'Privacy Policy',
-                'banner_title' => 'Privacy Policy',
-                'content' => '<p>Your privacy policy content goes here. Edit this page from the admin CMS.</p>',
+                'content' => '<p>Privacy policy content for HighTech.</p>',
                 'is_published' => true,
                 'sort_order' => 1,
             ]
         );
 
         MenuItem::query()->delete();
+        $menu = [
+            ['label' => 'Home', 'type' => 'route', 'route_name' => 'home', 'sort_order' => 1],
+            ['label' => 'About', 'type' => 'route', 'route_name' => 'about', 'sort_order' => 2],
+            ['label' => 'Services', 'type' => 'route', 'route_name' => 'services', 'sort_order' => 3],
+            ['label' => 'Projects', 'type' => 'route', 'route_name' => 'projects', 'sort_order' => 4],
+            ['label' => 'Prices', 'type' => 'route', 'route_name' => 'prices', 'sort_order' => 5],
+            ['label' => 'Team', 'type' => 'route', 'route_name' => 'team', 'sort_order' => 6],
+            ['label' => 'Blog Posts', 'type' => 'route', 'route_name' => 'blog', 'sort_order' => 7],
+            ['label' => 'Contact', 'type' => 'route', 'route_name' => 'contact', 'sort_order' => 8],
+        ];
+        foreach ($menu as $item) {
+            MenuItem::query()->create($item + ['is_active' => true, 'target' => '_self']);
+        }
 
-        $home = MenuItem::query()->create(['label' => 'Home', 'type' => 'route', 'route_name' => 'home', 'sort_order' => 1, 'is_active' => true]);
-        MenuItem::query()->create(['label' => 'About', 'type' => 'route', 'route_name' => 'about', 'sort_order' => 2, 'is_active' => true]);
-        MenuItem::query()->create(['label' => 'Services', 'type' => 'route', 'route_name' => 'services', 'sort_order' => 3, 'is_active' => true]);
-        MenuItem::query()->create(['label' => 'Prices', 'type' => 'route', 'route_name' => 'prices', 'sort_order' => 4, 'is_active' => true]);
-        MenuItem::query()->create(['label' => 'Projects', 'type' => 'route', 'route_name' => 'projects', 'sort_order' => 5, 'is_active' => true]);
-
-        $pagesParent = MenuItem::query()->create([
-            'label' => 'Pages',
-            'type' => 'custom',
-            'url' => '#',
-            'sort_order' => 6,
-            'is_active' => true,
-        ]);
-
-        MenuItem::query()->create([
-            'parent_id' => $pagesParent->id,
-            'label' => 'Meet The Team',
-            'type' => 'route',
-            'route_name' => 'team',
-            'sort_order' => 1,
-            'is_active' => true,
-        ]);
-        MenuItem::query()->create([
-            'parent_id' => $pagesParent->id,
-            'label' => 'Testimonial',
-            'type' => 'route',
-            'route_name' => 'testimonials',
-            'sort_order' => 2,
-            'is_active' => true,
-        ]);
-
-        MenuItem::query()->create(['label' => 'Contact', 'type' => 'route', 'route_name' => 'contact', 'sort_order' => 7, 'is_active' => true]);
-
-        unset($home);
+        $banners = [
+            ['page_key' => 'about', 'label' => 'About', 'title' => 'About Us'],
+            ['page_key' => 'services', 'label' => 'Services', 'title' => 'Services'],
+            ['page_key' => 'projects', 'label' => 'Projects', 'title' => 'Our Projects'],
+            ['page_key' => 'project_detail', 'label' => 'Project Detail', 'title' => 'Project Detail'],
+            ['page_key' => 'prices', 'label' => 'Pricing', 'title' => 'Pricing Plans'],
+            ['page_key' => 'team', 'label' => 'Team', 'title' => 'Our Team'],
+            ['page_key' => 'blog', 'label' => 'Blog', 'title' => 'Our Blog'],
+            ['page_key' => 'contact', 'label' => 'Contact', 'title' => 'Contact Us'],
+            ['page_key' => 'home', 'label' => 'Home', 'title' => 'Home'],
+            ['page_key' => 'default', 'label' => 'Default', 'title' => 'Page'],
+        ];
+        foreach ($banners as $i => $banner) {
+            PageBanner::query()->updateOrCreate(
+                ['page_key' => $banner['page_key']],
+                [
+                    'label' => $banner['label'],
+                    'title' => $banner['title'],
+                    'background_image' => 'hightech/carousel-1.jpg',
+                    'is_active' => true,
+                    'sort_order' => $i + 1,
+                ]
+            );
+        }
     }
 }
