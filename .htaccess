@@ -1,0 +1,29 @@
+# Laravel Hostinger - document root is project folder
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    Options +FollowSymLinks -Indexes
+
+    # Never expose sensitive files
+    RewriteRule ^(storage/logs|vendor|\.env|\.git) - [F,L]
+
+    # Serve existing public files directly
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -f
+    RewriteRule ^(.*)$ /public/$1 [L]
+
+    # Serve existing public directories
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} !^/public/
+    RewriteCond %{DOCUMENT_ROOT}/public%{REQUEST_URI} -d
+    RewriteRule ^(.*)$ /public/$1 [L]
+
+    # Front controller
+    RewriteRule ^$ public/index.php [L]
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ public/index.php [L]
+</IfModule>
+
+RedirectMatch 404 /\.env
+RedirectMatch 404 /\.git
