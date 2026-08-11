@@ -19,7 +19,7 @@ if (! function_exists('cms_html')) {
 if (! function_exists('cms_image')) {
     /**
      * Resolve a CMS image URL.
-     * Prefers public/assets/img (works on Hostinger), then public/media uploads.
+     * Uses /raw-file/* so Hostinger CDN cannot rewrite image bytes.
      */
     function cms_image(?string $path, string $fallback = ''): string
     {
@@ -28,26 +28,26 @@ if (! function_exists('cms_image')) {
 
             // Explicit asset path stored in DB / admin
             if (str_starts_with($path, 'assets/')) {
-                return asset($path);
+                return url('/raw-file/'.$path);
             }
 
             $basename = basename($path);
 
-            // Theme stock images (assets/img) — reliable on shared hosting
+            // Theme stock images (assets/img)
             if ($basename !== '' && is_file(public_path('assets/img/'.$basename))) {
-                return asset('assets/img/'.$basename);
+                return url('/raw-file/assets/img/'.$basename);
             }
 
             // Admin uploads live under public/media
             if (is_file(public_path('media/'.$path))) {
-                return asset('media/'.$path);
+                return url('/raw-file/media/'.$path);
             }
 
-            return asset('media/'.$path);
+            return url('/raw-file/media/'.$path);
         }
 
         return $fallback !== ''
-            ? asset('assets/img/'.$fallback)
+            ? url('/raw-file/assets/img/'.$fallback)
             : '';
     }
 }
