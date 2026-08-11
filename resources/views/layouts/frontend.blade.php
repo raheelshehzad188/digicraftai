@@ -294,6 +294,61 @@
     <script src="{{ asset('assets/lib/waypoints/waypoints.min.js') }}"></script>
     <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
     <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        (function ($) {
+            function newsletterMessage(xhr, fallback) {
+                if (!xhr || !xhr.responseJSON) {
+                    return fallback;
+                }
+                var json = xhr.responseJSON;
+                if (json.message) {
+                    return json.message;
+                }
+                if (json.errors && json.errors.email && json.errors.email[0]) {
+                    return json.errors.email[0];
+                }
+                return fallback;
+            }
+
+            $(document).on('submit', '.js-newsletter-form', function (e) {
+                e.preventDefault();
+
+                var $form = $(this);
+                var $btn = $form.find('button[type="submit"]');
+                var originalText = $btn.text();
+
+                $btn.prop('disabled', true).text('Please wait...');
+
+                $.ajax({
+                    url: $form.attr('action'),
+                    method: 'POST',
+                    data: $form.serialize(),
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json'
+                    }
+                }).done(function (res) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Subscribed!',
+                        text: (res && res.message) ? res.message : 'Thanks for subscribing to our newsletter.',
+                        confirmButtonColor: '{{ $settings->secondary_color ?: "#26d48c" }}'
+                    });
+                    $form[0].reset();
+                }).fail(function (xhr) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Oops...',
+                        text: newsletterMessage(xhr, 'Unable to subscribe. Please try again.'),
+                        confirmButtonColor: '{{ $settings->primary_color ?: "#1842b6" }}'
+                    });
+                }).always(function () {
+                    $btn.prop('disabled', false).text(originalText);
+                });
+            });
+        })(jQuery);
+    </script>
     @if($settings->preloader_enabled ?? true)
     <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module" defer></script>
     <script>
