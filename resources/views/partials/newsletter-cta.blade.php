@@ -1,6 +1,6 @@
 @php
     $bg = !empty($cta->extra['background_image'] ?? null)
-        ? asset('storage/'.$cta->extra['background_image'])
+        ? cms_image($cta->extra['background_image'])
         : asset('assets/img/background.jpg');
 @endphp
 <div

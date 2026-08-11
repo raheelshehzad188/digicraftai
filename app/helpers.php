@@ -17,9 +17,15 @@ if (! function_exists('cms_html')) {
 }
 
 if (! function_exists('cms_image')) {
-    function cms_image(?string $path, string $fallback): string
+    function cms_image(?string $path, string $fallback = ''): string
     {
-        return $path ? asset('storage/'.$path) : asset('assets/img/'.$fallback);
+        if ($path) {
+            return asset('media/'.ltrim($path, '/'));
+        }
+
+        return $fallback !== ''
+            ? asset('assets/img/'.$fallback)
+            : '';
     }
 }
 

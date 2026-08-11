@@ -47,7 +47,7 @@ class PageBanner extends Model
     public function getBackgroundUrlAttribute(): string
     {
         return $this->background_image
-            ? asset('storage/'.$this->background_image)
+            ? cms_image($this->background_image)
             : asset('assets/img/carousel-2.jpg');
     }
 }

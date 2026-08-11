@@ -17,7 +17,7 @@
     @include('partials.page-header', [
         'bannerKey' => 'cms_page',
         'title' => $page->banner_title ?: $page->title,
-        'background' => $page->banner_image ? asset('storage/'.$page->banner_image) : null,
+        'background' => $page->banner_image ? cms_image($page->banner_image) : null,
     ])
 
     @if($page->content)

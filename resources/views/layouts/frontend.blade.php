@@ -13,7 +13,7 @@
     <link rel="canonical" href="{{ url()->current() }}">
 
     @if($settings->favicon)
-        <link href="{{ asset('storage/'.$settings->favicon) }}" rel="icon">
+        <link href="{{ cms_image($settings->favicon) }}" rel="icon">
     @endif
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -32,7 +32,7 @@
         $menuText = $settings->menu_text_color ?: '#FFFFFF';
         $menuHover = $settings->menu_hover_color ?: $secondary;
         $contactBg = $settings->contact_background_image
-            ? asset('storage/'.$settings->contact_background_image)
+            ? cms_image($settings->contact_background_image)
             : asset('assets/img/background.jpg');
     @endphp
     <style>
@@ -133,7 +133,7 @@
                 <nav class="navbar navbar-dark navbar-expand-lg py-0">
                     <a href="{{ route('home') }}" class="navbar-brand">
                         @if($settings->logo)
-                            <img src="{{ asset('storage/'.$settings->logo) }}" alt="{{ $settings->site_name }}" style="max-height:52px">
+                            <img src="{{ cms_image($settings->logo) }}" alt="{{ $settings->site_name }}" style="max-height:52px">
                         @else
                             <h1 class="text-white fw-bold d-block mb-0">
                                 {{ $settings->site_name }}@if($settings->brand_accent)<span class="text-secondary">{{ $settings->brand_accent }}</span>@endif
@@ -196,7 +196,7 @@
                 <div class="col-lg-3 col-md-6">
                     <a href="{{ route('home') }}">
                         @if($settings->logo)
-                            <img src="{{ asset('storage/'.$settings->logo) }}" alt="" style="max-height:48px;filter:brightness(0) invert(1)">
+                            <img src="{{ cms_image($settings->logo) }}" alt="" style="max-height:48px;filter:brightness(0) invert(1)">
                         @else
                             <h1 class="text-white fw-bold d-block">{{ $settings->site_name }}@if($settings->brand_accent)<span class="text-secondary">{{ $settings->brand_accent }}</span>@endif</h1>
                         @endif
