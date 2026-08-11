@@ -22,6 +22,7 @@
                     @csrf
                     <div class="d-flex flex-column flex-sm-row gap-2">
                         <input type="email" class="form-control border-0 py-3 px-4" name="email" placeholder="Enter Your Email Address" required>
+                        <input type="hidden" name="_form" value="cta_newsletter">
                         <button type="submit" class="btn btn-secondary text-white px-5 py-3 rounded-pill">{{ $cta->button_text ?: 'Subscribe' }}</button>
                     </div>
                 </form>

@@ -113,8 +113,6 @@ class ManageSiteSettings extends Page implements HasForms
                             ->label('Contact form notice')
                             ->rows(2)
                             ->columnSpanFull(),
-                        TextInput::make('newsletter_text')
-                            ->maxLength(255),
                         TextInput::make('map_embed_url')
                             ->maxLength(1000)
                             ->columnSpanFull(),
@@ -130,6 +128,30 @@ class ManageSiteSettings extends Page implements HasForms
                             ->columns(2)
                             ->columnSpanFull(),
                     ]),
+                Section::make('Footer Newsletter')
+                    ->description('Emails are saved under Content → Newsletter.')
+                    ->schema([
+                        Toggle::make('newsletter_enabled')
+                            ->label('Show newsletter form in footer')
+                            ->default(true),
+                        TextInput::make('newsletter_title')
+                            ->label('Heading')
+                            ->placeholder('Newsletter')
+                            ->maxLength(255),
+                        Textarea::make('newsletter_text')
+                            ->label('Short description')
+                            ->rows(2)
+                            ->columnSpanFull(),
+                        TextInput::make('newsletter_placeholder')
+                            ->label('Email placeholder')
+                            ->placeholder('Enter Your Email Address')
+                            ->maxLength(255),
+                        TextInput::make('newsletter_button_text')
+                            ->label('Button text')
+                            ->placeholder('Subscribe')
+                            ->maxLength(100),
+                    ])
+                    ->columns(2),
                 Section::make('Colors')
                     ->schema([
                         ColorPicker::make('primary_color')

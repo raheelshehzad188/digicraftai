@@ -242,6 +242,42 @@
                     </div>
                 </div>
             </div>
+
+            @if($settings->newsletter_enabled ?? true)
+                <hr class="text-light mt-5 mb-4">
+                <div class="row g-4 align-items-center" id="footer-newsletter">
+                    <div class="col-lg-5">
+                        <h3 class="text-secondary mb-2">{{ $settings->newsletter_title ?: 'Newsletter' }}</h3>
+                        @if($settings->newsletter_text)
+                            <p class="text-light mb-0">{{ $settings->newsletter_text }}</p>
+                        @endif
+                    </div>
+                    <div class="col-lg-7">
+                        @if(session('newsletter_success'))
+                            <div class="alert alert-success py-2 mb-3">{{ session('newsletter_success') }}</div>
+                        @endif
+                        @if($errors->has('email') && old('_form') === 'footer_newsletter')
+                            <div class="alert alert-danger py-2 mb-3">{{ $errors->first('email') }}</div>
+                        @endif
+                        <form method="post" action="{{ route('newsletter.store') }}" class="d-flex flex-column flex-sm-row gap-2">
+                            @csrf
+                            <input type="hidden" name="_form" value="footer_newsletter">
+                            <input
+                                type="email"
+                                name="email"
+                                class="form-control border-0 py-3 px-4"
+                                value="{{ old('_form') === 'footer_newsletter' ? old('email') : '' }}"
+                                placeholder="{{ $settings->newsletter_placeholder ?: 'Enter Your Email Address' }}"
+                                required
+                            >
+                            <button type="submit" class="btn btn-secondary text-white px-5 py-3 rounded-pill flex-shrink-0">
+                                {{ $settings->newsletter_button_text ?: 'Subscribe' }}
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            @endif
+
             <hr class="text-light mt-5 mb-4">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start">
