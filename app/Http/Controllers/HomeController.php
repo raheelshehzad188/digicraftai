@@ -16,7 +16,12 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $sections = HomeSection::query()->orderBy('sort_order')->get()->keyBy('key');
+        // Ordered by admin sort_order so the home view can render sections in that sequence.
+        $sections = HomeSection::query()
+            ->orderBy('sort_order')
+            ->orderBy('id')
+            ->get()
+            ->keyBy('key');
 
         return view('frontend.home', [
             'sections' => $sections,
