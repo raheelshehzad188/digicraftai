@@ -1,287 +1,373 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>@yield('title', $settings->site_name)</title>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta name="keywords" content="@yield('meta_keywords', $settings->tagline)">
-    <meta name="description" content="@yield('meta_description', $settings->tagline)">
-    <meta property="og:title" content="@yield('og_title', $settings->site_name)">
-    <meta property="og:description" content="@yield('og_description', $settings->tagline)">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <link rel="canonical" href="{{ url()->current() }}">
-
-    @if($settings->favicon)
-        <link href="{{ asset('storage/'.$settings->favicon) }}" rel="icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @php
+        $seoModel = $seo ?? $settings;
+        $pageTitle = method_exists($seoModel, 'seoTitle') ? $seoModel->seoTitle($settings->site_name) : ($settings->meta_title ?: $settings->site_name);
+        $pageDescription = method_exists($seoModel, 'seoDescription') ? $seoModel->seoDescription($settings->meta_description) : ($settings->meta_description ?? '');
+        $pageKeywords = method_exists($seoModel, 'seoKeywords') ? $seoModel->seoKeywords() : ($settings->meta_keywords ?? '');
+        $ogImage = method_exists($seoModel, 'seoImage') ? $seoModel->seoImage() : null;
+        if (!$ogImage && $settings->og_image) {
+            $ogImage = asset('storage/'.$settings->og_image);
+        }
+    @endphp
+    <title>{{ $pageTitle }}</title>
+    <meta name="author" content="{{ $seoModel->meta_author ?? $settings->meta_author ?? $settings->site_name }}">
+    <meta name="description" content="{{ $pageDescription }}">
+    @if($pageKeywords)
+        <meta name="keywords" content="{{ $pageKeywords }}">
+    @endif
+    <meta name="robots" content="{{ $seoModel->robots ?? $settings->robots ?? 'index, follow' }}">
+    @if(!empty($seoModel->canonical_url) || !empty($settings->canonical_url))
+        <link rel="canonical" href="{{ $seoModel->canonical_url ?? $settings->canonical_url }}">
+    @else
+        <link rel="canonical" href="{{ url()->current() }}">
     @endif
 
+    {{-- Open Graph --}}
+    <meta property="og:type" content="{{ $seoModel->og_type ?? $settings->og_type ?? 'website' }}">
+    <meta property="og:title" content="{{ $seoModel->og_title ?? $pageTitle }}">
+    <meta property="og:description" content="{{ $seoModel->og_description ?? $pageDescription }}">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @if($ogImage)
+        <meta property="og:image" content="{{ $ogImage }}">
+    @endif
+
+    {{-- Twitter --}}
+    <meta name="twitter:card" content="{{ $seoModel->twitter_card ?? $settings->twitter_card ?? 'summary_large_image' }}">
+    <meta name="twitter:title" content="{{ $seoModel->twitter_title ?? $pageTitle }}">
+    <meta name="twitter:description" content="{{ $seoModel->twitter_description ?? $pageDescription }}">
+    @if($seoModel->twitter_image ?? $ogImage)
+        <meta name="twitter:image" content="{{ isset($seoModel->twitter_image) && $seoModel->twitter_image ? asset('storage/'.$seoModel->twitter_image) : $ogImage }}">
+    @endif
+
+    <link rel="shortcut icon" href="{{ $settings->faviconUrl() }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500&display=swap" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <link href="{{ asset('assets/lib/animate/animate.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ $settings->googleFontsUrl() }}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/meanmenu.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/swiper-bundle.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/nice-select.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/main.css') }}">
+
     <style>
+        @php
+            $bodyTextColor = $settings->color_body ?: '#445375';
+            $normalizedBody = strtolower(ltrim(trim((string) $bodyTextColor), '#'));
+            // White/near-white body text on light pages looks "empty" — fall back to readable text color.
+            if (in_array($normalizedBody, ['fff', 'ffffff', 'fefefe', 'fafafa', 'f8f8f8', 'f5f5f5'], true)) {
+                $bodyTextColor = $settings->color_text ?: '#445375';
+            }
+        @endphp
         :root {
-            --primary: {{ $settings->primary_color ?? '#FDF001' }};
-            --secondary: {{ $settings->secondary_color ?? '#555555' }};
-            --dark: {{ $settings->dark_color ?? '#13357B' }};
-            --menu-text: {{ $settings->menu_text_color ?? '#FFFFFF' }};
-            --menu-hover: {{ $settings->menu_hover_color ?? ($settings->primary_color ?? '#FDF001') }};
+            --body: {{ $bodyTextColor }};
+            --theme: {{ $settings->color_theme }};
+            --theme2: {{ $settings->color_theme2 }};
+            --theme-color3: {{ $settings->color_theme3 }};
+            --header: {{ $settings->color_header }};
+            --text: {{ $settings->color_text }};
+            --border: {{ $settings->color_border }};
+            --bg: {{ $settings->color_bg }};
+            --bg2: {{ $settings->color_theme2 }};
+            --title-color: {{ $settings->color_title }};
+            --body-color: {{ $bodyTextColor }};
+            --text-color: {{ $settings->color_text ?: '#445375' }};
+            --smoke-color: {{ $settings->color_bg }};
+            --title-font: "{{ $settings->font_title }}", sans-serif;
+            --body-font: "{{ $settings->font_body }}", sans-serif;
         }
-        .bg-primary, .btn-primary, .btn-primary:hover, .btn-primary:active,
-        .spinner-grow.text-primary, .text-primary, .border-primary,
-        .carousel-control-prev.btn-primary, .carousel-control-next.btn-primary,
-        .navbar-toggler.bg-primary, .dropdown-menu.bg-primary,
-        .blog-btn.bg-primary, .team-content.bg-primary, .pricing-label.bg-primary {
-            --bs-primary: {{ $settings->primary_color ?? '#FDF001' }};
-        }
-        .bg-primary { background-color: {{ $settings->primary_color ?? '#FDF001' }} !important; }
-        .btn-primary {
-            background-color: {{ $settings->primary_color ?? '#FDF001' }} !important;
-            border-color: {{ $settings->primary_color ?? '#FDF001' }} !important;
-            color: #111 !important;
-        }
-        .text-primary { color: {{ $settings->primary_color ?? '#FDF001' }} !important; }
-        .border-primary { border-color: {{ $settings->primary_color ?? '#FDF001' }} !important; }
-        .bg-dark { background-color: {{ $settings->dark_color ?? '#13357B' }} !important; }
+        body { font-family: var(--body-font); color: var(--body-color); }
+        h1,h2,h3,h4,h5,h6 { font-family: var(--title-font); }
 
-        /* Top menu item colors from Site Settings */
-        .site-header .navbar .navbar-nav .nav-link {
-            color: var(--menu-text) !important;
+        .cms-page-content {
+            color: var(--text-color, #445375);
+            line-height: 1.75;
+            font-size: 16px;
         }
-        .site-header .navbar .navbar-nav .nav-link:hover,
-        .site-header .navbar .navbar-nav .nav-link.active,
-        .site-header .navbar .navbar-nav .nav-link:focus {
-            color: var(--menu-hover) !important;
+        .cms-page-content p { margin-bottom: 1rem; }
+        .cms-page-content h1,
+        .cms-page-content h2,
+        .cms-page-content h3,
+        .cms-page-content h4,
+        .cms-page-content h5,
+        .cms-page-content h6 {
+            color: var(--title-color, #0F0D1D);
+            margin-bottom: .75rem;
         }
-        .site-header .navbar .dropdown-menu .dropdown-item {
-            color: #111 !important;
-        }
-        .site-header .navbar .dropdown-menu .dropdown-item:hover,
-        .site-header .navbar .dropdown-menu .dropdown-item.active {
-            color: var(--menu-hover) !important;
+        .about-page-section > .container > .row > [class*="col-"] > h2 {
+            color: var(--title-color, #0F0D1D);
         }
 
-        /* LiveBits preloader (exact) */
-        .loader-wrapper {
-            position: fixed;
-            top: 0;
-            left: 0;
+
+        /* Mobile header controls must stay clickable above decorative layers */
+        .header-3 .header-main,
+        .header-3 .header-right {
+            position: relative;
+            z-index: 20;
+        }
+        .header-3 .search-icon,
+        .header-3 .header__hamburger,
+        .header-3 .sidebar__toggle {
+            position: relative;
+            z-index: 30;
+            pointer-events: auto !important;
+            cursor: pointer;
+        }
+        .search-wrap {
+            display: none;
+        }
+        @media (max-width: 1199px) {
+            a.meanmenu-reveal {
+                display: none !important; /* custom offcanvas hamburger */
+            }
+            .header-main .mean__menu-wrapper,
+            .header-main .main-menu {
+                display: none !important;
+            }
+            .header-3 .header__hamburger,
+            .header-1 .header__hamburger,
+            .header-2 .header__hamburger {
+                display: block !important;
+            }
+        }
+
+        .offcanvas__info .mobile-menu {
+            margin-bottom: 24px;
+        }
+        .offcanvas__info .mobile-menu .mean-nav > ul,
+        .offcanvas__info .mobile-menu nav > ul {
+            display: block !important;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+        }
+        .offcanvas__info .mobile-menu ul li a {
+            display: block;
+            width: 100%;
+            padding: 10px 0;
+            color: var(--header, #0F0D1D);
+            font-size: 16px;
+            line-height: 1.5;
+            font-weight: 500;
+            text-transform: capitalize;
+            border-bottom: 1px solid var(--border, #e5e5e5);
+        }
+        .offcanvas__info .mobile-menu ul li a:hover,
+        .offcanvas__info .mobile-menu ul li.active > a {
+            color: var(--theme);
+        }
+        .offcanvas__info .mobile-menu ul li .submenu {
+            display: block !important;
+            position: static !important;
+            opacity: 1 !important;
+            visibility: visible !important;
+            transform: none !important;
+            box-shadow: none !important;
+            background: transparent !important;
+            width: 100% !important;
+            min-width: 0 !important;
+            padding: 0 0 0 14px !important;
+            margin: 0;
+        }
+        .offcanvas__info .mobile-menu ul li .submenu li a {
+            font-size: 14px;
+            font-weight: 400;
+            padding: 8px 0;
+        }
+        .offcanvas__info .mobile-menu ul li > a > i {
+            float: right;
+            line-height: inherit;
+        }
+
+        .footer-locations {
+            position: relative;
+            overflow: hidden;
+            padding: 40px 0 50px;
+            border-top: 1px solid rgba(255,255,255,.12);
+        }
+        .footer-locations-head {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            min-height: 48px;
+            margin-bottom: 28px;
+            padding-bottom: 18px;
+            border-bottom: 1px solid rgba(255,255,255,.12);
+        }
+        .footer-locations-title {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            color: #fff;
+            font-family: var(--title-font);
+            font-size: 24px;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .footer-locations-watermark {
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-55%);
+            color: rgba(255,255,255,.08);
+            font-family: var(--title-font);
+            font-size: clamp(28px, 6vw, 64px);
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            pointer-events: none;
+            line-height: 1;
+        }
+        .footer-location-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+        .footer-location-flag {
+            flex: 0 0 48px;
+            width: 48px;
+            height: 32px;
+            overflow: hidden;
+            border-radius: 3px;
+            box-shadow: 0 2px 8px rgba(0,0,0,.25);
+        }
+        .footer-location-flag img {
             width: 100%;
             height: 100%;
-            z-index: 100000;
-            background: #fff;
-        }
-        .loader-wrapper .loader {
+            object-fit: cover;
             display: block;
-            position: relative;
-            top: 50%;
-            left: 50%;
-            width: 300px;
-            height: 300px;
-            z-index: 100001;
-            transform: translate(-50%, -50%);
         }
-        .loaded .loader {
-            opacity: 0;
-            transition: all 0.3s ease-out;
+        .footer-location-info h4 {
+            margin: 0 0 8px;
+            color: #fff;
+            font-family: var(--title-font);
+            font-size: 16px;
+            font-weight: 700;
+            letter-spacing: .04em;
+            text-transform: uppercase;
         }
-        .loaded .loader-wrapper {
-            visibility: hidden;
-            transform: translateY(-100%);
-            transition: all 0.3s 0.3s ease-out;
+        .footer-location-info p,
+        .footer-location-info a {
+            margin: 0;
+            color: rgba(255,255,255,.72);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .footer-location-info a:hover {
+            color: var(--theme);
+        }
+
+        .marketplace-filter .form-control,
+        .marketplace-filter .form-select {
+            background: rgba(255,255,255,.08);
+            border: 1px solid rgba(255,255,255,.18);
+            color: #fff;
+            min-height: 44px;
+        }
+        .marketplace-filter .form-control::placeholder {
+            color: rgba(255,255,255,.55);
+        }
+        .marketplace-filter option {
+            color: #111;
+        }
+        .marketplace-price-badge h3 {
+            font-size: 18px !important;
+            line-height: 1.15 !important;
+        }
+        .news-card-items .news-content p {
+            color: var(--text-color, #445375);
+            margin-top: 8px;
         }
     </style>
-    @stack('styles')
+
+    @if(!empty($seoModel->schema_markup))
+        <script type="application/ld+json">{!! $seoModel->schema_markup !!}</script>
+    @elseif(!empty($settings->schema_markup))
+        <script type="application/ld+json">{!! $settings->schema_markup !!}</script>
+    @endif
+
+    {!! $settings->custom_head_code !!}
+    @if($settings->adsAreEnabled() && $settings->adsHeadScript())
+        {!! $settings->adsHeadScript() !!}
+    @endif
+    @stack('head')
+    @php
+        $catalogThemeCss = public_path('assets/css/catalog-theme.css');
+        $catalogThemeVer = is_file($catalogThemeCss) ? (string) filemtime($catalogThemeCss) : (string) time();
+    @endphp
+    <link rel="stylesheet" href="{{ asset('assets/css/catalog-theme.css') }}?v={{ $catalogThemeVer }}">
+    @if(\App\Support\ToolsPreview::enabled())
+        @php
+            $imageToolsCss = public_path('assets/css/image-tools-menu.css');
+            $imageToolsCssVer = is_file($imageToolsCss) ? (string) filemtime($imageToolsCss) : (string) time();
+        @endphp
+        <link rel="stylesheet" href="{{ asset('assets/css/image-tools-menu.css') }}?v={{ $imageToolsCssVer }}">
+    @endif
 </head>
 <body>
-    {{-- THEME PRELOADER START (LiveBits) --}}
-    <div class="loader-wrapper">
-        <div class="loader">
-            <dotlottie-player
-                src="https://lottie.host/f8e0b03c-545b-4e81-8e1c-d8500df41f9f/VTTcCVMYTX.lottie"
-                background="transparent"
-                speed="1"
-                style="width: 300px; height: 300px"
-                loop
-                autoplay
-            ></dotlottie-player>
-        </div>
-    </div>
-    {{-- THEME PRELOADER END --}}
+    {!! $settings->custom_body_code !!}
 
-    <div class="site-header">
-        <div class="container-fluid topbar-top bg-primary">
+    @include('frontend.partials.preloader')
+    @include('frontend.partials.offcanvas')
+    @include('frontend.partials.header')
+    @include('frontend.partials.search')
+
+    @if(request()->routeIs('filehippo.*', 'marketplace.*') && $settings->adsAreEnabled())
+        <div class="site-ad-header-bar">
             <div class="container">
-                <div class="d-flex justify-content-between topbar py-2">
-                    <div class="d-flex align-items-center flex-shrink-0 topbar-info flex-wrap">
-                        @if($settings->address)
-                            <a href="#" class="me-4 text-secondary"><i class="fas fa-map-marker-alt me-2 text-dark"></i>{{ $settings->address }}</a>
-                        @endif
-                        @if($settings->phone)
-                            <a href="tel:{{ $settings->phone }}" class="me-4 text-secondary"><i class="fas fa-phone-alt me-2 text-dark"></i>{{ $settings->phone }}</a>
-                        @endif
-                        @if($settings->email)
-                            <a href="mailto:{{ $settings->email }}" class="text-secondary"><i class="fas fa-envelope me-2 text-dark"></i>{{ $settings->email }}</a>
-                        @endif
-                    </div>
-                    <div class="d-flex align-items-center justify-content-center topbar-icon">
-                        @if($settings->facebook)<a href="{{ $settings->facebook }}" class="me-4" target="_blank"><i class="fab fa-facebook-f text-dark"></i></a>@endif
-                        @if($settings->twitter)<a href="{{ $settings->twitter }}" class="me-4" target="_blank"><i class="fab fa-twitter text-dark"></i></a>@endif
-                        @if($settings->instagram)<a href="{{ $settings->instagram }}" class="me-4" target="_blank"><i class="fab fa-instagram text-dark"></i></a>@endif
-                        @if($settings->linkedin)<a href="{{ $settings->linkedin }}" target="_blank"><i class="fab fa-linkedin-in text-dark"></i></a>@endif
-                    </div>
-                </div>
+                @include('frontend.partials.ad-slot', ['slot' => 'top', 'size' => 'leaderboard'])
             </div>
         </div>
-
-        <div class="container-fluid bg-dark">
-            <div class="container">
-                <nav class="navbar navbar-dark navbar-expand-lg py-lg-0">
-                    <a href="{{ route('home') }}" class="navbar-brand">
-                        @if($settings->logo)
-                            <img src="{{ asset('storage/'.$settings->logo) }}" alt="{{ $settings->site_name }}" style="max-height:55px">
-                        @else
-                            @php
-                                $name = $settings->site_name;
-                                $parts = preg_split('/\s+/', trim($name), 2);
-                            @endphp
-                            <h1 class="text-primary mb-0 display-5">
-                                {{ $parts[0] ?? $name }}@if(!empty($parts[1]))<span class="text-white">{{ $parts[1] }}</span>@endif
-                                <i class="fa fa-spider text-primary ms-2"></i>
-                            </h1>
-                        @endif
-                    </a>
-                    <button class="navbar-toggler bg-primary" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars text-dark"></span>
-                    </button>
-                    <div class="collapse navbar-collapse me-n3" id="navbarCollapse">
-                        <div class="navbar-nav ms-auto">
-                            @foreach($menuItems as $item)
-                                @php
-                                    $activeChildren = $item->children->where('is_active', true);
-                                    $isActive = $activeChildren->isNotEmpty()
-                                        ? $activeChildren->contains(fn ($child) => menu_is_active($child))
-                                        : menu_is_active($item);
-                                @endphp
-                                @if($activeChildren->isNotEmpty())
-                                    <div class="nav-item dropdown">
-                                        <a href="#" class="nav-link dropdown-toggle {{ $isActive ? 'active' : '' }}" data-bs-toggle="dropdown">{{ $item->label }}</a>
-                                        <div class="dropdown-menu m-0 bg-primary">
-                                            @foreach($activeChildren as $child)
-                                                <a href="{{ $child->href }}" class="dropdown-item {{ menu_is_active($child) ? 'active' : '' }}" target="{{ $child->target }}">{{ $child->label }}</a>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @else
-                                    <a href="{{ $item->href }}" class="nav-item nav-link {{ $isActive ? 'active' : '' }}" target="{{ $item->target }}">{{ $item->label }}</a>
-                                @endif
-                            @endforeach
-                        </div>
-                    </div>
-                </nav>
-            </div>
-        </div>
-    </div>
+    @endif
 
     @yield('content')
 
+    @include('frontend.partials.footer')
+
     @php
-        $footerBg = $settings->footer_background_image
-            ? asset('storage/'.$settings->footer_background_image)
-            : asset('assets/img/carousel-2.jpg');
+        $assetV = static function (string $path): string {
+            $full = public_path($path);
+            $ver = is_file($full) ? (string) filemtime($full) : (string) time();
+
+            return asset($path).'?v='.$ver;
+        };
     @endphp
-    <div
-        class="container-fluid footer py-5 wow fadeIn"
-        data-wow-delay=".3s"
-        style="background-image: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('{{ $footerBg }}'); background-position: center center; background-repeat: no-repeat; background-size: cover;"
-    >
-        <div class="container py-5">
-            <div class="row g-4 footer-inner">
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-item">
-                        <h4 class="text-white fw-bold mb-4">{{ $settings->site_name }}</h4>
-                        <p class="mb-4">{{ $settings->footer_about }}</p>
-                        <div class="d-flex">
-                            @if($settings->facebook)<a href="{{ $settings->facebook }}" class="btn btn-primary btn-sm-square me-3" target="_blank"><i class="fab fa-facebook-f text-dark"></i></a>@endif
-                            @if($settings->twitter)<a href="{{ $settings->twitter }}" class="btn btn-primary btn-sm-square me-3" target="_blank"><i class="fab fa-twitter text-dark"></i></a>@endif
-                            @if($settings->instagram)<a href="{{ $settings->instagram }}" class="btn btn-primary btn-sm-square me-3" target="_blank"><i class="fab fa-instagram text-dark"></i></a>@endif
-                            @if($settings->linkedin)<a href="{{ $settings->linkedin }}" class="btn btn-primary btn-sm-square" target="_blank"><i class="fab fa-linkedin-in text-dark"></i></a>@endif
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-item">
-                        <h4 class="text-white fw-bold mb-4">Contact Us</h4>
-                        @if($settings->address)<p><i class="fa fa-map-marker-alt me-2"></i>{{ $settings->address }}</p>@endif
-                        @if($settings->email)<p><i class="fas fa-envelope me-2"></i>{{ $settings->email }}</p>@endif
-                        @if($settings->phone)<p><i class="fas fa-phone me-2"></i>{{ $settings->phone }}</p>@endif
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-item">
-                        <h4 class="text-white fw-bold mb-4">Quick Links</h4>
-                        @foreach($menuItems->take(6) as $item)
-                            @if($item->children->where('is_active', true)->isEmpty())
-                                <a class="btn btn-link" href="{{ $item->href }}">{{ $item->label }}</a>
-                            @endif
-                        @endforeach
-                    </div>
-                </div>
-                <div class="col-lg-3 col-md-6">
-                    <div class="footer-item">
-                        <h4 class="text-white fw-bold mb-4">Newsletter</h4>
-                        <p class="mb-3">{{ $settings->newsletter_text }}</p>
-                        <form action="{{ route('newsletter.store') }}" method="POST">
-                            @csrf
-                            <div class="position-relative w-100">
-                                <input class="form-control py-3 ps-4 pe-5" type="email" name="email" placeholder="Your Email" required>
-                                <button type="submit" class="btn btn-primary py-2 px-3 position-absolute top-0 end-0 mt-2 me-2">SignUp</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-fluid copyright bg-dark py-4">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="{{ route('home') }}">{{ $settings->site_name }}</a>, {{ $settings->copyright_text ?: 'All Rights Reserved.' }}
-                </div>
-                <div class="col-md-6 text-center text-md-end">
-                    Designed by <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <a href="#" class="btn btn-primary rounded-circle border-3 border-white back-to-top"><i class="fa fa-arrow-up text-dark"></i></a>
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('assets/lib/wow/wow.min.js') }}"></script>
-    <script src="{{ asset('assets/lib/easing/easing.min.js') }}"></script>
-    <script src="{{ asset('assets/lib/waypoints/waypoints.min.js') }}"></script>
-    <script src="{{ asset('assets/lib/owlcarousel/owl.carousel.min.js') }}"></script>
-    <script src="{{ asset('assets/js/main.js') }}"></script>
-    {{-- LiveBits preloader: Lottie player + hide after load --}}
-    <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs" type="module" defer></script>
+    <script src="{{ $assetV('assets/js/jquery-3.7.1.min.js') }}"></script>
     <script>
-        window.addEventListener('load', function () {
-            setTimeout(function () {
-                document.body.classList.add('loaded');
-            }, 3000);
-        });
+        // Prevent hard crashes if any cached script still calls owlCarousel.
+        (function (jq) {
+            if (jq && jq.fn && typeof jq.fn.owlCarousel !== 'function') {
+                jq.fn.owlCarousel = function () { return this; };
+            }
+        })(window.jQuery);
     </script>
+    <script src="{{ $assetV('assets/js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ $assetV('assets/js/jquery.meanmenu.min.js') }}"></script>
+    <script src="{{ $assetV('assets/js/jquery.waypoints.js') }}"></script>
+    <script src="{{ $assetV('assets/js/jquery.counterup.min.js') }}"></script>
+    <script src="{{ $assetV('assets/js/swiper-bundle.min.js') }}"></script>
+    <script src="{{ $assetV('assets/js/jquery.nice-select.min.js') }}"></script>
+    <script src="{{ $assetV('assets/js/jquery.magnific-popup.min.js') }}"></script>
+    <script src="{{ $assetV('assets/js/wow.min.js') }}"></script>
+    <script src="{{ $assetV('assets/js/viewport.jquery.js') }}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <script src="{{ $assetV('assets/js/main.js') }}"></script>
+    @if(\App\Support\ToolsPreview::enabled())
+        <script src="{{ $assetV('assets/js/image-tools-menu.js') }}"></script>
+    @endif
     @stack('scripts')
 </body>
 </html>

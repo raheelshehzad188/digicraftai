@@ -1,0 +1,649 @@
+/* Catalog pages (software + marketplace) share homepage fonts, colors, and type scale */
+
+.filehippo-page,
+.software-detail-page,
+.marketplace-page,
+.Project-details-section {
+    font-family: var(--body-font);
+    color: var(--text-color);
+}
+
+.filehippo-page h1,
+.filehippo-page h2,
+.filehippo-page h3,
+.filehippo-page h4,
+.filehippo-page h5,
+.filehippo-page h6,
+.software-detail-page h1,
+.software-detail-page h2,
+.software-detail-page h3,
+.software-detail-page h4,
+.software-detail-page h5,
+.software-detail-page h6,
+.marketplace-page h1,
+.marketplace-page h2,
+.marketplace-page h3,
+.marketplace-page h4,
+.marketplace-page h5,
+.marketplace-page h6,
+.Project-details-section h1,
+.Project-details-section h2,
+.Project-details-section h3,
+.Project-details-section h4,
+.Project-details-section h5,
+.Project-details-section h6 {
+    font-family: var(--title-font) !important;
+    color: var(--title-color);
+    font-weight: 700 !important;
+}
+
+.filehippo-page p,
+.filehippo-page a,
+.filehippo-page li,
+.filehippo-page span,
+.filehippo-page label,
+.filehippo-page input,
+.filehippo-page select,
+.filehippo-page button,
+.filehippo-page small,
+.filehippo-page td,
+.filehippo-page th,
+.filehippo-page dt,
+.filehippo-page dd,
+.software-detail-page p,
+.software-detail-page a,
+.software-detail-page li,
+.software-detail-page span,
+.software-detail-page label,
+.software-detail-page input,
+.software-detail-page button,
+.software-detail-page small,
+.software-detail-page td,
+.software-detail-page th,
+.software-detail-page dt,
+.software-detail-page dd,
+.marketplace-page p,
+.marketplace-page a,
+.marketplace-page li,
+.marketplace-page span,
+.marketplace-page label,
+.marketplace-page input,
+.marketplace-page select,
+.marketplace-page button,
+.marketplace-page small,
+.Project-details-section p,
+.Project-details-section a,
+.Project-details-section li,
+.Project-details-section span {
+    font-family: var(--body-font);
+}
+
+.fh-hero,
+.marketplace-hero {
+    background: var(--bg) !important;
+    border-bottom: 1px solid var(--border-color, var(--border));
+}
+
+.fh-eyebrow,
+.mp-kicker,
+.Project-details-section .subtitle {
+    font-family: var(--body-font) !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    letter-spacing: 0.04em !important;
+    text-transform: uppercase;
+    color: var(--theme) !important;
+}
+
+.fh-hero h1,
+.mp-title,
+.sw-title-row h1 {
+    font-family: var(--title-font) !important;
+    font-size: 48px !important;
+    line-height: 1.16 !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.96px;
+    color: var(--title-color) !important;
+    text-transform: capitalize;
+}
+
+.fh-hero p,
+.mp-description,
+.sw-lead,
+.software-detail-page .sw-content-main article p,
+.software-detail-page .sw-faq p {
+    font-family: var(--body-font) !important;
+    font-size: 16px !important;
+    line-height: 1.75 !important;
+    color: var(--text-color) !important;
+    font-weight: 400 !important;
+}
+
+.fh-search,
+.mp-search,
+.fh-sub-form,
+.newsletter-box form {
+    border-radius: 100px !important;
+    overflow: hidden;
+}
+
+.fh-search input,
+.mp-search input,
+.fh-sub-form input,
+.newsletter-box input,
+.fh-sort select {
+    font-family: var(--body-font) !important;
+    font-size: 15px !important;
+    color: var(--title-color) !important;
+}
+
+.fh-search button,
+.mp-search button,
+.fh-sub-form button,
+.newsletter-box button,
+.fh-dl-btn,
+.sw-download-btn,
+.mp-btn-primary,
+.ad-btn,
+.table-download {
+    font-family: var(--title-font) !important;
+    font-weight: 700 !important;
+    background: var(--theme) !important;
+    color: #fff !important;
+    border-color: var(--theme) !important;
+}
+
+.fh-dl-btn,
+.sw-download-btn,
+.mp-btn,
+.ad-btn {
+    border-radius: 100px !important;
+}
+
+.fh-trust-item,
+.mp-trust-item,
+.fh-side-link,
+.fh-check,
+.fh-sort,
+.fh-content-head p,
+.fh-desc,
+.fh-meta,
+.fh-details,
+.mp-product-cat,
+.mp-product-meta,
+.mp-benefit p,
+.mp-category small,
+.mp-seller p,
+.sw-version,
+.sw-meta-row,
+.publisher-row,
+.info-card dt,
+.info-card dd {
+    font-family: var(--body-font) !important;
+    color: var(--text-color) !important;
+}
+
+.fh-trust-item {
+    font-size: 14px !important;
+}
+
+.fh-trust-item strong,
+.mp-trust-item strong,
+.fh-app-name,
+.fh-app-name a,
+.mp-product h3,
+.mp-product h3 a,
+.mp-price,
+.mp-category h4,
+.mp-benefit h4,
+.fh-side-title,
+.fh-content-head h2,
+.mp-section-head h2,
+.mp-seller h2,
+.mp-cta h2,
+.side-card h3,
+.feature-item h3,
+.sw-content-main h2,
+.related-item strong,
+.newsletter-copy h3,
+.fh-sub h3 {
+    font-family: var(--title-font) !important;
+    color: var(--title-color) !important;
+    font-weight: 700 !important;
+}
+
+.fh-trust-item span {
+    font-size: 13px !important;
+}
+
+.fh-cat {
+    font-family: var(--body-font) !important;
+    font-size: 14px !important;
+    color: var(--text-color) !important;
+}
+
+.fh-app-name,
+.fh-app-name a {
+    font-size: 20px !important;
+}
+
+.fh-version {
+    font-size: 15px !important;
+    font-weight: 500 !important;
+}
+
+.fh-desc {
+    font-size: 16px !important;
+    line-height: 1.65 !important;
+}
+
+.fh-tag,
+.tag-row span {
+    font-family: var(--body-font) !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+}
+
+.fh-meta {
+    font-size: 15px !important;
+    line-height: 1.7 !important;
+}
+
+.fh-dl-btn {
+    font-size: 15px !important;
+}
+
+.fh-details {
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    margin-top: 10px !important;
+    display: inline-block !important;
+}
+
+.fh-side-title {
+    font-size: 22px !important;
+}
+
+.fh-side-link,
+.fh-check {
+    font-size: 16px !important;
+}
+
+.fh-content-head h2,
+.mp-section-head h2 {
+    font-size: 36px !important;
+    line-height: 1.2 !important;
+}
+
+.fh-content-head p,
+.mp-section-head p {
+    font-size: 16px !important;
+}
+
+.fh-sub h3,
+.newsletter-copy h3 {
+    font-size: 22px !important;
+}
+
+.fh-sub p,
+.newsletter-copy p,
+.fh-sub-agree,
+.newsletter-agree {
+    font-size: 14px !important;
+}
+
+.mp-category h4 {
+    font-size: 16px !important;
+}
+
+.mp-category small {
+    font-size: 13px !important;
+}
+
+.mp-product h3 {
+    font-size: 18px !important;
+    min-height: 0 !important;
+    line-height: 1.35 !important;
+}
+
+.mp-product-cat,
+.mp-product-meta {
+    font-size: 14px !important;
+}
+
+.mp-price {
+    font-size: 22px !important;
+}
+
+.mp-seller h2 {
+    font-size: 36px !important;
+}
+
+.mp-seller p,
+.mp-cta p {
+    font-size: 16px !important;
+}
+
+.mp-btn {
+    font-family: var(--title-font) !important;
+    font-size: 15px !important;
+    padding: 14px 22px !important;
+}
+
+.mp-benefit h4 {
+    font-size: 18px !important;
+}
+
+.mp-benefit p {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+}
+
+.mp-cta {
+    background: var(--theme2) !important;
+}
+
+.mp-cta .mp-btn-primary,
+.mp-cta .theme-btn {
+    background: #fff !important;
+    color: var(--theme2) !important;
+}
+
+.fh-software .theme-btn.fh-dl-btn {
+    padding: 12px 18px !important;
+    font-size: 14px !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    line-height: 1;
+}
+
+.software-detail-page .theme-btn.sw-download-btn {
+    display: flex !important;
+    width: 100%;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 12px;
+}
+
+.software-detail-page .sw-product-hero {
+    padding: 48px 0 28px;
+}
+
+.mp-cta h2 {
+    font-size: 32px !important;
+    color: #fff !important;
+}
+
+.mp-cta p {
+    color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.sw-download-btn {
+    height: auto !important;
+    min-height: 58px;
+    padding: 14px 22px !important;
+}
+
+.sw-download-btn b {
+    font-family: var(--title-font) !important;
+    font-size: 18px !important;
+}
+
+.sw-download-btn small {
+    font-size: 13px !important;
+}
+
+.sw-tabs a {
+    font-family: var(--body-font) !important;
+    font-size: 16px !important;
+    font-weight: 600 !important;
+    color: var(--text-color) !important;
+}
+
+.sw-tabs a.active {
+    color: var(--theme) !important;
+}
+
+.sw-tabs a.active:after {
+    background: var(--theme) !important;
+}
+
+.sw-content-main h2 {
+    font-size: 32px !important;
+}
+
+.feature-item h3 {
+    font-size: 18px !important;
+}
+
+.feature-item p {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+    color: var(--text-color) !important;
+}
+
+.version-table {
+    font-size: 14px !important;
+}
+
+.version-table th {
+    font-family: var(--title-font) !important;
+}
+
+.sw-faq summary {
+    font-family: var(--title-font) !important;
+    font-size: 18px !important;
+    color: var(--title-color) !important;
+}
+
+.side-card h3 {
+    font-size: 20px !important;
+}
+
+.info-card dt,
+.info-card dd {
+    font-size: 14px !important;
+}
+
+.related-item strong {
+    font-size: 16px !important;
+}
+
+.related-item small,
+.related-item > b {
+    font-size: 12px !important;
+}
+
+.other-versions,
+.side-heading a,
+.more-versions {
+    font-family: var(--body-font) !important;
+    font-size: 14px !important;
+    color: var(--theme) !important;
+}
+
+.Project-details-section .details-content h3,
+.Project-details-section .project-catagory h3,
+.Project-details-section .preview-item h3 {
+    font-family: var(--title-font) !important;
+    color: var(--title-color) !important;
+}
+
+.Project-details-section .details-content p,
+.Project-details-section .project-catagory li,
+.Project-details-section .preview-item p {
+    font-family: var(--body-font) !important;
+    font-size: 16px !important;
+    line-height: 1.75 !important;
+    color: var(--text-color) !important;
+}
+
+@media (max-width: 991px) {
+    .fh-hero h1,
+    .mp-title,
+    .sw-title-row h1 {
+        font-size: 36px !important;
+        line-height: 1.2 !important;
+    }
+
+    .fh-content-head h2,
+    .mp-section-head h2,
+    .mp-seller h2 {
+        font-size: 28px !important;
+    }
+}
+
+.site-ad-header-bar {
+    background: #f7f8fc;
+    border-bottom: 1px solid #e8edf5;
+    padding: 8px 0 4px;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+
+.site-ad-header-bar .site-ad {
+    margin: 6px 0 8px;
+}
+
+.site-ad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 22px 0;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+    position: relative;
+    z-index: 0;
+}
+
+.site-ad-label {
+    font-size: 11px;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+    color: #94a3b8;
+    font-weight: 700;
+    font-family: var(--body-font, inherit);
+}
+
+.site-ad-box {
+    width: 100%;
+    max-width: 728px;
+    min-height: 90px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #eef2ff;
+    border: 1px dashed #c7d2fe;
+    border-radius: 8px;
+    padding: 0;
+}
+
+.site-ad-sidebar,
+.site-ad-sidebar .site-ad-box {
+    max-width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.site-ad-sidebar .site-ad-box {
+    min-height: 250px;
+}
+
+.site-ad-rectangle,
+.site-ad-rectangle .site-ad-box {
+    max-width: 336px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.site-ad-rectangle .site-ad-box {
+    min-height: 280px;
+}
+
+.site-ad-dummy {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+}
+
+.site-ad-dummy-mobile {
+    display: none;
+}
+
+.site-ad-box ins,
+.site-ad-box iframe {
+    max-width: 100%;
+}
+
+.fh-sidebar .site-ad,
+.sw-sidebar .site-ad,
+.project-catagory .site-ad {
+    margin: 18px auto 0;
+}
+
+.sw-sidebar .site-ad {
+    grid-column: 1 / -1;
+}
+
+.fh-list .site-ad {
+    margin: 4px 0;
+}
+
+.site-ad-mobile-only {
+    display: none;
+}
+
+body:has(.offcanvas__overlay.overlay-open) .site-ad,
+body:has(.offcanvas__info.info-open) .site-ad,
+.offcanvas__info .site-ad,
+.fix-area .site-ad {
+    visibility: hidden !important;
+    pointer-events: none !important;
+}
+
+@media (max-width: 850px) {
+    .site-ad-mobile-only {
+        display: block;
+        margin-bottom: 18px;
+    }
+}
+
+@media (max-width: 767px) {
+    .site-ad {
+        margin: 14px 0;
+    }
+
+    .site-ad-dummy-desktop {
+        display: none !important;
+    }
+
+    .site-ad-dummy-mobile {
+        display: block !important;
+    }
+
+    .site-ad-leaderboard .site-ad-box,
+    .site-ad-header-bar .site-ad-box {
+        max-width: 320px;
+        min-height: 100px;
+    }
+
+    .site-ad-rectangle,
+    .site-ad-rectangle .site-ad-box {
+        max-width: 300px;
+        min-height: 250px;
+    }
+}
+
+@media (max-width: 575px) {
+    .fh-hero h1,
+    .mp-title,
+    .sw-title-row h1 {
+        font-size: 30px !important;
+    }
+}

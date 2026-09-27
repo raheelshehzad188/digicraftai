@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="336" height="280" viewBox="0 0 336 280" role="img" aria-label="Advertisement">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#384BFF"/>
+      <stop offset="1" stop-color="#18185E"/>
+    </linearGradient>
+  </defs>
+  <rect width="336" height="280" fill="#EEF2FF"/>
+  <rect x="1" y="1" width="334" height="278" fill="none" stroke="#C7D2FE" stroke-dasharray="6 6"/>
+  <rect x="141" y="72" width="54" height="54" rx="10" fill="url(#g)"/>
+  <text x="168" y="106" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="700">Ad</text>
+  <text x="168" y="156" text-anchor="middle" fill="#18185E" font-family="Arial, sans-serif" font-size="18" font-weight="700">Advertisement</text>
+  <text x="168" y="182" text-anchor="middle" fill="#64748B" font-family="Arial, sans-serif" font-size="13">Large rectangle unit</text>
+  <text x="168" y="204" text-anchor="middle" fill="#94A3B8" font-family="Arial, sans-serif" font-size="12">336 × 280</text>
+</svg>

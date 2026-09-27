@@ -2,31 +2,41 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasSeo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 class Service extends Model
 {
-    protected $fillable = [
-        'title', 'title_line2', 'slug', 'icon', 'description', 'content', 'image',
-        'is_published', 'sort_order',
-    ];
+    use HasSeo;
+
+    protected $guarded = [];
 
     protected function casts(): array
     {
-        return ['is_published' => 'boolean'];
+        return [
+            'features' => 'array',
+            'is_featured' => 'boolean',
+            'is_published' => 'boolean',
+        ];
     }
 
     protected static function booted(): void
     {
         static::saving(function (Service $service) {
-            if (blank($service->slug)) {
-                $service->slug = \Illuminate\Support\Str::slug(trim($service->title.' '.$service->title_line2));
+            if (blank($service->slug) && filled($service->title)) {
+                $service->slug = Str::slug($service->title);
             }
         });
     }
 
-    public function getFullTitleAttribute(): string
+    public function getRouteKeyName(): string
     {
-        return trim($this->title.($this->title_line2 ? ' '.$this->title_line2 : ''));
+        return 'slug';
+    }
+
+    public function imageUrl(): ?string
+    {
+        return $this->image ? asset('storage/'.$this->image) : null;
     }
 }

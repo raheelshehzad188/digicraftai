@@ -1,0 +1,9 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Do not rewrite requests already going to /public
+    RewriteCond %{REQUEST_URI} !^/public/
+
+    # Send all requests internally to Laravel public directory
+    RewriteRule ^(.*)$ public/$1 [L,QSA]
+</IfModule>

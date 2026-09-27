@@ -1,0 +1,55 @@
+<?php
+
+namespace App\Filament\Resources\MenuItems\Tables;
+
+use App\Models\MenuItem;
+use Filament\Actions\BulkActionGroup;
+use Filament\Actions\DeleteAction;
+use Filament\Actions\DeleteBulkAction;
+use Filament\Actions\EditAction;
+use Filament\Tables\Columns\IconColumn;
+use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
+use Filament\Tables\Table;
+
+class MenuItemsTable
+{
+    public static function configure(Table $table): Table
+    {
+        return $table
+            ->columns([
+                TextColumn::make('label')->searchable()->sortable(),
+                TextColumn::make('location')
+                    ->badge()
+                    ->formatStateUsing(fn (?string $state): string => MenuItem::locationLabel($state)),
+                TextColumn::make('route_name')->label('Page')->toggleable(),
+                TextColumn::make('url')->limit(30)->toggleable(),
+                TextColumn::make('parent.label')->label('Parent')->toggleable(),
+                IconColumn::make('is_active')->boolean(),
+                TextColumn::make('sort_order')->sortable(),
+            ])
+            ->filters([
+                SelectFilter::make('location')
+                    ->label('Menu')
+                    ->options([
+                        'header' => 'Header',
+                        'footer' => 'Footer Quick Links',
+                        'footer_bottom' => 'Footer Bottom Bar',
+                    ])
+                    ->placeholder('All menus'),
+            ])
+            ->filtersLayout(\Filament\Tables\Enums\FiltersLayout::AboveContent)
+            ->persistFiltersInSession()
+            ->defaultSort('sort_order')
+            ->reorderable('sort_order')
+            ->recordActions([
+                EditAction::make(),
+                DeleteAction::make(),
+            ])
+            ->toolbarActions([
+                BulkActionGroup::make([
+                    DeleteBulkAction::make(),
+                ]),
+            ]);
+    }
+}

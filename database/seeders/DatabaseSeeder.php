@@ -2,16 +2,14 @@
 
 namespace Database\Seeders;
 
-use App\Models\HomeSection;
+use App\Models\Faq;
 use App\Models\MenuItem;
 use App\Models\Page;
-use App\Models\PricingPlan;
+use App\Models\Post;
 use App\Models\Project;
-use App\Models\ProjectCategory;
 use App\Models\Service;
 use App\Models\SiteSetting;
-use App\Models\Team;
-use App\Models\Testimonial;
+use App\Models\TeamMember;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -21,253 +19,209 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         User::query()->updateOrCreate(
-            ['email' => 'admin@digicraftai.test'],
-            [
-                'name' => 'Admin',
-                'password' => Hash::make('password'),
-            ]
+            ['email' => 'admin@extech.test'],
+            ['name' => 'Admin', 'password' => Hash::make('password')]
         );
 
-        SiteSetting::query()->updateOrCreate(
-            ['id' => 1],
-            [
-                'site_name' => 'DOT.NET',
-                'tagline' => 'Digital Agency Website',
-                'phone' => '+012 345 6789',
-                'email' => 'info@example.com',
-                'address' => '123 Street, New York, USA',
-                'footer_about' => 'Volup amet magna clita tempor. Tempor sea eos vero ipsum. Lorem lorem sit sed elitr sed kasd et',
-                'newsletter_text' => 'Volup amet magna clita tempor. Tempor sea eos vero ipsum. Lorem lorem sit sed elitr sed kasd et',
-                'map_embed_url' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd',
-                'primary_color' => '#FFAA17',
-                'secondary_color' => '#6c757d',
-                'dark_color' => '#212529',
-                'facebook' => '#',
-                'twitter' => '#',
-                'linkedin' => '#',
-                'instagram' => '#',
-                'copyright_text' => 'DOT.NET. All Rights Reserved.',
-            ]
-        );
+        SiteSetting::query()->updateOrCreate(['id' => 1], [
+            'site_name' => 'Extech',
+            'tagline' => 'IT Solution & Technology Company',
+            'preloader_text' => 'EXTECH',
+            'home_template' => 'home-1',
+            'color_theme' => '#384BFF',
+            'color_theme2' => '#18185E',
+            'color_theme3' => '#F98600',
+            'color_header' => '#0F0D1D',
+            'color_text' => '#585858',
+            'color_title' => '#0F0D1D',
+            'color_bg' => '#F3F7FB',
+            'color_body' => '#ffffff',
+            'color_border' => '#E3E3E3',
+            'font_title' => 'Rajdhani',
+            'font_body' => 'Plus Jakarta Sans',
+            'email' => 'info@example.com',
+            'phone' => '+11002345909',
+            'address' => 'Main Street, Melbourne, Australia',
+            'working_hours' => 'Mon-Friday, 09am - 05pm',
+            'facebook' => 'https://facebook.com',
+            'twitter' => 'https://twitter.com',
+            'linkedin' => 'https://linkedin.com',
+            'youtube' => 'https://youtube.com',
+            'header_cta_text' => 'Get A Quote',
+            'header_cta_url' => '/quote',
+            'offcanvas_text' => 'We deliver innovative IT solutions for modern businesses.',
+            'footer_about' => 'Extech is a technology company providing IT services, digital transformation and software solutions.',
+            'footer_copyright' => '© '.date('Y').' Extech. All Rights Reserved.',
+            'meta_title' => 'Extech - IT Solution & Technology',
+            'meta_description' => 'Extech provides IT solutions, software development, cloud services and digital transformation.',
+            'meta_keywords' => 'IT solutions, technology, software, cloud, digital agency',
+            'meta_author' => 'Extech',
+            'og_title' => 'Extech - IT Solution & Technology',
+            'og_description' => 'Business innovation with IT services expertise.',
+            'robots' => 'index, follow',
+            'home_1_content' => [
+                'hero_subtitle' => 'Everything You Need to Create a Website',
+                'hero_title' => 'Business Innovation With IT Services Expertise',
+                'hero_cta_text' => 'Get Started',
+                'hero_cta_url' => '/contact',
+                'hero_checklist' => [
+                    'Deployment and Support',
+                    'Discovery and Analysis',
+                    'Flexibility and Adaptability',
+                    'Competitive Advantage',
+                ],
+                'about_subtitle' => 'About Company',
+                'about_title' => 'We Make Your Business Smarter With Digital Solutions',
+                'about_text' => 'We help organizations modernize operations with reliable technology partnerships.',
+                'services_subtitle' => 'Our Services',
+                'services_title' => 'We Provide Best IT Solutions For Your Business',
+                'cta_title' => 'Ready to transform your business?',
+                'cta_text' => 'Let our experts build the right technology roadmap for you.',
+                'cta_button_text' => 'Contact Us',
+                'cta_button_url' => '/contact',
+            ],
+            'home_2_content' => [
+                'hero_subtitle' => 'Modern IT Partner',
+                'hero_title' => 'Smart IT Solutions For Your Growing Business',
+                'hero_cta_text' => 'Get A Quote',
+                'about_text' => 'Scale faster with cloud, software and managed IT services.',
+                'services_title' => 'What We Offer',
+            ],
+            'home_3_content' => [
+                'hero_subtitle' => 'Extech Agency',
+                'hero_title' => 'Technology That Powers Digital Transformation',
+                'hero_cta_text' => 'Start a Project',
+                'about_text' => 'Build, scale and innovate with a trusted IT partner.',
+            ],
+        ]);
 
-        $sections = [
-            [
-                'key' => 'hero',
-                'name' => 'Hero Banner',
-                'title' => 'Best Digital Marketing Agency',
-                'content' => 'Sea ipsum kasd eirmod kasd magna, est sea et diam ipsum est amet sed sit. Ipsum dolor no justo dolor et, lorem ut dolor erat dolore sed ipsum at ipsum nonumy amet.',
-                'button_text' => 'Learn More',
-                'button_url' => '/about',
-                'image' => null,
-                'extra' => ['fallback_image' => 'header.png'],
-                'sort_order' => 1,
-            ],
-            [
-                'key' => 'about',
-                'name' => 'About Section',
-                'title' => 'Best digital agency in downtown',
-                'subtitle' => 'Clita elitr et amet et ipsum sea. Ipsum stet kasd ea et no est duo diam. Lorem dolores eos ut nonumy ipsum sit clita lorem no amet dolor dolore, stet sit dolor justo',
-                'content' => 'Eirmod est dolor nonumy sea amet dolore erat sit dolor et dolor vero. Tempor ipsum at justo amet at ipsum justo. Aiam kasd sea sit dolor duo elitr dolor amet, justo est ipsum amet dolor ut ipsum.',
-                'button_text' => 'Read More',
-                'button_url' => '/about',
-                'extra' => ['fallback_image' => 'about.jpg'],
-                'sort_order' => 2,
-            ],
-            [
-                'key' => 'services_title',
-                'name' => 'Services Section',
-                'title' => 'Our Creative Services',
-                'sort_order' => 3,
-            ],
-            [
-                'key' => 'portfolio_title',
-                'name' => 'Projects Section',
-                'title' => 'Visit Our Projects',
-                'sort_order' => 4,
-            ],
-            [
-                'key' => 'pricing_title',
-                'name' => 'Pricing Section',
-                'title' => 'Competitive Pricing',
-                'sort_order' => 5,
-            ],
-            [
-                'key' => 'team_title',
-                'name' => 'Team Section',
-                'title' => 'Meet Our Team',
-                'sort_order' => 6,
-            ],
-            [
-                'key' => 'testimonial_title',
-                'name' => 'Testimonials Section',
-                'title' => "Our Client's Say",
-                'sort_order' => 7,
-            ],
-            [
-                'key' => 'contact',
-                'name' => 'Contact Section',
-                'title' => 'Contact Us',
-                'sort_order' => 8,
-            ],
+        $menu = [
+            ['label' => 'Home', 'url' => '/', 'sort_order' => 1],
+            ['label' => 'About', 'url' => '/about', 'sort_order' => 2],
+            ['label' => 'Services', 'url' => '/services', 'sort_order' => 3],
+            ['label' => 'Team', 'url' => '/team', 'sort_order' => 4],
+            ['label' => 'Projects', 'url' => '/projects', 'sort_order' => 5],
+            ['label' => 'Blog', 'url' => '/blog', 'sort_order' => 6],
+            ['label' => 'Contact', 'url' => '/contact', 'sort_order' => 7],
         ];
-
-        foreach ($sections as $section) {
-            HomeSection::query()->updateOrCreate(
-                ['key' => $section['key']],
-                array_merge(['is_visible' => true], $section)
+        foreach ($menu as $item) {
+            MenuItem::query()->updateOrCreate(
+                ['label' => $item['label'], 'location' => 'header', 'parent_id' => null],
+                $item + ['is_active' => true]
             );
         }
+
+        Page::query()->updateOrCreate(['slug' => 'about'], [
+            'title' => 'About Us',
+            'subtitle' => 'Who we are',
+            'content' => '<p>Extech is a leading IT solutions company helping businesses innovate with technology.</p>',
+            'is_published' => true,
+            'meta_title' => 'About Extech | IT Solution Company',
+            'meta_description' => 'Learn about Extech, our mission, team and technology expertise.',
+            'meta_keywords' => 'about extech, IT company, technology partner',
+        ]);
+
+        Page::query()->updateOrCreate(['slug' => 'contact'], [
+            'title' => 'Contact Us',
+            'content' => '<p>Have a project in mind? Reach out and our team will respond shortly.</p>',
+            'is_published' => true,
+            'meta_title' => 'Contact Extech',
+            'meta_description' => 'Contact Extech for IT consulting, development and support.',
+            'meta_keywords' => 'contact extech, IT support, get quote',
+        ]);
 
         $services = [
-            ['title' => 'Web', 'title_line2' => 'Design', 'slug' => 'web-design', 'icon' => 'fa-laptop-code', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Professional web design services focused on clean UI, branding, and conversion-ready layouts.</p>', 'sort_order' => 1],
-            ['title' => 'Web', 'title_line2' => 'Development', 'slug' => 'web-development', 'icon' => 'fa-code', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Custom web development with modern frameworks, performance, and scalable architecture.</p>', 'sort_order' => 2],
-            ['title' => 'Digital', 'title_line2' => 'Marketing', 'slug' => 'digital-marketing', 'icon' => 'fa-envelope-open-text', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Result-driven digital marketing campaigns across SEO, social, and paid channels.</p>', 'sort_order' => 3],
-            ['title' => 'Content', 'title_line2' => 'Writing', 'slug' => 'content-writing', 'icon' => 'fa-edit', 'description' => 'Vero amet vero eos kasd justo ipsum diam sed elitr', 'content' => '<p>Clear, engaging content writing that strengthens your brand voice and SEO.</p>', 'sort_order' => 4],
+            ['title' => 'Web Development', 'icon' => 'fa-solid fa-code', 'short_description' => 'Custom websites and web applications.', 'meta_keywords' => 'web development, laravel, websites'],
+            ['title' => 'Cloud Services', 'icon' => 'fa-solid fa-cloud', 'short_description' => 'Secure scalable cloud infrastructure.', 'meta_keywords' => 'cloud, aws, hosting'],
+            ['title' => 'UI/UX Design', 'icon' => 'fa-solid fa-pen-ruler', 'short_description' => 'Beautiful user-centered product design.', 'meta_keywords' => 'ui ux, design, product'],
+            ['title' => 'Cyber Security', 'icon' => 'fa-solid fa-shield-halved', 'short_description' => 'Protect your digital assets.', 'meta_keywords' => 'security, cybersecurity'],
+            ['title' => 'Digital Marketing', 'icon' => 'fa-solid fa-bullhorn', 'short_description' => 'Grow traffic and conversions.', 'meta_keywords' => 'seo, marketing, growth'],
+            ['title' => 'IT Consulting', 'icon' => 'fa-solid fa-handshake', 'short_description' => 'Strategy and technology advisory.', 'meta_keywords' => 'consulting, IT strategy'],
         ];
 
-        foreach ($services as $service) {
+        foreach ($services as $i => $service) {
             Service::query()->updateOrCreate(
-                ['slug' => $service['slug']],
-                array_merge(['is_published' => true], $service)
-            );
-        }
-
-        $design = ProjectCategory::query()->updateOrCreate(
-            ['slug' => 'design'],
-            ['name' => 'Design', 'filter_class' => 'first', 'icon' => 'fa-laptop-code', 'sort_order' => 1]
-        );
-        $dev = ProjectCategory::query()->updateOrCreate(
-            ['slug' => 'development'],
-            ['name' => 'Development', 'filter_class' => 'second', 'icon' => 'fa-mobile-alt', 'sort_order' => 2]
-        );
-
-        $projects = [
-            ['title' => 'Portfolio 1', 'slug' => 'portfolio-1', 'project_category_id' => $design->id, 'extra_img' => 'portfolio-1.jpg', 'sort_order' => 1],
-            ['title' => 'Portfolio 2', 'slug' => 'portfolio-2', 'project_category_id' => $dev->id, 'extra_img' => 'portfolio-2.jpg', 'sort_order' => 2],
-            ['title' => 'Portfolio 3', 'slug' => 'portfolio-3', 'project_category_id' => $design->id, 'extra_img' => 'portfolio-3.jpg', 'sort_order' => 3],
-            ['title' => 'Portfolio 4', 'slug' => 'portfolio-4', 'project_category_id' => $dev->id, 'extra_img' => 'portfolio-4.jpg', 'sort_order' => 4],
-            ['title' => 'Portfolio 5', 'slug' => 'portfolio-5', 'project_category_id' => $design->id, 'extra_img' => 'portfolio-5.jpg', 'sort_order' => 5],
-            ['title' => 'Portfolio 6', 'slug' => 'portfolio-6', 'project_category_id' => $dev->id, 'extra_img' => 'portfolio-6.jpg', 'sort_order' => 6],
-        ];
-
-        foreach ($projects as $project) {
-            Project::query()->updateOrCreate(
-                ['slug' => $project['slug']],
+                ['slug' => \Illuminate\Support\Str::slug($service['title'])],
                 [
-                    'title' => $project['title'],
-                    'project_category_id' => $project['project_category_id'],
-                    'description' => 'Project showcase item',
-                    'is_featured' => true,
+                    'title' => $service['title'],
+                    'icon' => $service['icon'],
+                    'short_description' => $service['short_description'],
+                    'description' => '<p>'.$service['short_description'].' Our experts deliver end-to-end implementation and support.</p>',
+                    'features' => ['Discovery', 'Implementation', 'Support'],
+                    'is_featured' => $i < 3,
                     'is_published' => true,
-                    'sort_order' => $project['sort_order'],
+                    'sort_order' => $i + 1,
+                    'meta_title' => $service['title'].' | Extech',
+                    'meta_description' => $service['short_description'],
+                    'meta_keywords' => $service['meta_keywords'],
+                    'og_title' => $service['title'],
+                    'og_description' => $service['short_description'],
+                    'robots' => 'index, follow',
                 ]
             );
         }
 
-        // Store fallback image names in description isn't ideal - home view uses portfolio-N.jpg by sort
-        // We'll rely on cms_image fallbacks in views
-
-        $plans = [
-            ['name' => 'Basic', 'tagline' => 'The Best Choice', 'price' => 49, 'is_featured' => false, 'sort_order' => 1],
-            ['name' => 'Standard', 'tagline' => 'The Best Choice', 'price' => 99, 'is_featured' => true, 'sort_order' => 2],
-            ['name' => 'Extended', 'tagline' => 'The Best Choice', 'price' => 149, 'is_featured' => false, 'sort_order' => 3],
+        $team = [
+            ['name' => 'Masirul Islam', 'designation' => 'Web Designer'],
+            ['name' => 'Jessica Pearson', 'designation' => 'Project Manager'],
+            ['name' => 'John Abraham', 'designation' => 'Software Engineer'],
+            ['name' => 'Alex Mika', 'designation' => 'UI/UX Designer'],
         ];
-
-        foreach ($plans as $plan) {
-            PricingPlan::query()->updateOrCreate(
-                ['name' => $plan['name']],
-                array_merge($plan, [
-                    'period' => '/ Mo',
-                    'currency' => '$',
-                    'features' => ['HTML5 & CSS3', 'Bootstrap v4', 'Responsive Layout', 'Compatible With All Browsers'],
-                    'button_text' => 'Order Now',
-                    'button_url' => '/contact',
-                    'is_published' => true,
-                ])
-            );
-        }
-
-        $teams = [
-            ['name' => 'John Doe', 'slug' => 'john-doe', 'designation' => 'CEO, Founder', 'sort_order' => 1],
-            ['name' => 'Kate Wilson', 'slug' => 'kate-wilson', 'designation' => 'Designer', 'sort_order' => 2],
-            ['name' => 'John Brown', 'slug' => 'john-brown', 'designation' => 'Developer', 'sort_order' => 3],
-            ['name' => 'Paul Watson', 'slug' => 'paul-watson', 'designation' => 'Marketer', 'sort_order' => 4],
-        ];
-
-        foreach ($teams as $member) {
-            Team::query()->updateOrCreate(
-                ['slug' => $member['slug']],
+        foreach ($team as $i => $member) {
+            TeamMember::query()->updateOrCreate(
+                ['slug' => \Illuminate\Support\Str::slug($member['name'])],
                 [
                     'name' => $member['name'],
                     'designation' => $member['designation'],
-                    'content' => '<p>'.$member['name'].' is a valued team member working as '.$member['designation'].'.</p>',
-                    'facebook' => '#',
-                    'twitter' => '#',
-                    'linkedin' => '#',
+                    'bio' => $member['name'].' is a dedicated professional at Extech.',
                     'is_published' => true,
-                    'sort_order' => $member['sort_order'],
+                    'sort_order' => $i + 1,
+                    'meta_title' => $member['name'].' | Extech Team',
+                    'meta_description' => $member['name'].' - '.$member['designation'].' at Extech',
+                    'meta_keywords' => $member['name'].', '.$member['designation'].', extech team',
+                    'robots' => 'index, follow',
                 ]
             );
         }
 
-        for ($i = 1; $i <= 4; $i++) {
-            Testimonial::query()->updateOrCreate(
-                ['name' => "Client Name {$i}"],
-                [
-                    'profession' => 'Profession',
-                    'content' => 'Tempor lorem dolor sea et ipsum, lorem justo kasd dolore vero eos. Lorem duo ipsum sea amet et clita dolor',
-                    'is_published' => true,
-                    'sort_order' => $i,
-                ]
-            );
-        }
-
-        Page::query()->updateOrCreate(
-            ['slug' => 'privacy-policy'],
-            [
-                'title' => 'Privacy Policy',
-                'banner_title' => 'Privacy Policy',
-                'content' => '<p>Your privacy policy content goes here. Edit this page from the admin CMS.</p>',
-                'is_published' => true,
-                'sort_order' => 1,
-            ]
-        );
-
-        MenuItem::query()->delete();
-
-        $home = MenuItem::query()->create(['label' => 'Home', 'type' => 'route', 'route_name' => 'home', 'sort_order' => 1, 'is_active' => true]);
-        MenuItem::query()->create(['label' => 'About', 'type' => 'route', 'route_name' => 'about', 'sort_order' => 2, 'is_active' => true]);
-        MenuItem::query()->create(['label' => 'Services', 'type' => 'route', 'route_name' => 'services', 'sort_order' => 3, 'is_active' => true]);
-        MenuItem::query()->create(['label' => 'Prices', 'type' => 'route', 'route_name' => 'prices', 'sort_order' => 4, 'is_active' => true]);
-        MenuItem::query()->create(['label' => 'Projects', 'type' => 'route', 'route_name' => 'projects', 'sort_order' => 5, 'is_active' => true]);
-
-        $pagesParent = MenuItem::query()->create([
-            'label' => 'Pages',
-            'type' => 'custom',
-            'url' => '#',
-            'sort_order' => 6,
-            'is_active' => true,
-        ]);
-
-        MenuItem::query()->create([
-            'parent_id' => $pagesParent->id,
-            'label' => 'Meet The Team',
-            'type' => 'route',
-            'route_name' => 'team',
+        Project::query()->updateOrCreate(['slug' => 'business-analytics'], [
+            'title' => 'Business Analytics',
+            'client' => 'Extech Client',
+            'category' => 'Technology',
+            'short_description' => 'Analytics platform for business insights.',
+            'description' => '<p>A complete analytics solution for modern enterprises.</p>',
+            'is_published' => true,
             'sort_order' => 1,
-            'is_active' => true,
+            'meta_title' => 'Business Analytics Project | Extech',
+            'meta_description' => 'Case study: Business Analytics platform by Extech.',
+            'meta_keywords' => 'analytics, project, case study',
         ]);
-        MenuItem::query()->create([
-            'parent_id' => $pagesParent->id,
-            'label' => 'Testimonial',
-            'type' => 'route',
-            'route_name' => 'testimonials',
+
+        Post::query()->updateOrCreate(['slug' => 'future-of-it-services'], [
+            'title' => 'The Future of IT Services',
+            'category' => 'Technology',
+            'author_name' => 'Admin',
+            'excerpt' => 'How cloud and AI are reshaping IT delivery.',
+            'content' => '<p>IT services are evolving rapidly with AI, automation and cloud-native platforms.</p>',
+            'published_at' => now(),
+            'is_published' => true,
+            'meta_title' => 'The Future of IT Services | Extech Blog',
+            'meta_description' => 'Insights on cloud, AI and modern IT service delivery.',
+            'meta_keywords' => 'IT services, cloud, AI, blog',
+        ]);
+
+        Faq::query()->updateOrCreate(['question' => 'What services do you offer?'], [
+            'answer' => 'We offer web development, cloud, cybersecurity, UI/UX, marketing and IT consulting.',
+            'is_published' => true,
+            'sort_order' => 1,
+            'meta_keywords' => 'services, faq',
+        ]);
+
+        Faq::query()->updateOrCreate(['question' => 'How can I get a quote?'], [
+            'answer' => 'Use the contact form or call us directly and our team will respond quickly.',
+            'is_published' => true,
             'sort_order' => 2,
-            'is_active' => true,
+            'meta_keywords' => 'quote, contact, faq',
         ]);
-
-        MenuItem::query()->create(['label' => 'Contact', 'type' => 'route', 'route_name' => 'contact', 'sort_order' => 7, 'is_active' => true]);
-
-        unset($home);
     }
 }

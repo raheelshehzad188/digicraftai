@@ -6,18 +6,89 @@ use Illuminate\Database\Eloquent\Model;
 
 class PricingPlan extends Model
 {
-    protected $fillable = [
-        'name', 'tagline', 'price', 'period', 'currency', 'features',
-        'button_text', 'button_url', 'is_featured', 'is_published', 'sort_order',
-    ];
+    protected $guarded = [];
 
     protected function casts(): array
     {
         return [
             'features' => 'array',
-            'is_featured' => 'boolean',
+            'is_highlighted' => 'boolean',
             'is_published' => 'boolean',
-            'price' => 'decimal:2',
         ];
+    }
+
+    public function iconUrl(): string
+    {
+        return $this->icon
+            ? asset('storage/'.$this->icon)
+            : asset('assets/img/icon/pricingIcon1_1.svg');
+    }
+
+    /**
+     * @return array<int, array{text: string, included: bool}>
+     */
+    public function featureList(): array
+    {
+        $features = $this->features ?? [];
+
+        return collect($features)
+            ->map(function ($feature) {
+                if (is_string($feature)) {
+                    return ['text' => $feature, 'included' => true];
+                }
+
+                return [
+                    'text' => (string) ($feature['text'] ?? $feature['feature'] ?? ''),
+                    'included' => (bool) ($feature['included'] ?? true),
+                ];
+            })
+            ->filter(fn (array $feature) => $feature['text'] !== '')
+            ->values()
+            ->all();
+    }
+
+    public function cardClass(): string
+    {
+        if ($this->is_highlighted) {
+            return 'style2';
+        }
+
+        return in_array($this->card_style, ['style1', 'style2'], true)
+            ? $this->card_style
+            : 'style1';
+    }
+
+    public function buttonClass(): string
+    {
+        return $this->is_highlighted || $this->card_style === 'style2'
+            ? 'gt-btn style3 w-100'
+            : 'gt-btn style2 w-100';
+    }
+
+    /**
+     * One-time package price (legacy monthly_price column).
+     */
+    public function displayPrice(): string
+    {
+        return (string) ($this->monthly_price ?: $this->yearly_price ?: '');
+    }
+
+    /**
+     * One-time label shown next to price.
+     */
+    public function displaySuffix(): string
+    {
+        $suffix = trim((string) ($this->monthly_suffix ?: ''));
+
+        if ($suffix === '' || preg_match('/month|year/i', $suffix)) {
+            return 'One Time';
+        }
+
+        return $suffix;
+    }
+
+    public function getRouteKeyName(): string
+    {
+        return 'id';
     }
 }

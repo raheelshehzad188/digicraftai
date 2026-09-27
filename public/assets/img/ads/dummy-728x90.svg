@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="728" height="90" viewBox="0 0 728 90" role="img" aria-label="Advertisement">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#384BFF"/>
+      <stop offset="1" stop-color="#18185E"/>
+    </linearGradient>
+  </defs>
+  <rect width="728" height="90" fill="#EEF2FF"/>
+  <rect x="1" y="1" width="726" height="88" fill="none" stroke="#C7D2FE" stroke-dasharray="6 6"/>
+  <rect x="16" y="18" width="54" height="54" rx="10" fill="url(#g)"/>
+  <text x="43" y="52" text-anchor="middle" fill="#fff" font-family="Arial, sans-serif" font-size="18" font-weight="700">Ad</text>
+  <text x="86" y="42" fill="#18185E" font-family="Arial, sans-serif" font-size="18" font-weight="700">Advertisement</text>
+  <text x="86" y="64" fill="#64748B" font-family="Arial, sans-serif" font-size="13">Your AdSense banner will appear here · 728 × 90</text>
+</svg>

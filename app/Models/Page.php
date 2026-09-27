@@ -2,39 +2,59 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasSeo;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Str;
 
 class Page extends Model
 {
-    protected $fillable = [
-        'title', 'slug', 'template', 'banner_title', 'banner_image', 'content',
-        'meta_title', 'meta_description', 'is_published', 'sort_order',
-    ];
+    use HasSeo;
+
+    protected $guarded = [];
 
     protected function casts(): array
     {
-        return ['is_published' => 'boolean'];
+        return [
+            'sections' => 'array',
+            'is_published' => 'boolean',
+        ];
     }
 
     protected static function booted(): void
     {
         static::saving(function (Page $page) {
-            if (blank($page->slug)) {
+            if (blank($page->slug) && filled($page->title)) {
                 $page->slug = Str::slug($page->title);
             }
         });
     }
 
-    public function sections(): HasMany
+    public function getRouteKeyName(): string
     {
-        return $this->hasMany(PageSection::class)->orderBy('sort_order');
+        return 'slug';
     }
 
-    public function menuItems(): HasMany
+    public function section(string $key, mixed $default = null): mixed
     {
-        return $this->hasMany(MenuItem::class);
+        return data_get($this->sections ?? [], $key, $default);
+    }
+
+    public function sectionMedia(string $key, ?string $default = null): ?string
+    {
+        $path = $this->section($key, $default);
+
+        if (blank($path)) {
+            return $default;
+        }
+
+        if (str_starts_with((string) $path, 'http://') || str_starts_with((string) $path, 'https://')) {
+            return (string) $path;
+        }
+
+        if (str_starts_with((string) $path, 'assets/')) {
+            return asset((string) $path);
+        }
+
+        return asset('storage/'.$path);
     }
 }

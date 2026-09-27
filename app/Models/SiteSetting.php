@@ -2,52 +2,188 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasSeo;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Cache;
 
 class SiteSetting extends Model
 {
-    protected $fillable = [
-        'site_name', 'tagline', 'logo', 'favicon', 'phone', 'email', 'address',
-        'footer_about', 'footer_background_image', 'newsletter_text', 'map_embed_url',
-        'primary_color', 'secondary_color', 'dark_color',
-        'menu_text_color', 'menu_hover_color',
-        'facebook', 'twitter', 'linkedin', 'instagram', 'copyright_text',
-    ];
+    use HasSeo;
 
-    public static function defaults(): array
+    protected $guarded = [];
+
+    protected function casts(): array
     {
         return [
-            'site_name' => 'DOT.NET',
-            'tagline' => 'Digital Agency Website',
-            'logo' => null,
-            'favicon' => null,
-            'phone' => '+012 345 6789',
-            'email' => 'info@example.com',
-            'address' => '123 Street, New York, USA',
-            'footer_about' => 'Volup amet magna clita tempor. Tempor sea eos vero ipsum. Lorem lorem sit sed elitr sed kasd et',
-            'footer_background_image' => null,
-            'newsletter_text' => 'Volup amet magna clita tempor. Tempor sea eos vero ipsum. Lorem lorem sit sed elitr sed kasd et',
-            'map_embed_url' => 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3001156.4288297426!2d-78.01371936852176!3d42.72876761954724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4ccc4bf0f123a5a9%3A0xddcfc6c1de189567!2sNew%20York%2C%20USA!5e0!3m2!1sen!2sbd!4v1603794290143!5m2!1sen!2sbd',
-            'primary_color' => '#FFAA17',
-            'secondary_color' => '#6c757d',
-            'dark_color' => '#212529',
-            'menu_text_color' => '#FFFFFF',
-            'menu_hover_color' => '#FFAA17',
-            'facebook' => '#',
-            'twitter' => '#',
-            'linkedin' => '#',
-            'instagram' => '#',
-            'copyright_text' => 'DOT.NET. All Rights Reserved.',
+            'home_1_content' => 'array',
+            'home_2_content' => 'array',
+            'home_3_content' => 'array',
+            'ads_enabled' => 'boolean',
         ];
     }
 
     public static function current(): self
     {
-        return static::query()->first() ?? static::query()->create(static::defaults());
+        $attributes = Cache::remember('site_settings', 60, function () {
+            $settings = static::query()->first() ?? static::query()->create([
+                'site_name' => 'Extech',
+                'home_template' => 'home-1',
+            ]);
+
+            return $settings->getAttributes();
+        });
+
+        $model = static::query()->newModelInstance();
+        $model->setRawAttributes($attributes, true);
+        $model->exists = true;
+
+        return $model;
     }
 
-    public function resetToDefaults(): void
+    public static function flushCache(): void
     {
-        $this->update(static::defaults());
+        Cache::forget('site_settings');
+    }
+
+    protected static function booted(): void
+    {
+        static::saved(fn () => static::flushCache());
+        static::deleted(fn () => static::flushCache());
+    }
+
+    public function homeContent(): array
+    {
+        return match ($this->home_template) {
+            'home-2' => $this->home_2_content ?? [],
+            'home-3' => $this->home_3_content ?? [],
+            default => $this->home_1_content ?? [],
+        };
+    }
+
+    public function homeView(): string
+    {
+        return match ($this->home_template) {
+            'home-2' => 'frontend.home.home-2',
+            'home-3' => 'frontend.home.home-3',
+            default => 'frontend.home.home-1',
+        };
+    }
+
+    public function googleFontsUrl(): string
+    {
+        $title = str_replace(' ', '+', $this->font_title ?: 'Rajdhani');
+        $body = str_replace(' ', '+', $this->font_body ?: 'Plus Jakarta Sans');
+
+        return "https://fonts.googleapis.com/css2?family={$title}:wght@400;500;600;700&family={$body}:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap";
+    }
+
+    public function logoUrl(): string
+    {
+        return $this->logo
+            ? asset('storage/'.$this->logo)
+            : asset('assets/img/logo.svg');
+    }
+
+    /**
+     * Header "Get A Quote" CTA. Legacy /contact defaults go to the quote form.
+     */
+    public function headerCtaUrl(): string
+    {
+        $url = trim((string) $this->header_cta_url);
+
+        if ($url === '' || in_array(trim($url, '/'), ['contact'], true)) {
+            return route('quote');
+        }
+
+        if (str_starts_with($url, 'http://') || str_starts_with($url, 'https://')) {
+            return $url;
+        }
+
+        return url($url);
+    }
+
+    public function faviconUrl(): string
+    {
+        return $this->favicon
+            ? asset('storage/'.$this->favicon)
+            : asset('assets/img/favicon.svg');
+    }
+
+    public function preloaderGifUrl(): ?string
+    {
+        return $this->preloader_gif
+            ? asset('storage/'.$this->preloader_gif)
+            : null;
+    }
+
+    public static function mediaUrl(?string $path, string $fallback = ''): string
+    {
+        if (blank($path)) {
+            return $fallback ? asset($fallback) : '';
+        }
+
+        if (str_starts_with($path, 'http://') || str_starts_with($path, 'https://')) {
+            return $path;
+        }
+
+        if (str_starts_with($path, 'assets/')) {
+            return asset($path);
+        }
+
+        return asset('storage/'.$path);
+    }
+
+    public function defaultBannerUrl(): string
+    {
+        return $this->default_banner
+            ? asset('storage/'.$this->default_banner)
+            : asset('assets/img/breadcrumb.jpg');
+    }
+
+    /**
+     * Individual banner pehle, warna general site banner.
+     */
+    public function resolveBanner(?string $individualBanner = null): string
+    {
+        if (filled($individualBanner)) {
+            return static::mediaUrl($individualBanner, $this->defaultBannerUrl());
+        }
+
+        return $this->defaultBannerUrl();
+    }
+
+    public function adsAreEnabled(): bool
+    {
+        if (! array_key_exists('ads_enabled', $this->getAttributes())) {
+            return true;
+        }
+
+        return (bool) $this->ads_enabled;
+    }
+
+    public function adsHeadScript(): ?string
+    {
+        $script = trim((string) ($this->ads_head_script ?? ''));
+
+        return $script !== '' ? $script : null;
+    }
+
+    public function adSlotHtml(string $slot): ?string
+    {
+        $column = match ($slot) {
+            'top' => 'ads_slot_top',
+            'sidebar' => 'ads_slot_sidebar',
+            'inline' => 'ads_slot_inline',
+            'bottom' => 'ads_slot_bottom',
+            default => null,
+        };
+
+        if (! $column) {
+            return null;
+        }
+
+        $html = trim((string) ($this->{$column} ?? ''));
+
+        return $html !== '' ? $html : null;
     }
 }
