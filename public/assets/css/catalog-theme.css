@@ -647,3 +647,1625 @@ body:has(.offcanvas__info.info-open) .site-ad,
         font-size: 30px !important;
     }
 }
+
+/* =========================================================
+   Software downloads listing (from software-downloads.html)
+   Applied on /download-free-software (.filehippo-page)
+   ========================================================= */
+
+.filehippo-page {
+    --zv-blue: #0860F5;
+    --zv-blue-dark: #0650D2;
+    --zv-blue-50: #EAF2FF;
+    --zv-blue-25: #F4F8FF;
+    --zv-navy: #071426;
+    --zv-ink: #101828;
+    --zv-body: #344054;
+    --zv-muted: #667085;
+    --zv-border: #E5EAF2;
+    --zv-green: #12A150;
+    --zv-green-50: #E7F8EE;
+    --zv-red: #E5484D;
+    --zv-red-50: #FDECEC;
+    --zv-star: #F5A524;
+    --zv-radius: 10px;
+    --zv-shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 4px 14px rgba(16, 24, 40, .04);
+    background: #fff;
+    color: var(--zv-body);
+    overflow: hidden;
+}
+
+.filehippo-page,
+.filehippo-page * {
+    box-sizing: border-box;
+}
+
+.filehippo-page h1,
+.filehippo-page h2,
+.filehippo-page h3,
+.filehippo-page h4,
+.filehippo-page h5,
+.filehippo-page h6 {
+    color: var(--zv-ink);
+    letter-spacing: -.01em;
+    font-weight: 700;
+}
+
+.filehippo-page a {
+    transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.filehippo-page :focus-visible {
+    outline: 2px solid var(--zv-blue);
+    outline-offset: 2px;
+}
+
+.filehippo-page .zv-sr-only {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Buttons */
+.filehippo-page .zv-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 42px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 1;
+    border: 1px solid transparent;
+    cursor: pointer;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.filehippo-page .zv-btn-primary {
+    background: var(--zv-blue);
+    color: #fff;
+    border-color: var(--zv-blue);
+}
+
+.filehippo-page .zv-btn-primary:hover {
+    background: var(--zv-blue-dark);
+    border-color: var(--zv-blue-dark);
+    color: #fff;
+}
+
+.filehippo-page .zv-btn-outline {
+    background: #fff;
+    color: var(--zv-blue);
+    border-color: #C9DAF8;
+}
+
+.filehippo-page .zv-btn-outline:hover {
+    border-color: var(--zv-blue);
+    color: var(--zv-blue);
+    background: var(--zv-blue-25);
+}
+
+/* Tags */
+.filehippo-page .zv-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px;
+}
+
+.filehippo-page .zv-tag {
+    display: inline-flex;
+    align-items: center;
+    height: 24px;
+    padding: 0 10px;
+    border-radius: 5px;
+    font-size: 11.5px;
+    font-weight: 500;
+    background: #EEF3FC;
+    color: #3559B7;
+    line-height: 1;
+}
+
+.filehippo-page .zv-tag.is-free,
+.filehippo-page .zv-tag.is-freemium {
+    background: var(--zv-green-50);
+    color: var(--zv-green);
+}
+
+.filehippo-page .zv-tag.is-paid {
+    background: var(--zv-red-50);
+    color: var(--zv-red);
+}
+
+/* Newsletter */
+.filehippo-page .zv-newsletter {
+    padding: 0 0 24px;
+}
+
+.filehippo-page .zv-newsletter-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    background: linear-gradient(90deg, #E6F0FF 0%, #EEF5FF 60%, #E8F1FF 100%);
+    border: 1px solid #DCE8FB;
+    border-radius: 12px;
+    padding: 22px 36px;
+}
+
+.filehippo-page .zv-newsletter-copy {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+.filehippo-page .zv-newsletter-icon {
+    flex: 0 0 64px;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(145deg, #3B86FF, #0756E4);
+    color: #fff;
+    font-size: 26px;
+    box-shadow: 0 8px 20px rgba(8, 96, 245, .28), 0 0 0 6px rgba(255, 255, 255, .7);
+}
+
+.filehippo-page .zv-newsletter-copy h3 {
+    font-size: 21px;
+    line-height: 1.3;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--zv-ink) !important;
+}
+
+.filehippo-page .zv-newsletter-copy p {
+    font-size: 14px;
+    color: var(--zv-muted);
+    line-height: 1.5;
+    margin: 0;
+}
+
+.filehippo-page .zv-newsletter-form {
+    display: flex;
+    gap: 12px;
+    flex: 0 0 auto;
+    position: relative;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.filehippo-page .zv-newsletter-form input[type=email] {
+    width: 350px;
+    max-width: 100%;
+    height: 50px;
+    border: 1px solid var(--zv-border);
+    border-radius: 8px;
+    background: #fff;
+    font-size: 14px;
+    padding: 0 18px;
+    color: var(--zv-ink);
+}
+
+.filehippo-page .zv-newsletter-form input::placeholder {
+    color: #8A94A6 !important;
+}
+
+.filehippo-page .zv-newsletter-form .zv-btn {
+    height: 50px;
+    padding: 0 34px;
+    font-size: 15px;
+}
+
+.filehippo-page .zv-form-note {
+    position: absolute;
+    left: 2px;
+    top: calc(100% + 6px);
+    font-size: 12.5px;
+    font-weight: 500;
+}
+
+.filehippo-page .zv-form-note.is-success { color: var(--zv-green); }
+.filehippo-page .zv-form-note.is-error { color: var(--zv-red); }
+
+.filehippo-page .zv-newsletter-agree {
+    width: 100%;
+    font-size: 12px;
+    color: var(--zv-muted);
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin: 0;
+}
+
+/* Hero */
+.filehippo-page .zv-hero {
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(1200px 500px at 85% 20%, rgba(150, 192, 255, .35), transparent 60%),
+        linear-gradient(100deg, #F1F7FF 0%, #EAF3FF 45%, #E2EEFF 100%);
+    border-bottom: 0 !important;
+}
+
+.filehippo-page .zv-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background:
+        linear-gradient(135deg, transparent 0 62%, rgba(255, 255, 255, .55) 62% 63%, transparent 63%),
+        linear-gradient(160deg, transparent 0 72%, rgba(196, 220, 255, .45) 72% 100%);
+}
+
+.filehippo-page .zv-hero .container {
+    position: relative;
+    min-height: 452px;
+    display: flex;
+    align-items: center;
+}
+
+.filehippo-page .zv-hero-copy {
+    position: relative;
+    z-index: 2;
+    width: 600px;
+    max-width: 100%;
+    padding: 52px 0 44px;
+}
+
+.filehippo-page .zv-kicker {
+    display: inline-block;
+    color: var(--zv-blue) !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    letter-spacing: .14em !important;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+}
+
+.filehippo-page .zv-hero h1 {
+    font-size: 50px !important;
+    line-height: 1.12 !important;
+    font-weight: 800 !important;
+    letter-spacing: -.025em !important;
+    color: #0B1730 !important;
+    margin-bottom: 14px;
+    text-transform: none;
+}
+
+.filehippo-page .zv-hero-copy > p {
+    font-size: 17px !important;
+    line-height: 1.55 !important;
+    color: #3D4A5F !important;
+    max-width: 560px;
+    margin: 0;
+}
+
+.filehippo-page .zv-hero-search {
+    display: flex;
+    margin-top: 26px;
+    width: 626px;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 10px !important;
+    box-shadow: 0 10px 30px rgba(8, 96, 245, .08);
+    border: 1px solid #DCE6F5;
+    overflow: hidden;
+}
+
+.filehippo-page .zv-hero-search input {
+    height: 58px;
+    border: 0;
+    background: transparent;
+    font-size: 15px !important;
+    padding: 0 22px;
+    color: var(--zv-ink);
+    border-radius: 10px 0 0 10px;
+    flex: 1;
+    min-width: 0;
+    outline: 0;
+}
+
+.filehippo-page .zv-hero-search input::placeholder {
+    color: #7A8599 !important;
+}
+
+.filehippo-page .zv-hero-search button {
+    flex: 0 0 66px;
+    width: 66px;
+    height: 58px;
+    margin: 0;
+    border: 0;
+    border-radius: 0 10px 10px 0 !important;
+    background: var(--zv-blue) !important;
+    color: #fff !important;
+    font-size: 19px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.filehippo-page .zv-hero-search button:hover {
+    background: var(--zv-blue-dark) !important;
+}
+
+.filehippo-page .zv-trust {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 26px;
+    margin-top: 30px;
+    width: 740px;
+    max-width: calc(100vw - 48px);
+    position: relative;
+    z-index: 3;
+    list-style: none;
+    padding: 0;
+}
+
+.filehippo-page .zv-trust-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--zv-ink) !important;
+    font-size: inherit !important;
+}
+
+.filehippo-page .zv-trust-icon {
+    flex: 0 0 36px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    background: #fff;
+    color: var(--zv-blue);
+    font-size: 15px;
+    box-shadow: 0 4px 12px rgba(8, 96, 245, .12);
+}
+
+.filehippo-page .zv-trust-item div strong {
+    display: block;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    color: var(--zv-ink) !important;
+    line-height: 1.3;
+}
+
+.filehippo-page .zv-trust-item div span {
+    display: block;
+    font-size: 11.5px !important;
+    color: var(--zv-muted) !important;
+    line-height: 1.35;
+}
+
+.filehippo-page .zv-hero-art {
+    position: absolute;
+    right: -60px;
+    top: 10px;
+    width: 750px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+.filehippo-page .zv-hero-art img {
+    width: 100%;
+    height: auto;
+    display: block;
+    max-width: none;
+    border-radius: 0;
+    box-shadow: none;
+    object-fit: contain;
+}
+
+.filehippo-page .zv-hero-badge {
+    position: absolute;
+    right: -40px;
+    bottom: 26px;
+    z-index: 3;
+    width: 236px;
+    padding: 18px 20px;
+    display: flex;
+    gap: 14px;
+    align-items: center;
+    background: rgba(255, 255, 255, .92);
+    backdrop-filter: blur(6px);
+    border: 1px solid #fff;
+    border-radius: 12px;
+    box-shadow: 0 16px 36px rgba(11, 61, 168, .16);
+}
+
+.filehippo-page .zv-hero-badge i {
+    flex: 0 0 44px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    color: var(--zv-blue);
+    font-size: 26px;
+}
+
+.filehippo-page .zv-hero-badge p {
+    font-size: 14px !important;
+    line-height: 1.35 !important;
+    color: var(--zv-ink) !important;
+    margin: 0;
+}
+
+.filehippo-page .zv-hero-badge strong {
+    display: block;
+    font-size: 17px;
+    font-weight: 700;
+}
+
+/* Platform categories */
+.filehippo-page .zv-platforms {
+    padding: 24px 0 0;
+}
+
+.filehippo-page .zv-platform-grid {
+    display: grid;
+    grid-template-columns: repeat(9, minmax(0, 1fr));
+    gap: 13px;
+}
+
+.filehippo-page .zv-platform {
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    text-align: center;
+    background: #fff;
+    border: 1px solid var(--zv-border);
+    border-radius: 8px;
+    color: var(--zv-ink);
+    box-shadow: var(--zv-shadow);
+    cursor: pointer;
+    width: 100%;
+    text-decoration: none;
+    padding: 10px 6px;
+    transition: border-color .2s, transform .2s, background .2s, color .2s, box-shadow .2s;
+}
+
+.filehippo-page .zv-platform i {
+    font-size: 25px;
+    line-height: 1;
+    color: #0B1730;
+}
+
+.filehippo-page .zv-platform .zv-platform-label {
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.25;
+    color: inherit;
+}
+
+.filehippo-page .zv-platform .zv-platform-label small {
+    display: block;
+    font-size: 11px;
+    font-weight: 500;
+    color: var(--zv-muted);
+}
+
+.filehippo-page .zv-platform:hover {
+    border-color: #B9D0F7;
+    transform: translateY(-1px);
+    color: var(--zv-ink);
+}
+
+.filehippo-page .zv-platform .fa-android { color: #2FBF71; }
+.filehippo-page .zv-platform .fa-apple { color: #3D4250; }
+
+.filehippo-page .zv-platform.is-active {
+    background: var(--zv-blue);
+    border-color: var(--zv-blue);
+    color: #fff;
+    box-shadow: 0 10px 22px rgba(8, 96, 245, .25);
+}
+
+.filehippo-page .zv-platform.is-active i,
+.filehippo-page .zv-platform.is-active .zv-platform-label small {
+    color: #fff;
+}
+
+/* Listing layout */
+.filehippo-page .zv-listing {
+    padding: 30px 0 40px;
+}
+
+.filehippo-page .zv-listing-grid {
+    display: grid;
+    grid-template-columns: 354px minmax(0, 1fr);
+    gap: 28px;
+    align-items: start;
+}
+
+.filehippo-page .zv-sidebar {
+    background: #FBFCFE;
+    border: 1px solid var(--zv-border);
+    border-radius: var(--zv-radius);
+    padding: 22px 16px 22px;
+    height: max-content;
+}
+
+.filehippo-page .zv-sidebar-block + .zv-sidebar-block {
+    border-top: 1px solid var(--zv-border);
+    margin-top: 18px;
+    padding-top: 18px;
+}
+
+.filehippo-page .zv-sidebar h2,
+.filehippo-page .zv-sidebar h3 {
+    font-size: 18px !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
+    margin: 0 0 14px 6px;
+    color: var(--zv-ink) !important;
+}
+
+.filehippo-page .zv-cat-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.filehippo-page .zv-cat-list li {
+    margin-bottom: 2px;
+}
+
+.filehippo-page .zv-cat-list a,
+.filehippo-page .zv-cat-list button {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 37px;
+    padding: 0 12px;
+    border-radius: 7px;
+    font-size: 14px !important;
+    font-weight: 500;
+    color: var(--zv-body) !important;
+    text-align: left;
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+}
+
+.filehippo-page .zv-cat-list a i,
+.filehippo-page .zv-cat-list button i {
+    width: 18px;
+    text-align: center;
+    color: #475467;
+    font-size: 14.5px;
+}
+
+.filehippo-page .zv-cat-list .zv-count {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--zv-muted);
+    font-weight: 500;
+}
+
+.filehippo-page .zv-cat-list a:hover,
+.filehippo-page .zv-cat-list button:hover {
+    background: #F1F5FB;
+    color: var(--zv-ink) !important;
+}
+
+.filehippo-page .zv-cat-list a.is-active,
+.filehippo-page .zv-cat-list button.is-active {
+    background: var(--zv-blue-50);
+    color: var(--zv-blue) !important;
+    font-weight: 600;
+}
+
+.filehippo-page .zv-cat-list a.is-active i,
+.filehippo-page .zv-cat-list a.is-active .zv-count,
+.filehippo-page .zv-cat-list button.is-active i,
+.filehippo-page .zv-cat-list button.is-active .zv-count {
+    color: var(--zv-blue);
+}
+
+.filehippo-page .zv-filter-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.filehippo-page .zv-filter-list li {
+    margin-bottom: 3px;
+}
+
+.filehippo-page .zv-filter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 30px;
+    padding: 0 12px;
+    cursor: pointer;
+    font-size: 14px !important;
+    color: var(--zv-body) !important;
+    position: relative;
+    margin: 0;
+}
+
+.filehippo-page .zv-filter input {
+    position: absolute;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    display: block;
+    visibility: visible;
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+.filehippo-page .zv-filter .zv-box {
+    flex: 0 0 18px;
+    width: 18px;
+    height: 18px;
+    border: 1.5px solid #C4CCD8;
+    border-radius: 4px;
+    background: #fff;
+    display: grid;
+    place-items: center;
+    transition: all .15s;
+}
+
+.filehippo-page .zv-filter .zv-box.is-round {
+    border-radius: 50%;
+}
+
+.filehippo-page .zv-filter .zv-box::after {
+    content: "";
+    width: 9px;
+    height: 5px;
+    border-left: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    transform: rotate(-45deg) translate(1px, -1px);
+    opacity: 0;
+}
+
+.filehippo-page .zv-filter input:checked + .zv-box {
+    background: var(--zv-blue);
+    border-color: var(--zv-blue);
+}
+
+.filehippo-page .zv-filter input:checked + .zv-box::after {
+    opacity: 1;
+}
+
+.filehippo-page .zv-filter input:focus-visible + .zv-box {
+    outline: 2px solid var(--zv-blue);
+    outline-offset: 2px;
+}
+
+.filehippo-page .zv-filter .zv-count {
+    margin-left: auto;
+    font-size: 13px;
+    color: var(--zv-muted);
+}
+
+.filehippo-page .zv-filter:hover {
+    color: var(--zv-ink) !important;
+}
+
+.filehippo-page .zv-filter-toggle {
+    display: none;
+}
+
+.filehippo-page .zv-list-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.filehippo-page .zv-list-head h1,
+.filehippo-page .zv-list-head h2 {
+    font-size: 27px !important;
+    line-height: 1.25 !important;
+    font-weight: 800 !important;
+    margin-bottom: 4px;
+    color: var(--zv-ink) !important;
+}
+
+.filehippo-page .zv-list-head p {
+    font-size: 14.5px !important;
+    color: var(--zv-muted) !important;
+    line-height: 1.5 !important;
+    margin: 0;
+}
+
+.filehippo-page .zv-sort {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 13.5px;
+    color: var(--zv-body);
+    white-space: nowrap;
+}
+
+.filehippo-page .zv-sort select {
+    height: 40px;
+    border: 1px solid var(--zv-border);
+    border-radius: 7px !important;
+    padding: 0 28px 0 12px;
+    font-size: 13.5px !important;
+    color: var(--zv-ink) !important;
+    background: #fff;
+}
+
+/* Software cards */
+.filehippo-page .zv-soft-list {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.filehippo-page .zv-soft {
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr) 200px 162px;
+    align-items: center;
+    gap: 24px;
+    min-height: 117px;
+    padding: 16px 20px 16px 22px;
+    background: #fff;
+    border: 1px solid var(--zv-border);
+    border-radius: var(--zv-radius);
+    box-shadow: 0 1px 2px rgba(16, 24, 40, .03);
+}
+
+.filehippo-page .zv-soft:hover {
+    border-color: #CFDDF5;
+    box-shadow: 0 8px 24px rgba(16, 24, 40, .06);
+}
+
+.filehippo-page .zv-soft-logo {
+    width: 84px;
+    height: 84px;
+    display: grid;
+    place-items: center;
+    border-radius: 12px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    font-size: 28px;
+    font-weight: 800;
+}
+
+.filehippo-page .zv-soft-logo img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+    display: block;
+}
+
+.filehippo-page .zv-soft-logo.chrome { background: linear-gradient(135deg, #e34b38 0 35%, #f7d34b 35% 66%, #2aa85d 66%); }
+.filehippo-page .zv-soft-logo.vlc { background: #f4a500; }
+.filehippo-page .zv-soft-logo.ps { background: #071d3c; }
+.filehippo-page .zv-soft-logo.winrar { background: linear-gradient(#e34b62, #6953a6, #efb93f); }
+.filehippo-page .zv-soft-logo.zoom { background: #3d91ee; }
+.filehippo-page .zv-soft-logo.notepad { background: #70bd6b; }
+.filehippo-page .zv-soft-logo:has(img) {
+    background: #fff !important;
+    border: 1px solid var(--zv-border, #E5EAF2);
+    border-radius: 12px;
+}
+
+.filehippo-page .zv-soft-info {
+    min-width: 0;
+}
+
+.filehippo-page .zv-soft-info h3 {
+    font-size: 17px !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
+    margin-bottom: 3px;
+    color: var(--zv-ink) !important;
+}
+
+.filehippo-page .zv-soft-info h3 a {
+    color: var(--zv-ink);
+    text-decoration: none;
+}
+
+.filehippo-page .zv-soft-info h3 a:hover {
+    color: var(--zv-blue);
+}
+
+.filehippo-page .zv-soft-info h3 .zv-ver {
+    font-size: 13.5px;
+    font-weight: 500;
+    color: var(--zv-muted);
+    margin-left: 8px;
+    letter-spacing: 0;
+}
+
+.filehippo-page .zv-soft-info > p {
+    font-size: 13.5px !important;
+    color: var(--zv-body) !important;
+    line-height: 1.5 !important;
+    margin-bottom: 10px;
+}
+
+.filehippo-page .zv-soft-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 12.5px;
+    color: var(--zv-muted);
+    line-height: 1.3;
+}
+
+.filehippo-page .zv-soft-stats span {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filehippo-page .zv-soft-stats i {
+    width: 14px;
+    text-align: center;
+    font-size: 13px;
+    color: #667085;
+}
+
+.filehippo-page .zv-soft-stats .fa-star {
+    color: var(--zv-star);
+}
+
+.filehippo-page .zv-soft-stats b {
+    color: var(--zv-ink);
+    font-weight: 700;
+    font-size: 13px;
+}
+
+.filehippo-page .zv-soft-actions {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 11px;
+}
+
+.filehippo-page .zv-soft-actions .zv-btn {
+    width: 162px;
+    height: 44px;
+    font-size: 14px;
+    border-radius: 8px !important;
+}
+
+.filehippo-page .zv-soft-actions .zv-link {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--zv-blue);
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    text-decoration: none;
+}
+
+.filehippo-page .zv-soft-actions .zv-link:hover {
+    color: var(--zv-blue-dark);
+    gap: 10px;
+}
+
+.filehippo-page .zv-empty {
+    text-align: center;
+    padding: 48px 20px;
+    border: 1px dashed #C9D6EA;
+    border-radius: var(--zv-radius);
+    background: var(--zv-blue-25);
+    color: var(--zv-muted);
+}
+
+/* Infinite scroll */
+.filehippo-page .zv-infinite-status,
+.filehippo-page .zv-infinite-end {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 18px 0 8px;
+    color: #64748b;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.filehippo-page .zv-infinite-status[hidden],
+.filehippo-page .zv-infinite-end[hidden] {
+    display: none !important;
+}
+
+.filehippo-page .zv-infinite-spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid #c7d7ea;
+    border-top-color: var(--zv-blue);
+    border-radius: 50%;
+    animation: zv-spin .7s linear infinite;
+}
+
+@keyframes zv-spin {
+    to { transform: rotate(360deg); }
+}
+
+#fh-infinite-sentinel {
+    height: 1px;
+    width: 100%;
+}
+
+/* Ads inside new layout */
+.filehippo-page .zv-sidebar .site-ad {
+    margin: 18px auto 0;
+}
+
+.filehippo-page .zv-soft-list .site-ad {
+    margin: 4px 0;
+}
+
+/* Responsive */
+@media (min-width: 1700px) {
+    .filehippo-page .zv-hero-art { right: -110px; }
+    .filehippo-page .zv-hero-badge { right: -90px; }
+}
+
+@media (max-width: 1399px) {
+    .filehippo-page .zv-hero-art { width: 660px; right: -70px; top: 30px; }
+    .filehippo-page .zv-hero-badge { right: -20px; }
+    .filehippo-page .zv-listing-grid { grid-template-columns: 300px minmax(0, 1fr); gap: 24px; }
+    .filehippo-page .zv-soft { grid-template-columns: 72px minmax(0, 1fr) 180px 150px; gap: 18px; }
+    .filehippo-page .zv-soft-logo,
+    .filehippo-page .zv-soft-logo img { width: 72px; height: 72px; }
+    .filehippo-page .zv-soft-actions .zv-btn { width: 150px; }
+}
+
+@media (max-width: 1199px) {
+    .filehippo-page .zv-hero-copy { width: 520px; }
+    .filehippo-page .zv-hero h1 { font-size: 42px !important; }
+    .filehippo-page .zv-hero-art { width: 540px; right: -90px; top: 60px; }
+    .filehippo-page .zv-hero-badge { display: none; }
+    .filehippo-page .zv-platform-grid { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+    .filehippo-page .zv-listing-grid { grid-template-columns: 270px minmax(0, 1fr); }
+    .filehippo-page .zv-soft {
+        grid-template-columns: 64px minmax(0, 1fr) 150px;
+        grid-template-areas: "logo info actions" "logo stats actions";
+        row-gap: 10px;
+    }
+    .filehippo-page .zv-soft-logo { grid-area: logo; align-self: start; }
+    .filehippo-page .zv-soft-logo,
+    .filehippo-page .zv-soft-logo img { width: 64px; height: 64px; }
+    .filehippo-page .zv-soft-info { grid-area: info; }
+    .filehippo-page .zv-soft-stats { grid-area: stats; flex-direction: row; flex-wrap: wrap; gap: 6px 18px; }
+    .filehippo-page .zv-soft-actions { grid-area: actions; }
+}
+
+@media (max-width: 991px) {
+    .filehippo-page .zv-hero .container {
+        flex-direction: column;
+        align-items: stretch;
+        min-height: 0;
+    }
+    .filehippo-page .zv-hero-copy { width: 100%; padding: 44px 0 8px; }
+    .filehippo-page .zv-hero-art {
+        position: relative;
+        right: auto;
+        top: auto;
+        transform: none;
+        width: 100%;
+        max-width: 620px;
+        margin: 0 auto 8px;
+        pointer-events: auto;
+    }
+    .filehippo-page .zv-listing-grid { grid-template-columns: 1fr; }
+    .filehippo-page .zv-filter-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        height: 48px;
+        padding: 0 16px;
+        border: 1px solid var(--zv-border);
+        border-radius: var(--zv-radius);
+        background: #fff;
+        font-size: 15px;
+        font-weight: 600;
+        color: var(--zv-ink);
+        cursor: pointer;
+    }
+    .filehippo-page .zv-filter-toggle i { color: var(--zv-blue); }
+    .filehippo-page .zv-sidebar { display: none; margin-top: -14px; }
+    .filehippo-page .zv-sidebar.is-open { display: block; }
+    .filehippo-page .zv-sidebar-inner {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr;
+        gap: 0 28px;
+    }
+    .filehippo-page .zv-sidebar-block + .zv-sidebar-block {
+        border-top: 0;
+        margin-top: 0;
+        padding-top: 0;
+    }
+    .filehippo-page .zv-sidebar-block.is-cats { grid-row: span 2; }
+    .filehippo-page .zv-sidebar-block.is-license {
+        border-top: 1px solid var(--zv-border);
+        margin-top: 16px;
+        padding-top: 16px;
+    }
+    .filehippo-page .zv-newsletter-box {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 24px;
+    }
+    .filehippo-page .zv-newsletter-form input[type=email] { width: 100%; }
+    .filehippo-page .zv-newsletter-form { width: 100%; }
+}
+
+@media (max-width: 767px) {
+    .filehippo-page .zv-hero h1 { font-size: 34px !important; }
+    .filehippo-page .zv-hero-copy > p { font-size: 15.5px !important; }
+    .filehippo-page .zv-trust {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        width: 100%;
+    }
+    .filehippo-page .zv-platform-grid {
+        display: flex;
+        overflow-x: auto;
+        gap: 10px;
+        padding: 2px 2px 10px;
+        margin: 0 -2px;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+    .filehippo-page .zv-platform-grid::-webkit-scrollbar { display: none; }
+    .filehippo-page .zv-platform {
+        flex: 0 0 112px;
+        height: 92px;
+        scroll-snap-align: start;
+    }
+    .filehippo-page .zv-list-head {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .filehippo-page .zv-soft {
+        grid-template-columns: 56px minmax(0, 1fr);
+        grid-template-areas: "logo info" "stats stats" "actions actions";
+        padding: 16px;
+        gap: 12px 14px;
+    }
+    .filehippo-page .zv-soft-logo,
+    .filehippo-page .zv-soft-logo img { width: 56px; height: 56px; }
+    .filehippo-page .zv-soft-actions {
+        flex-direction: row;
+        justify-content: space-between;
+        border-top: 1px solid var(--zv-border);
+        padding-top: 12px;
+    }
+    .filehippo-page .zv-soft-actions .zv-btn {
+        width: auto;
+        flex: 0 0 auto;
+    }
+    .filehippo-page .zv-sidebar-inner { grid-template-columns: 1fr; }
+    .filehippo-page .zv-sidebar-block.is-cats { grid-row: auto; }
+    .filehippo-page .zv-sidebar-block + .zv-sidebar-block {
+        border-top: 1px solid var(--zv-border);
+        margin-top: 16px;
+        padding-top: 16px;
+    }
+}
+
+@media (max-width: 575px) {
+    .filehippo-page .zv-newsletter-copy {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 14px;
+    }
+    .filehippo-page .zv-newsletter-form { flex-direction: column; }
+    .filehippo-page .zv-newsletter-form .zv-btn { width: 100%; }
+    .filehippo-page .zv-form-note { position: static; margin-top: 4px; }
+    .filehippo-page .zv-hero h1 { font-size: 30px !important; }
+}
+
+
+/* =========================================================
+   Software / Marketplace details (from software-details.html)
+   Shared by .software-details-page (filehippo + marketplace)
+   ========================================================= */
+
+.software-details-page {
+    --zv-blue: #0860F5;
+    --zv-blue-dark: #0650D2;
+    --zv-blue-50: #EAF2FF;
+    --zv-blue-25: #F4F8FF;
+    --zv-navy: #071426;
+    --zv-ink: #101828;
+    --zv-body: #344054;
+    --zv-muted: #667085;
+    --zv-border: #E5EAF2;
+    --zv-green: #12A150;
+    --zv-green-50: #E7F8EE;
+    --zv-red: #E5484D;
+    --zv-red-50: #FDECEC;
+    --zv-star: #F5A524;
+    --zv-radius: 10px;
+    --zv-shadow: 0 1px 2px rgba(16, 24, 40, .04), 0 4px 14px rgba(16, 24, 40, .04);
+    background: #fff;
+    color: var(--zv-body);
+    overflow: hidden;
+}
+
+.software-details-page,
+.software-details-page * {
+    box-sizing: border-box;
+}
+
+.software-details-page h1,
+.software-details-page h2,
+.software-details-page h3,
+.software-details-page h4,
+.software-details-page h5,
+.software-details-page h6 {
+    color: var(--zv-ink) !important;
+    letter-spacing: -.01em;
+    text-transform: none;
+}
+
+/* Beat older catalog-theme !important type rules on detail pages */
+.software-details-page.software-detail-page h1,
+.software-details-page.marketplace-detail-page h1,
+.software-details-page .zv-product-info h1 {
+    font-size: 34px !important;
+    line-height: 1.2 !important;
+    font-weight: 800 !important;
+    letter-spacing: -.02em !important;
+    color: var(--zv-ink) !important;
+}
+
+.software-details-page .zv-section-title,
+.software-details-page .zv-block-head h2 {
+    font-size: 21px !important;
+    line-height: 1.3 !important;
+    font-weight: 700 !important;
+    color: var(--zv-ink) !important;
+}
+
+.software-details-page p,
+.software-details-page a,
+.software-details-page li,
+.software-details-page span,
+.software-details-page label,
+.software-details-page button,
+.software-details-page small,
+.software-details-page td,
+.software-details-page th,
+.software-details-page dt,
+.software-details-page dd {
+    font-family: inherit;
+}
+
+.software-details-page a {
+    transition: color .2s ease, background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+
+.software-details-page :focus-visible {
+    outline: 2px solid var(--zv-blue);
+    outline-offset: 2px;
+}
+
+.software-details-page .zv-sr-only {
+    position: absolute !important;
+    width: 1px; height: 1px; padding: 0; margin: -1px;
+    overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0;
+}
+
+.software-details-page .zv-btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+    height: 42px; padding: 0 20px; border-radius: 8px; font-size: 14px; font-weight: 600;
+    line-height: 1; border: 1px solid transparent; cursor: pointer; white-space: nowrap; text-decoration: none;
+}
+
+.software-details-page .zv-btn-primary {
+    background: var(--zv-blue); color: #fff; border-color: var(--zv-blue);
+}
+.software-details-page .zv-btn-primary:hover {
+    background: var(--zv-blue-dark); border-color: var(--zv-blue-dark); color: #fff;
+}
+
+.software-details-page .zv-tags { display: flex; flex-wrap: wrap; gap: 7px; }
+.software-details-page .zv-tag {
+    display: inline-flex; align-items: center; height: 24px; padding: 0 10px; border-radius: 5px;
+    font-size: 11.5px; font-weight: 500; background: #EEF3FC; color: #3559B7; line-height: 1;
+}
+.software-details-page .zv-tag.is-free,
+.software-details-page .zv-tag.is-freemium { background: var(--zv-green-50); color: var(--zv-green); }
+.software-details-page .zv-tag.is-paid { background: var(--zv-red-50); color: var(--zv-red); }
+
+.software-details-page .zv-newsletter { padding: 24px 0 40px; }
+.software-details-page .zv-newsletter-box {
+    display: flex; align-items: center; justify-content: space-between; gap: 32px;
+    background: linear-gradient(90deg, #E6F0FF 0%, #EEF5FF 60%, #E8F1FF 100%);
+    border: 1px solid #DCE8FB; border-radius: 12px; padding: 22px 36px;
+}
+.software-details-page .zv-newsletter-copy { display: flex; align-items: center; gap: 22px; }
+.software-details-page .zv-newsletter-icon {
+    flex: 0 0 64px; width: 64px; height: 64px; border-radius: 50%; display: grid; place-items: center;
+    background: linear-gradient(145deg, #3B86FF, #0756E4); color: #fff; font-size: 26px;
+    box-shadow: 0 8px 20px rgba(8, 96, 245, .28), 0 0 0 6px rgba(255, 255, 255, .7);
+}
+.software-details-page .zv-newsletter-copy h3 {
+    font-size: 21px !important; line-height: 1.3; font-weight: 700; margin-bottom: 4px; color: var(--zv-ink) !important;
+}
+.software-details-page .zv-newsletter-copy p { font-size: 14px; color: var(--zv-muted); line-height: 1.5; margin: 0; }
+.software-details-page .zv-newsletter-form {
+    display: flex; gap: 12px; flex: 0 0 auto; position: relative; flex-wrap: wrap; align-items: center;
+}
+.software-details-page .zv-newsletter-form input[type=email] {
+    width: 350px; max-width: 100%; height: 50px; border: 1px solid var(--zv-border); border-radius: 8px;
+    background: #fff; font-size: 14px; padding: 0 18px; color: var(--zv-ink);
+}
+.software-details-page .zv-newsletter-form input::placeholder { color: #8A94A6 !important; }
+.software-details-page .zv-newsletter-form .zv-btn { height: 50px; padding: 0 34px; font-size: 15px; }
+.software-details-page .zv-newsletter-agree {
+    width: 100%; font-size: 12px; color: var(--zv-muted); display: flex; gap: 8px; align-items: center; margin: 0;
+}
+.software-details-page .zv-form-note {
+    position: absolute; left: 2px; top: calc(100% + 6px); font-size: 12.5px; font-weight: 500;
+}
+.software-details-page .zv-form-note.is-success { color: var(--zv-green); }
+.software-details-page .zv-form-note.is-error { color: var(--zv-red); }
+
+
+/* =========================================================
+           Software details page
+           ========================================================= */
+        .software-details-page .zv-detail-top { background: linear-gradient(180deg, #F5F8FE 0%, #F8FAFE 70%, #FFFFFF 100%); }
+
+        /* ---------- Breadcrumb ---------- */
+        .software-details-page .zv-breadcrumb { padding: 20px 0 22px; }
+        .software-details-page .zv-breadcrumb ol { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 12px; margin: 0; padding: 0; list-style: none; font-size: 13px; color: var(--zv-muted); }
+        .software-details-page .zv-breadcrumb li { display: flex; align-items: center; gap: 12px; }
+        .software-details-page .zv-breadcrumb li + li::before { content: "›"; font-family: inherit; font-weight: 400; font-size: 14px; color: #98A2B3; }
+        .software-details-page .zv-breadcrumb a { color: var(--zv-muted); }
+        .software-details-page .zv-breadcrumb a:hover { color: var(--zv-blue); }
+        .software-details-page .zv-breadcrumb [aria-current] { color: var(--zv-body); }
+
+        /* ---------- Overview ---------- */
+        .software-details-page .zv-overview { display: grid; grid-template-columns: 446px minmax(0, 1fr) 350px; gap: 38px; align-items: start; padding-bottom: 42px; }
+        .software-details-page .zv-gallery { display: grid; grid-template-columns: 80px minmax(0, 1fr); gap: 15px; }
+        .software-details-page .zv-thumbs { display: flex; flex-direction: column; gap: 12px; margin: 0; padding: 0; list-style: none; }
+        .software-details-page .zv-thumb {
+            position: relative; display: block; width: 80px; height: 78px; padding: 0; border-radius: 8px; overflow: hidden;
+            border: 1.5px solid var(--zv-border); background: #0B1730; cursor: pointer;
+        }
+        .software-details-page .zv-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .software-details-page .zv-thumb.is-active { border: 2px solid var(--zv-blue); box-shadow: 0 0 0 2px rgba(8, 96, 245, .15); }
+        .software-details-page .zv-thumb:hover { border-color: #9DBBF0; }
+        .software-details-page .zv-thumb .zv-thumb-play, .software-details-page .zv-thumb .zv-thumb-more {
+            position: absolute; inset: 0; display: grid; place-items: center; color: #fff; background: rgba(7, 20, 38, .45);
+        }
+        .software-details-page .zv-thumb .zv-thumb-play i { width: 30px; height: 30px; border-radius: 50%; border: 2px solid #fff; display: grid; place-items: center; font-size: 11px; padding-left: 2px; }
+        .software-details-page .zv-thumb .zv-thumb-more { background: rgba(7, 20, 38, .72); font-size: 17px; font-weight: 700; }
+        .software-details-page .zv-main-image { position: relative; border-radius: 10px; overflow: hidden; background: #081430; aspect-ratio: 351 / 438; box-shadow: 0 14px 34px rgba(8, 20, 48, .18); }
+        .software-details-page .zv-main-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        .software-details-page .zv-badge { display: inline-flex; align-items: center; gap: 6px; height: 26px; padding: 0 11px; border-radius: 6px; font-size: 12px; font-weight: 600; background: #E3EDFF; color: var(--zv-blue); }
+        .software-details-page .zv-product-info { padding-top: 6px; }
+        .software-details-page .zv-product-info h1 { font-size: 34px; line-height: 1.2; font-weight: 800; letter-spacing: -.02em; margin: 14px 0 8px; }
+        .software-details-page .zv-product-info .zv-subtitle { font-size: 16px; line-height: 1.5; color: var(--zv-body); margin-bottom: 12px; }
+        .software-details-page .zv-rating-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; font-size: 13.5px; color: var(--zv-muted); }
+        .software-details-page .zv-stars { display: inline-flex; gap: 2px; color: var(--zv-star); font-size: 13px; }
+        .software-details-page .zv-rating-row b { color: var(--zv-ink); font-weight: 700; }
+        .software-details-page .zv-rating-row .zv-sep { width: 1px; height: 16px; background: var(--zv-border); }
+        .software-details-page .zv-rating-row i.fa-arrow-down-to-line { margin-right: 6px; }
+        .software-details-page .zv-publisher-row { display: flex; align-items: center; gap: 10px; margin: 14px 0 16px; font-size: 13.5px; color: var(--zv-body); }
+        .software-details-page .zv-publisher-row img { width: 22px; height: auto; }
+        .software-details-page .zv-publisher-row a { color: var(--zv-blue); font-weight: 600; }
+        .software-details-page .zv-verified { display: inline-flex; align-items: center; gap: 6px; height: 24px; padding: 0 10px; border-radius: 6px; background: var(--zv-green-50); color: var(--zv-green); font-size: 12px; font-weight: 600; }
+        .software-details-page .zv-tag-rows { display: flex; flex-direction: column; gap: 9px; margin-bottom: 18px; }
+        .software-details-page .zv-tag { height: 28px; padding: 0 12px; font-size: 12px; border-radius: 6px; }
+        .software-details-page .zv-product-info .zv-desc { font-size: 14px; line-height: 1.75; color: var(--zv-body); }
+
+        /* ---------- Purchase card ---------- */
+        .software-details-page .zv-buy { background: #fff; border: 1px solid var(--zv-border); border-radius: 12px; padding: 22px 22px 24px; box-shadow: 0 10px 30px rgba(16, 24, 40, .05); }
+        .software-details-page .zv-price-row { display: flex; align-items: center; gap: 12px; margin-bottom: 18px; }
+        .software-details-page .zv-price { font-size: 31px; line-height: 1; font-weight: 800; color: var(--zv-ink); letter-spacing: -.02em; }
+        .software-details-page .zv-price-old { font-size: 15px; color: #98A2B3; text-decoration: line-through; }
+        .software-details-page .zv-off { margin-left: auto; display: inline-flex; align-items: center; height: 26px; padding: 0 10px; border-radius: 6px; background: #DDF7E7; color: #0E9F4F; font-size: 12.5px; font-weight: 700; }
+        .software-details-page .zv-buy .zv-btn { width: 100%; height: 52px; font-size: 15.5px; border-radius: 8px; }
+        .software-details-page .zv-buy .zv-btn + .zv-btn { margin-top: 12px; height: 48px; }
+        .software-details-page .zv-btn-ghost { background: #fff; color: var(--zv-ink); border-color: #D0D7E2; }
+        .software-details-page .zv-btn-ghost:hover { border-color: var(--zv-blue); color: var(--zv-blue); }
+        .software-details-page .zv-btn-ghost.is-saved { color: var(--zv-red); border-color: #F6C3C5; background: #FFF7F7; }
+        .software-details-page .zv-benefits { margin: 24px 0 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 18px; }
+        .software-details-page .zv-benefits li { display: flex; align-items: center; gap: 14px; }
+        .software-details-page .zv-benefit-icon { flex: 0 0 40px; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--zv-blue-50); color: var(--zv-blue); font-size: 16px; }
+        .software-details-page .zv-benefits div strong { display: block; font-size: 14px; font-weight: 700; color: var(--zv-ink); line-height: 1.35; }
+        .software-details-page .zv-benefits div span { display: block; font-size: 12.5px; color: var(--zv-muted); line-height: 1.4; }
+
+        /* ---------- Tabs ---------- */
+        .software-details-page .zv-tabs-bar { border-bottom: 1px solid var(--zv-border); background: #fff; }
+        .software-details-page .zv-tabs { display: flex; gap: 44px; overflow-x: auto; scrollbar-width: none; }
+        .software-details-page .zv-tabs::-webkit-scrollbar { display: none; }
+        .software-details-page .zv-tab {
+            position: relative; flex: 0 0 auto; padding: 12px 0 13px; font-size: 14.5px; font-weight: 500; color: var(--zv-body); background: none; border: 0; white-space: nowrap;
+        }
+        .software-details-page .zv-tab::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px; background: transparent; border-radius: 2px; }
+        .software-details-page .zv-tab:hover { color: var(--zv-blue); }
+        .software-details-page .zv-tab[aria-selected="true"] { color: var(--zv-blue); font-weight: 600; }
+        .software-details-page .zv-tab[aria-selected="true"]::after { background: var(--zv-blue); }
+        .software-details-page .zv-panels { padding-top: 36px; padding-bottom: 10px; }
+        .software-details-page .zv-panel[hidden] { display: none; }
+
+        /* ---------- Overview panel ---------- */
+        .software-details-page .zv-overview-panel { display: grid; grid-template-columns: minmax(0, 1fr) 414px; gap: 52px; align-items: start; }
+        .software-details-page .zv-section-title { font-size: 21px; line-height: 1.3; font-weight: 700; margin-bottom: 12px; }
+        .software-details-page .zv-copy p { font-size: 14.5px; line-height: 1.75; color: var(--zv-body); }
+        .software-details-page .zv-copy p + p { margin-top: 14px; }
+        .software-details-page .zv-features { display: grid; grid-template-columns: 1fr 1fr; gap: 20px 40px; margin: 16px 0 0; padding: 0; list-style: none; }
+        .software-details-page .zv-features li { display: flex; align-items: center; gap: 14px; }
+        .software-details-page .zv-feature-icon { flex: 0 0 42px; width: 42px; height: 42px; border-radius: 8px; display: grid; place-items: center; background: var(--zv-blue-50); color: var(--zv-blue); font-size: 17px; }
+        .software-details-page .zv-features div strong { display: block; font-size: 14px; font-weight: 700; color: var(--zv-ink); line-height: 1.35; }
+        .software-details-page .zv-features div span { display: block; font-size: 13px; color: var(--zv-muted); line-height: 1.45; }
+        .software-details-page .zv-key-features { margin-top: 30px; }
+
+        .software-details-page .zv-publisher-card { background: #F7FAFE; border: 1px solid var(--zv-border); border-radius: 12px; padding: 18px 18px 18px; margin-top: -8px; }
+        .software-details-page .zv-publisher-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 14px; }
+        .software-details-page .zv-pub-head { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+        .software-details-page .zv-pub-logo { flex: 0 0 48px; width: 48px; height: 48px; display: grid; place-items: center; }
+        .software-details-page .zv-pub-logo img { width: 40px; height: auto; }
+        .software-details-page .zv-pub-head strong { display: block; font-size: 14.5px; color: var(--zv-ink); margin-bottom: 4px; }
+        .software-details-page .zv-pub-head .zv-link { margin-left: auto; font-size: 12.5px; font-weight: 600; color: var(--zv-blue); white-space: nowrap; display: inline-flex; gap: 6px; align-items: center; }
+        .software-details-page .zv-pub-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+        .software-details-page .zv-pub-stats div { background: #fff; border: 1px solid var(--zv-border); border-radius: 8px; padding: 12px 8px; text-align: center; }
+        .software-details-page .zv-pub-stats b { display: block; font-size: 16px; font-weight: 800; color: var(--zv-ink); line-height: 1.3; }
+        .software-details-page .zv-pub-stats span { display: block; font-size: 12px; line-height: 1.35; color: var(--zv-muted); }
+
+        /* ---------- Other panels ---------- */
+        .software-details-page .zv-feature-list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px 40px; margin: 0; padding: 0; list-style: none; }
+        .software-details-page .zv-feature-list li { display: flex; gap: 12px; font-size: 14.5px; color: var(--zv-body); line-height: 1.6; }
+        .software-details-page .zv-feature-list i { color: var(--zv-green); margin-top: 5px; }
+        .software-details-page .zv-feature-list b { color: var(--zv-ink); }
+        .software-details-page .zv-req-table { width: 100%; border-collapse: separate; border-spacing: 0; border: 1px solid var(--zv-border); border-radius: 10px; overflow: hidden; font-size: 14px; margin: 0; }
+        .software-details-page .zv-req-table th, .software-details-page .zv-req-table td { border: 0; border-bottom: 1px solid var(--zv-border); padding: 13px 18px; text-align: left; vertical-align: top; color: var(--zv-body); }
+        .software-details-page .zv-req-table thead th { background: #F7FAFE; color: var(--zv-ink); font-weight: 700; }
+        .software-details-page .zv-req-table tbody th { color: var(--zv-ink); font-weight: 600; width: 22%; }
+        .software-details-page .zv-req-table tr:last-child th, .software-details-page .zv-req-table tr:last-child td { border-bottom: 0 !important; }
+        .software-details-page .zv-shot-grid-lg { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .software-details-page .zv-shot-grid-lg figure { margin: 0; }
+        .software-details-page .zv-shot-grid-lg img { width: 100%; aspect-ratio: 16 / 9.3; object-fit: cover; border-radius: 10px; border: 1px solid var(--zv-border); display: block; }
+        .software-details-page .zv-shot-grid-lg figcaption { font-size: 13px; color: var(--zv-muted); margin-top: 8px; }
+        .software-details-page .zv-reviews { display: grid; grid-template-columns: 280px minmax(0, 1fr); gap: 40px; }
+        .software-details-page .zv-review-summary { background: #F7FAFE; border: 1px solid var(--zv-border); border-radius: 12px; padding: 22px; text-align: center; align-self: start; }
+        .software-details-page .zv-review-summary .zv-score { font-size: 46px; font-weight: 800; color: var(--zv-ink); line-height: 1; }
+        .software-details-page .zv-review-summary p { font-size: 13px; color: var(--zv-muted); margin: 6px 0 14px; }
+        .software-details-page .zv-bars { display: flex; flex-direction: column; gap: 7px; text-align: left; }
+        .software-details-page .zv-bars div { display: grid; grid-template-columns: 10px 14px 1fr 36px; align-items: center; gap: 8px; font-size: 12.5px; color: var(--zv-muted); }
+        .software-details-page .zv-bars span.zv-bar { height: 7px; border-radius: 4px; background: #E4EAF3; overflow: hidden; }
+        .software-details-page .zv-bars span.zv-bar i { display: block; height: 100%; background: var(--zv-star); border-radius: 4px; }
+        .software-details-page .zv-review { border-bottom: 1px solid var(--zv-border); padding: 0 0 18px; margin-bottom: 18px; }
+        .software-details-page .zv-review:last-child { border-bottom: 0; margin-bottom: 0; }
+        .software-details-page .zv-review-head { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+        .software-details-page .zv-avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--zv-blue-50); color: var(--zv-blue); font-weight: 700; font-size: 14px; }
+        .software-details-page .zv-review-head strong { display: block; font-size: 14px; color: var(--zv-ink); }
+        .software-details-page .zv-review-head small { font-size: 12px; color: var(--zv-muted); }
+        .software-details-page .zv-review-head .zv-stars { margin-left: auto; }
+        .software-details-page .zv-review p { font-size: 14px; line-height: 1.7; color: var(--zv-body); }
+        .software-details-page .zv-faq { max-width: 880px; display: flex; flex-direction: column; gap: 12px; }
+        .software-details-page .zv-faq details { border: 1px solid var(--zv-border); border-radius: 10px; background: #fff; }
+        .software-details-page .zv-faq summary { list-style: none; cursor: pointer; padding: 16px 20px; font-size: 15px; font-weight: 600; color: var(--zv-ink); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+        .software-details-page .zv-faq summary::-webkit-details-marker { display: none; }
+        .software-details-page .zv-faq summary::after { content: "+"; font-family: inherit; font-weight: 600; color: var(--zv-blue); }
+        .software-details-page .zv-faq details[open] summary::after { content: "−"; }
+        .software-details-page .zv-faq details p { padding: 0 20px 18px; font-size: 14px; line-height: 1.7; color: var(--zv-body); }
+
+        /* ---------- Screenshots & related ---------- */
+        .software-details-page .zv-block { padding: 30px 0 0; }
+        .software-details-page .zv-block-head { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin-bottom: 14px; }
+        .software-details-page .zv-block-head h2 { font-size: 21px; line-height: 1.3; font-weight: 700; margin: 0; }
+        .software-details-page .zv-block-head .zv-link { font-size: 14px; font-weight: 600; color: var(--zv-blue); display: inline-flex; align-items: center; gap: 8px; }
+        .software-details-page .zv-block-head .zv-link:hover { gap: 11px; color: var(--zv-blue-dark); }
+        .software-details-page .zv-shots { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
+        .software-details-page .zv-shot { display: block; border-radius: 8px; overflow: hidden; border: 1px solid #D5DDEA; aspect-ratio: 316 / 187; background: #1E1E1E; position: relative; }
+        .software-details-page .zv-shot img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .35s ease; }
+        .software-details-page .zv-shot:hover img { transform: scale(1.03); }
+        .software-details-page .zv-related { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+        .software-details-page .zv-rel {
+            display: flex; flex-direction: column; gap: 12px; padding: 14px 14px 15px; background: #fff; border: 1px solid var(--zv-border); border-radius: 10px;
+            color: var(--zv-body); box-shadow: 0 1px 2px rgba(16, 24, 40, .03);
+        }
+        .software-details-page .zv-rel:hover { border-color: #C7D8F5; box-shadow: 0 10px 24px rgba(16, 24, 40, .07); transform: translateY(-2px); }
+        .software-details-page .zv-rel-head { display: flex; gap: 12px; align-items: flex-start; }
+        .software-details-page .zv-rel-head img { flex: 0 0 48px; width: 48px; height: 48px; object-fit: contain; }
+        .software-details-page .zv-rel-head strong { display: block; font-size: 14px; font-weight: 700; color: var(--zv-ink); line-height: 1.3; }
+        .software-details-page .zv-rel-head small { display: block; font-size: 12.5px; color: var(--zv-muted); margin-top: 3px; }
+        .software-details-page .zv-rel-rating { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: var(--zv-muted); }
+        .software-details-page .zv-rel-rating .zv-stars { font-size: 11.5px; }
+        .software-details-page .zv-rel-rating b { color: var(--zv-ink); }
+        .software-details-page .zv-rel-price { display: flex; align-items: center; gap: 8px; margin-top: auto; }
+        .software-details-page .zv-rel-price b { font-size: 20px; font-weight: 800; color: var(--zv-ink); }
+        .software-details-page .zv-rel-price s { font-size: 13px; color: #98A2B3; }
+        .software-details-page .zv-rel-price .zv-off { height: 24px; font-size: 12px; }
+        .software-details-page .zv-related-wrap { padding-bottom: 6px; }
+
+        /* ---------- Responsive ---------- */
+        @media (max-width: 1399px) {
+            .software-details-page .zv-overview { grid-template-columns: 400px minmax(0, 1fr) 320px; gap: 30px; }
+            .software-details-page .zv-gallery { grid-template-columns: 72px minmax(0, 1fr); gap: 12px; }
+            .software-details-page .zv-thumb { width: 72px; height: 70px; }
+            .software-details-page .zv-overview-panel { grid-template-columns: minmax(0, 1fr) 380px; gap: 40px; }
+            .software-details-page .zv-tabs { gap: 36px; }
+        }
+        @media (max-width: 1199px) {
+            .software-details-page .zv-overview { grid-template-columns: 400px minmax(0, 1fr); }
+            .software-details-page .zv-buy { grid-column: 1 / -1; display: grid; grid-template-columns: 1fr 1fr; gap: 0 32px; align-items: start; }
+            .software-details-page .zv-buy-main { grid-column: 1; }
+            .software-details-page .zv-benefits { grid-column: 2; grid-row: 1; margin-top: 0; display: grid; grid-template-columns: 1fr 1fr; }
+            .software-details-page .zv-overview-panel { grid-template-columns: 1fr; }
+            .software-details-page .zv-publisher-card { margin-top: 0; max-width: 560px; }
+            .software-details-page .zv-related { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        }
+        @media (max-width: 991px) {
+            .software-details-page .zv-overview { grid-template-columns: 1fr; gap: 28px; }
+            .software-details-page .zv-gallery { max-width: 560px; }
+            .software-details-page .zv-buy { grid-template-columns: 1fr; }
+            .software-details-page .zv-benefits { grid-column: 1; grid-row: auto; margin-top: 22px; }
+            .software-details-page .zv-shots { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 8px; -webkit-overflow-scrolling: touch; }
+            .software-details-page .zv-shot { flex: 0 0 300px; scroll-snap-align: start; }
+            .software-details-page .zv-shots { scrollbar-width: none; }
+            .software-details-page .zv-shots::-webkit-scrollbar { display: none; }
+            .software-details-page .zv-shot-grid-lg { grid-template-columns: repeat(2, 1fr); }
+            .software-details-page .zv-reviews { grid-template-columns: 1fr; }
+            .software-details-page .zv-review-summary { max-width: 360px; }
+        }
+        @media (max-width: 767px) {
+            .software-details-page .zv-gallery { grid-template-columns: 1fr; }
+            .software-details-page .zv-gallery .zv-main-image { grid-row: 1; }
+            .software-details-page .zv-thumbs { flex-direction: row; overflow-x: auto; padding-bottom: 4px; }
+            .software-details-page .zv-thumb { flex: 0 0 72px; }
+            .software-details-page .zv-product-info h1 { font-size: 28px; }
+            .software-details-page .zv-features, .software-details-page .zv-feature-list { grid-template-columns: 1fr; }
+            .software-details-page .zv-related { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; gap: 12px; padding-bottom: 8px; }
+            .software-details-page .zv-rel { flex: 0 0 240px; scroll-snap-align: start; }
+            .software-details-page .zv-related, .software-details-page .zv-thumbs { scrollbar-width: none; }
+            .software-details-page .zv-related::-webkit-scrollbar, .software-details-page .zv-thumbs::-webkit-scrollbar { display: none; }
+            .software-details-page .zv-benefits { grid-template-columns: 1fr; }
+            .software-details-page .zv-tabs { gap: 26px; }
+            .software-details-page .zv-req-wrap { overflow-x: auto; }
+            .software-details-page .zv-req-table { min-width: 560px; }
+            .software-details-page .zv-shot-grid-lg { grid-template-columns: 1fr; }
+            .software-details-page .zv-pub-head { flex-wrap: wrap; }
+            .software-details-page .zv-pub-head .zv-link { margin-left: 62px; }
+        }
+
+
+/* ---------- Blade extras (marketplace + software) ---------- */
+.software-details-page .zv-gallery.is-single { grid-template-columns: 1fr; }
+.software-details-page .zv-app-fallback {
+    width: 100%; height: 100%; min-height: 280px; display: grid; place-items: center;
+    font-size: 64px; font-weight: 800; color: #fff; background: linear-gradient(135deg, #1e3a8a, #0860F5);
+}
+.software-details-page .zv-app-fallback.chrome { background: linear-gradient(135deg, #e34b38 0 35%, #f7d34b 35% 66%, #2aa85d 66%); }
+.software-details-page .zv-app-fallback.vlc { background: #f4a500; }
+.software-details-page .zv-app-fallback.ps { background: #071d3c; }
+.software-details-page .zv-app-fallback.winrar { background: linear-gradient(#e34b62, #6953a6, #efb93f); }
+.software-details-page .zv-app-fallback.zoom { background: #3d91ee; }
+.software-details-page .zv-app-fallback.notepad { background: #70bd6b; }
+
+.software-details-page .zv-info-card {
+    background: #F7FAFE; border: 1px solid var(--zv-border); border-radius: 12px; padding: 22px;
+}
+.software-details-page .zv-info-card h3 {
+    font-size: 16px !important; font-weight: 700; margin: 0 0 16px; color: var(--zv-ink) !important;
+}
+.software-details-page .zv-info-card dl {
+    display: grid; grid-template-columns: 140px minmax(0, 1fr); gap: 10px 16px; margin: 0;
+}
+.software-details-page .zv-info-card dt {
+    font-size: 13px; color: var(--zv-muted); margin: 0;
+}
+.software-details-page .zv-info-card dd {
+    font-size: 14px; font-weight: 600; color: var(--zv-ink); margin: 0;
+}
+.software-details-page .zv-info-card dd s {
+    margin-left: 8px; color: #98A2B3; font-weight: 500;
+}
+
+.software-details-page .zv-meta-list {
+    list-style: none; margin: 0 0 18px; padding: 0; display: flex; flex-direction: column; gap: 10px;
+}
+.software-details-page .zv-meta-list li {
+    display: flex; justify-content: space-between; gap: 12px; font-size: 13.5px; color: var(--zv-muted);
+}
+.software-details-page .zv-meta-list b { color: var(--zv-ink); font-weight: 600; }
+
+.software-details-page .zv-share-row {
+    display: flex; align-items: center; gap: 12px; margin-top: 18px; font-size: 13.5px; color: var(--zv-muted);
+}
+.software-details-page .zv-share-row a {
+    width: 34px; height: 34px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center;
+    border: 1px solid var(--zv-border); color: var(--zv-ink); background: #fff;
+}
+.software-details-page .zv-share-row a:hover { border-color: var(--zv-blue); color: var(--zv-blue); }
+
+.software-details-page .zv-dl {
+    display: inline-flex; align-items: center; gap: 8px; color: var(--zv-blue); font-weight: 600; font-size: 13.5px; text-decoration: none;
+}
+.software-details-page .zv-dl:hover { color: var(--zv-blue-dark); }
+
+.software-details-page .zv-rel { text-decoration: none; }
+.software-details-page .zv-rel-icon {
+    flex: 0 0 48px; width: 48px; height: 48px; border-radius: 10px; display: grid; place-items: center;
+    color: #fff; font-size: 18px; font-weight: 800;
+}
+.software-details-page .zv-rel-icon.chrome { background: linear-gradient(135deg, #e34b38 0 35%, #f7d34b 35% 66%, #2aa85d 66%); }
+.software-details-page .zv-rel-icon.vlc { background: #f4a500; }
+.software-details-page .zv-rel-icon.ps { background: #071d3c; }
+.software-details-page .zv-rel-icon.winrar { background: linear-gradient(#e34b62, #6953a6, #efb93f); }
+.software-details-page .zv-rel-icon.zoom { background: #3d91ee; }
+.software-details-page .zv-rel-icon.notepad { background: #70bd6b; }
+
+.software-details-page .zv-nav-prevnext {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 28px 0 40px; border-top: 1px solid var(--zv-border); margin-top: 28px;
+}
+.software-details-page .zv-nav-item {
+    display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1px solid var(--zv-border);
+    border-radius: 10px; text-decoration: none; color: var(--zv-body); background: #fff;
+}
+.software-details-page .zv-nav-item:hover { border-color: #C7D8F5; }
+.software-details-page .zv-nav-item.is-next { justify-content: flex-end; text-align: right; }
+.software-details-page .zv-nav-item img {
+    width: 56px; height: 56px; object-fit: cover; border-radius: 8px; flex: 0 0 56px;
+}
+.software-details-page .zv-nav-item strong { display: block; font-size: 12px; color: var(--zv-muted); font-weight: 600; margin-bottom: 4px; }
+.software-details-page .zv-nav-item span { display: block; font-size: 14px; font-weight: 700; color: var(--zv-ink); }
+
+.software-details-page .zv-copy .cms-page-content,
+.software-details-page .zv-copy .cms-page-content p {
+    font-size: 14.5px; line-height: 1.75; color: var(--zv-body);
+}
+.software-details-page .zv-copy .cms-page-content h2,
+.software-details-page .zv-copy .cms-page-content h3 {
+    font-size: 21px !important; margin: 22px 0 10px; color: var(--zv-ink) !important;
+}
+.software-details-page .zv-buy .site-ad { margin-top: 20px; }
+
+.software-details-page .zv-tab.is-active { color: var(--zv-blue); font-weight: 600; }
+.software-details-page .zv-tab.is-active::after { background: var(--zv-blue); }
+
+@media (max-width: 991px) {
+    .software-details-page .zv-newsletter-box { flex-direction: column; align-items: stretch; padding: 24px; }
+    .software-details-page .zv-newsletter-form { width: 100%; }
+    .software-details-page .zv-newsletter-form input[type=email] { width: 100%; }
+    .software-details-page .zv-info-card dl { grid-template-columns: 120px minmax(0, 1fr); }
+}
+@media (max-width: 767px) {
+    .software-details-page .zv-nav-prevnext { grid-template-columns: 1fr; }
+    .software-details-page .zv-nav-item.is-next { justify-content: flex-start; text-align: left; flex-direction: row-reverse; }
+}
+@media (max-width: 575px) {
+    .software-details-page .zv-newsletter-copy { flex-direction: column; align-items: flex-start; gap: 14px; }
+    .software-details-page .zv-newsletter-form { flex-direction: column; }
+    .software-details-page .zv-newsletter-form .zv-btn { width: 100%; }
+    .software-details-page .zv-form-note { position: static; margin-top: 4px; }
+    .software-details-page .zv-info-card dl { grid-template-columns: 1fr; gap: 4px; }
+    .software-details-page .zv-info-card dt { margin-top: 8px; }
+}
+

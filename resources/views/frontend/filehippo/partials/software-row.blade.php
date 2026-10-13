@@ -1,42 +1,52 @@
 @php
     $detailUrl = route('filehippo.show', $item->slug);
-    $licenseClass = $item->license === 'paid' ? 'paid' : 'free';
+    $licenseClass = match ($item->license) {
+        'paid' => 'is-paid',
+        'freemium' => 'is-freemium',
+        default => 'is-free',
+    };
     $licenseLabel = $item->licenseLabel();
     $tags = $item->tagList();
     $platforms = $item->platformList();
+    $platformLabel = implode(' / ', $platforms) ?: 'Windows';
+    $designLogo = \App\Support\SoftwareDesignAssets::logoFor($item);
 @endphp
-<article class="fh-software">
-    <a href="{{ $detailUrl }}" class="fh-app-icon {{ $item->icon_class }}" aria-label="{{ $item->name }}">
+<article class="zv-soft">
+    <a href="{{ $detailUrl }}" class="zv-soft-logo {{ $item->icon_class }}" aria-label="{{ $item->name }}">
         @if($item->image)
-            <img src="{{ $item->imageUrl() }}" alt="{{ $item->name }}" style="width:100%;height:100%;object-fit:cover;border-radius:12px">
+            <img src="{{ $item->imageUrl() }}" alt="{{ $item->name }}" width="80" height="80">
+        @elseif($designLogo)
+            <img src="{{ $designLogo }}" alt="{{ $item->name }}" width="80" height="80">
         @elseif($item->icon)
             <i class="{{ $item->icon }}"></i>
         @else
             {{ $item->icon_text }}
         @endif
     </a>
-    <div>
-        <div class="fh-app-name">
+    <div class="zv-soft-info">
+        <h3>
             <a href="{{ $detailUrl }}">{{ $item->name }}</a>
-            <span class="fh-version">{{ $item->version }}</span>
-        </div>
-        <div class="fh-desc">{{ $item->description }}</div>
-        <div class="fh-tags">
+            @if($item->version)
+                <span class="zv-ver">{{ $item->version }}</span>
+            @endif
+        </h3>
+        <p>{{ $item->description }}</p>
+        <div class="zv-tags">
             @foreach($tags as $tag)
-                <span class="fh-tag">{{ $tag }}</span>
+                <span class="zv-tag">{{ $tag }}</span>
             @endforeach
-            <span class="fh-tag {{ $licenseClass }}">{{ $licenseLabel }}</span>
+            <span class="zv-tag {{ $licenseClass }}">{{ $licenseLabel }}</span>
         </div>
     </div>
-    <div class="fh-meta">
-        <strong>★ {{ $item->rating }}</strong> ({{ $item->votes }} votes)<br>
-        ↧ {{ $item->downloads }} downloads<br>
-        <i class="fab fa-windows"></i> {{ implode(' / ', $platforms) }}
+    <div class="zv-soft-stats">
+        <span><i class="fas fa-star"></i><b>{{ $item->rating }}</b> ({{ $item->votes }} votes)</span>
+        <span><i class="fas fa-download"></i>{{ $item->downloads }} downloads</span>
+        <span><i class="fab fa-windows"></i>{{ $platformLabel }}</span>
     </div>
-    <div class="fh-download">
-        <a class="theme-btn fh-dl-btn" href="{{ $detailUrl }}">
+    <div class="zv-soft-actions">
+        <a class="zv-btn zv-btn-primary" href="{{ $detailUrl }}">
             <i class="fas fa-download"></i> Download
         </a>
-        <a class="fh-details" href="{{ $detailUrl }}">View Details →</a>
+        <a class="zv-link" href="{{ $detailUrl }}">View Details <i class="fas fa-arrow-right"></i></a>
     </div>
 </article>

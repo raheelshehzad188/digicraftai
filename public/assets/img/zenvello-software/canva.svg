@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" fill="none">
+<defs><linearGradient id="cv" x1="0" y1="1" x2="1" y2="0"><stop offset="0" stop-color="#00C4CC"/><stop offset=".55" stop-color="#5A32FA"/><stop offset="1" stop-color="#7D2AE8"/></linearGradient></defs>
+<rect x="1" y="1" width="62" height="62" rx="14" fill="url(#cv)"/>
+<text x="32" y="39" text-anchor="middle" font-family="'Brush Script MT','Segoe Script','Snell Roundhand',cursive" font-style="italic" font-weight="700" font-size="21" fill="#fff">Canva</text>
+</svg>

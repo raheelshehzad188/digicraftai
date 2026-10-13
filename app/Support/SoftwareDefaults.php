@@ -77,7 +77,7 @@ class SoftwareDefaults
             'hero_title' => 'Find the Best Software for Your Needs',
             'hero_description' => 'Download trusted, safe and verified software for Windows, Mac, Android and more. Free & premium software in one place.',
             'search_placeholder' => 'Search for software, e.g. Chrome, Photoshop, VLC...',
-            'hero_image' => 'https://softwaretechcompany.com/storage/home/dashboard.jpg',
+            'hero_image' => 'assets/img/zenvello-software/hero-software.svg',
             'list_subtitle' => 'Discover and download the best software for your device.',
             'subscribe_title' => 'Stay Updated With the Latest Software',
             'subscribe_text' => 'Get notified about new versions, popular software and exclusive deals.',
